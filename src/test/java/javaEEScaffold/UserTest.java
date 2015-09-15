@@ -41,5 +41,12 @@ public class UserTest {
 		//userService.save(user);
 		userService.findByUsername("admin");
 	}
+	@Test
+	public void testConnectUserAndRole(){
+		userService.connectUserAndRole(1l, 1l,2l);
+	}
+	@Test public void testDisconnectUserAndRole(){
+		userService.disconnectUserAndRole(1l, 1l);
+	}
 
 }

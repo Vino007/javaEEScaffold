@@ -47,6 +47,11 @@
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
 	</classpathentry>
+	<classpathentry sourcepath="G:/Users/Joker/.gradle/caches/modules-2/files-2.1/com.alibaba/fastjson/1.2.7/ead58343766a8926770a7eba3a01fc8b82e12fac/fastjson-1.2.7-sources.jar" kind="lib" path="G:/Users/Joker/.gradle/caches/modules-2/files-2.1/com.alibaba/fastjson/1.2.7/a5c721e8ea1e18854272879d6ed2770d25feb342/fastjson-1.2.7.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
 	<classpathentry sourcepath="G:/Users/Joker/.gradle/caches/modules-2/files-2.1/org.springframework.data/spring-data-jpa/1.8.2.RELEASE/51fde6f50117e11818730b082207068b4f56817a/spring-data-jpa-1.8.2.RELEASE-sources.jar" kind="lib" path="G:/Users/Joker/.gradle/caches/modules-2/files-2.1/org.springframework.data/spring-data-jpa/1.8.2.RELEASE/bfed4488e76c9a6a380965715b7467d641a34679/spring-data-jpa-1.8.2.RELEASE.jar" exported="true">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
@@ -58,6 +63,11 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="G:/Users/Joker/.gradle/caches/modules-2/files-2.1/jstl/jstl/1.2/74aca283cd4f4b4f3e425f5820cda58f44409547/jstl-1.2.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry sourcepath="G:/Users/Joker/.gradle/caches/modules-2/files-2.1/org.aspectj/aspectjweaver/1.8.7/2c276bb839d67f39766342cf77ea799da72ea323/aspectjweaver-1.8.7-sources.jar" kind="lib" path="G:/Users/Joker/.gradle/caches/modules-2/files-2.1/org.aspectj/aspectjweaver/1.8.7/f753e78bbe484e58b3b4e5ce3cc1751e50d11f6c/aspectjweaver-1.8.7.jar" exported="true">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>

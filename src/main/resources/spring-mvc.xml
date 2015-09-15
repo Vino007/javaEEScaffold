@@ -22,7 +22,28 @@
         <property name="securityManager" ref="securityManager"/>
     </bean>
 
-    <mvc:annotation-driven/>
+    <mvc:annotation-driven>
+    <mvc:message-converters register-defaults="true">
+            <!-- 配置Fastjson支持 -->
+            <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>text/html;charset=UTF-8</value>
+                        <value>application/json</value>
+                    </list>
+                </property>
+                <property name="features">
+                    <list>
+                        <value>WriteMapNullValue</value>
+                        <value>QuoteFieldNames</value>
+                    </list>
+                </property>
+            </bean>
+        </mvc:message-converters>
+        
+    </mvc:annotation-driven>
+    
+    
    <!--  <mvc:view-controller path="/" view-name="index"/> --><!-- 如果当前路径是/ 则交给相应的视图解析器直接解析为视图 -->
 	<!--    <mvc:view-controller path="/authenticated" view-name="/authenticated"/> -->
     <!-- 默认的视图解析器 在上边的解析错误时使用 (默认使用html)- -->
@@ -35,7 +56,7 @@
 
 
 	<!-- 静态资源文件处理，mapping为映射,location为实际路径，根路径为webapp路径 -->
-	 <mvc:resources mapping="/resources/**" location="/resources/" /> 
+	<mvc:resources mapping="/resources/**" location="/resources/" /> 
 	<!-- 静态html处理 -->
 	<mvc:resources location="/resources/html/" mapping="/html/**"></mvc:resources>
 	<mvc:resources location="/resources/js/" mapping="/js/**"></mvc:resources>

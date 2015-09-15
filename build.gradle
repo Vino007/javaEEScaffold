@@ -13,7 +13,7 @@ repositories {
 }
 
 dependencies {
-     compile group: 'commons-collections', name: 'commons-collections', version: '3.2'   
+    compile group: 'commons-collections', name: 'commons-collections', version: '3.2'   
     compile 'org.apache.shiro:shiro-core:1.2.2'
     compile 'org.apache.shiro:shiro-web:1.2.2'
     compile 'org.apache.shiro:shiro-ehcache:1.2.2'
@@ -22,6 +22,7 @@ dependencies {
     
     compile 'mysql:mysql-connector-java:5.1.25'
     compile 'com.alibaba:druid:1.0.15'
+    compile 'com.alibaba:fastjson:1.2.7'
     
 	
  	compile 'mysql:mysql-connector-java:5.1.25'
@@ -29,6 +30,7 @@ dependencies {
 	
 	compile 'javax.servlet.jsp:jsp-api:2.2'
 	compile 'jstl:jstl:1.2'
+	compile 'org.aspectj:aspectjweaver:1.8.7'  //缺少该包会导致申明式事务出错：java.lang.NoClassDefFoundError: org/aspectj/util/PartialOrder$PartialComparable.
 	compile 'org.springframework:spring-webmvc:4.2.1.RELEASE'
 	compile 'org.hibernate:hibernate-entitymanager:4.3.11.Final'
 

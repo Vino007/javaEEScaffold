@@ -11,12 +11,15 @@ import org.springframework.stereotype.Service;
 
 import com.vino.shirospring.entity.Role;
 import com.vino.shirospring.entity.User;
+import com.vino.shirospring.repository.RoleRepository;
 import com.vino.shirospring.repository.UserRepository;
 
 @Service("userService")
 public class UserServiceImpl implements UserService {
 	@Resource
 	private UserRepository userRepository;
+	@Resource
+	private RoleRepository roleRepository;
 	@Resource
     private PasswordHelper passwordHelper;
 	public UserRepository getUserRepository() {
@@ -27,9 +30,6 @@ public class UserServiceImpl implements UserService {
 		this.userRepository = userRepository;
 	}
 
-
-
-	
 
 	@Override
 	public void update(User user) {
@@ -97,5 +97,40 @@ public class UserServiceImpl implements UserService {
         passwordHelper.encryptPassword(user);//对密码进行加密,修改后等待flush就会持久化到数据库
         
     }
+
+	@Override
+	@Transactional
+	public void connectUserAndRole(Long userId, Long... roleId) {
+		User user=userRepository.findOne(userId);
+		Set<Role> roles=user.getRoles();
+		for(Long id:roleId){
+			roles.add(roleRepository.findOne(id));
+		}
+		
+	}
+
+	@Override
+	@Transactional
+	public void disconnectUserAndRole(Long userId, Long... roleIds) {
+		for(Long id:roleIds){
+			userRepository.findOne(userId).getRoles().remove(roleRepository.findOne(id));
+		}
+	}
+
+	public RoleRepository getRoleRepository() {
+		return roleRepository;
+	}
+
+	public void setRoleRepository(RoleRepository roleRepository) {
+		this.roleRepository = roleRepository;
+	}
+
+	public PasswordHelper getPasswordHelper() {
+		return passwordHelper;
+	}
+
+	public void setPasswordHelper(PasswordHelper passwordHelper) {
+		this.passwordHelper = passwordHelper;
+	}
 	
 }

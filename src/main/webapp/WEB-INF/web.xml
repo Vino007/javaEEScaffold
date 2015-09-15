@@ -16,8 +16,58 @@
         </param-value>
     </context-param>
     <listener>
+    	<description>spring监听器</description>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+     <!-- 防止spring内存溢出监听器 -->
+    <listener>
+        <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+    </listener>
+    
+     <servlet>
+        <servlet-name>spring</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:spring-mvc.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+        <async-supported>true</async-supported>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>spring</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+    
+     <filter>
+        <description>字符集过滤器</description>
+        <filter-name>encodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <description>字符集编码</description>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+     <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    
+    <filter> 
+    	<description>使session在一个http请求中保持打开状态过滤器</description>
+   		<filter-name>SpringOpenEntityManagerInViewFilter</filter-name> 
+   		<filter-class>
+			org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter
+  		</filter-class>                                        
+	</filter> 
+	<filter-mapping> 
+   		<filter-name>SpringOpenEntityManagerInViewFilter</filter-name> 
+   		<url-pattern>/*</url-pattern> 
+	</filter-mapping>
+    
+   
+    
     <!-- Spring配置文件结束 -->
 
     <!-- shiro 安全过滤器 -->
@@ -40,20 +90,8 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-    <servlet>
-        <servlet-name>spring</servlet-name>
-        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-        <init-param>
-            <param-name>contextConfigLocation</param-name>
-            <param-value>classpath:spring-mvc.xml</param-value>
-        </init-param>
-        <load-on-startup>1</load-on-startup>
-        <async-supported>true</async-supported>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>spring</servlet-name>
-        <url-pattern>/</url-pattern>
-    </servlet-mapping>
-
+   
+    
+        
 
 </web-app>

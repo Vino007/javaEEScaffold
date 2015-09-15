@@ -24,13 +24,21 @@ public class Role extends BaseEntity<Long> {
 	private String description;
 	@Column(name="available")
 	private Boolean available=Boolean.TRUE;
-	@ManyToMany(fetch=FetchType.EAGER,targetEntity=Resource.class)
+	@ManyToMany(targetEntity=Resource.class)
 	@JoinTable(name="t_role_resource",joinColumns=@JoinColumn(name="role_id"),inverseJoinColumns=@JoinColumn(name="resource_id"))
 	private Set<Resource> resources=new HashSet<Resource>();
-	@ManyToMany(fetch=FetchType.EAGER,targetEntity=User.class,mappedBy="roles")
+	@ManyToMany(targetEntity=User.class,mappedBy="roles")
 	private Set<User> users=new HashSet<User>();
 	
 	
+	public Role() {
+	}
+	
+	public Role(String mark, String name) {
+		this.mark = mark;
+		this.name = name;
+	}
+
 	public String getMark() {
 		return mark;
 	}

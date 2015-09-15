@@ -1,4 +1,4 @@
-package com.vino.shirospring.tag;
+package com.vino.common.tag;
 
 import java.io.IOException;
 

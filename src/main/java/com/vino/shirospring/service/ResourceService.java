@@ -1,10 +1,11 @@
 package com.vino.shirospring.service;
 
-import org.springframework.stereotype.Service;
+import com.vino.shirospring.entity.Resource;
 
-import com.vino.shirospring.repository.ResourceRepository;
 
-@Service("resourceService")
-public class ResourceService {
-	private ResourceRepository resourceRepository;
+
+public interface ResourceService {
+	public Resource find(Long id);
+	void save(Resource resource);
+	void delete(Long id);
 }

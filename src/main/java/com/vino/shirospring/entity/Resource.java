@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -19,7 +20,7 @@ public class Resource extends BaseEntity<Long> {
 	@Column(name="type",length=30)
 	private String type;
 	@Column(name="priority")
-	private Integer priority;
+	private Integer priority=0;
 	@Column(name="parent_id")
 	private Long parent_id;
 	@Column(name="permission",length=100)
@@ -31,6 +32,16 @@ public class Resource extends BaseEntity<Long> {
 	@ManyToMany(mappedBy="resources",targetEntity=Role.class)
 	private Set<Role> roles=new HashSet<Role>();
 	
+	
+	public Resource() {
+		
+	}
+	public Resource(String name, String type, String permission) {
+		
+		this.name = name;
+		this.type = type;
+		this.permission = permission;
+	}
 	public Set<Role> getRoles() {
 		return roles;
 	}
