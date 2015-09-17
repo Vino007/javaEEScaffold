@@ -19,8 +19,13 @@
 				}
 			}
 		};
-
 		var zNodes =[
+		 {"id":1,"name":"用户管理","pId":0},
+		 {"id":2,"name":"创建用户","pId":1},
+		 {"id":3,"name":"删除用户","pId":1},
+		 {"id":4,"name":"编辑用户","pId":1},
+		 {"id":5,"name":"查询用户","pId":1}];
+	/* 	var zNodes =[
 			{ id:1, pId:0, name:"父节点1 - 展开", open:true},
 			{ id:11, pId:1, name:"父节点11 - 折叠"},
 			{ id:111, pId:11, name:"叶子节点111"},
@@ -50,7 +55,7 @@
 			{ id:233, pId:23, name:"叶子节点233"},
 			{ id:234, pId:23, name:"叶子节点234"},
 			{ id:3, pId:0, name:"父节点3 - 没有子节点", isParent:true}
-		];
+		]; */
 
 		$(document).ready(function(){
 			$.fn.zTree.init($("#treeDemo"), setting, zNodes); //指定作用的元素，设置，和节点数据

@@ -1,86 +1,121 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="vino" uri="http://www.vino007.com/pager" %> 
-<%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+
+<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
 <html>
 <head>
-<base href="<%=basePath%>"> 
-<%@ include file="/WEB-INF/pages/common/default_css.jsp" %>
+<title>AdminLTE 2 | Starter</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>分页测试</title>
+
+<%@ include file="/WEB-INF/pages/common/default_header.jsp"%>
+<%@ include file="/WEB-INF/pages/common/default_css.jsp"%>
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
-<body>
-<shiro:guest>
-    欢迎游客访问，<a href="${pageContext.request.contextPath}/login">点击登录</a><br/>
-</shiro:guest>
+<!--
+  BODY TAG OPTIONS:
+  =================
+  Apply one or more of the following classes to get the
+  desired effect
+  |---------------------------------------------------------|
+  | SKINS         | skin-blue                               |
+  |               | skin-black                              |
+  |               | skin-purple                             |
+  |               | skin-yellow                             |
+  |               | skin-red                                |
+  |               | skin-green                              |
+  |---------------------------------------------------------|
+  |LAYOUT OPTIONS | fixed                                   |
+  |               | layout-boxed                            |
+  |               | layout-top-nav                          |
+  |               | sidebar-collapse                        |
+  |               | sidebar-mini                            |
+  |---------------------------------------------------------|
+  -->
+<body class="hold-transition skin-blue sidebar-mini">
+	<div class="wrapper">
 
-<shiro:user>
-    欢迎[<shiro:principal/>]登录，<a href="${pageContext.request.contextPath}/logout">点击退出</a><br/>
-</shiro:user>
+		<!-- Main Header -->
+		<%@include file="/WEB-INF/pages/common/main_header.jsp"%>
+		<!-- Left side column. contains the logo and sidebar -->
+		<%@include file="/WEB-INF/pages/common/left_sidebar.jsp"%>
 
-<%-- <div class="ui-layout-west">
-    功能菜单<br/>
-    <c:forEach items="${menus}" var="m">
-        <a href="${pageContext.request.contextPath}/${m.url}" target="content">${m.name}</a><br/>
-    </c:forEach>
-</div>
- --%>
-<div class="ui-layout-west">
-    权限菜单<br/>
-    <c:forEach items="${permissionList}" var="permission">
-       ${permission}<br/>
-    </c:forEach>
-</div>
+		<!-- 内容区域 -->
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<section class="content-header">
+				<h1>
+					Page Header <small>Optional description</small>
+				</h1>
+				<ol class="breadcrumb">
+					<li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+					<li class="active">Here</li>
+				</ol>
+			</section>
 
- <c:forEach items="${permissions}" var="permission">
-       ${permission.name}<br/>
-    </c:forEach>
-    
-<h2>树形菜单显示role</h2>
-<div>
-	<ul id="tree" class="ztree"></ul>
-	<button id="getRoles">role/all</button>
-</div>
-<%-- <vino:pager type="form" action="${pageContext.request.contextPath}/permission/view"/> --%>
+			<!-- Main content -->
+			<section class="content" id="mainContent">
+				
+				<!-- Your Page Content Here！！！！！！ -->
 
-<%@ include file="/WEB-INF/pages/common/default_js.jsp" %>
-<script type="text/javascript">
+			</section>
+			<!-- /.content -->
+		</div>
+		<!-- /.content-wrapper -->
+		<!-- Main Footer -->
+		<%@include file="/WEB-INF/pages/common/main_footer.jsp"%>
 
-	
-    var setting = {  
-	        isSimpleData : true,              //数据是否采用简单 Array 格式，默认false  
-	        treeNodeKey : "id",               //在isSimpleData格式下，当前节点id属性  
-	        treeNodeParentKey : "pId",        //在isSimpleData格式下，当前节点的父节点id属性  
-	        showLine : true,                  //是否显示节点间的连线  
-	        checkable : true                  //每个节点上是否显示 CheckBox  
-	    };  
-	      
-	    var zNodes;  
-	   $(document).ready(function(){  
-	    $("#getRoles").click(function(){
-	        $.ajax({  
-	            async : false,  
-	            cache:false,  
-	            type: 'GET',  
-	        //    contentType : 'application/json',  //发送信息至服务器时内容编码类型
-	            dataType : "json",  
-	            url: "role/all",//请求的action路径  
-	            error: function () {//请求失败处理函数  
-	                alert('请求失败');  
-	            },  
-	            success:function(data){ //请求成功后处理函数。    
-	                alert(data);  
-	                zNodes = data;   //把后台封装好的简单Json格式赋给treeNodes  
-	            }  
-	        });  
-	      
-	       $.fn.zTree.init($("#tree"), setting, zNodes);
-	    }); 
-	   });
-</script>
+		<!-- Control Sidebar -->
+		<%@include file="/WEB-INF/pages/common/control_sidebar.jsp"%>
+		<!-- /.control-sidebar -->
+		<!-- control-sidebar的背景设置  Add the sidebar's background. This div must be placed
+           immediately after the control sidebar -->
+		<div class="control-sidebar-bg"></div>
+	</div>
+	<!-- ./wrapper -->
+
+	<!-- REQUIRED JS SCRIPTS -->
+	<%@ include file="/WEB-INF/pages/common/default_js.jsp"%>
+
+	<!-- Optionally, you can add Slimscroll and FastClick plugins.
+         Both of these plugins are recommended to enhance the
+         user experience. Slimscroll is required when using the
+         fixed layout. -->
+         <script type="text/javascript">
+         $(document).ready(function(){
+        	 $(".sidebarMenuHref").click(function(){
+        		 
+        		 $.ajax({
+                     async : false,
+                     cache:false,
+                     type: 'GET',
+                     //    contentType : 'application/json',  //发送信息至服务器时内容编码类型
+                     //dataType : "json",
+                     url: this.href,//请求的action路径
+                     error: function () {//请求失败处理函数
+                         alert('请求失败');
+                     },
+                     success:function(data){ //请求成功后处理函数。
+                        // alert(data);
+                     $("#mainContent").html(data);
+                            //把后台封装好的简单Json格式赋给treeNodes
+                     }
+        	 });
+        	 return false;       		
+          	});
+          	});
+       
+         	
+         </script>
 </body>
 </html>

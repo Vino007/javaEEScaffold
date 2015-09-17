@@ -16,10 +16,12 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 
 
-import com.vino.shirospring.entity.Resource;
-import com.vino.shirospring.entity.Role;
-import com.vino.shirospring.service.ResourceService;
-import com.vino.shirospring.service.RoleService;
+
+
+import com.vino.scaffold.shiro.entity.Resource;
+import com.vino.scaffold.shiro.entity.Role;
+import com.vino.scaffold.shiro.service.ResourceService;
+import com.vino.scaffold.shiro.service.RoleService;
 
 public class RoleTest {
 	

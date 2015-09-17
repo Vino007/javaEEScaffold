@@ -15,7 +15,7 @@
         <context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/> 
     </context:component-scan> -->
     <!-- 如果配置了<context:component-scan>那么<context:annotation-config/>标签就可以不用再xml中配置了，因为前者包含了后者 -->
-    <context:component-scan base-package="com.vino.scaffold.controller,com.vino.shirospring.controller"></context:component-scan>
+    <context:component-scan base-package="com.vino.scaffold.controller,com.vino.scaffold.shiro.controller"></context:component-scan>
 
     <aop:config proxy-target-class="true"></aop:config>
     <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
@@ -66,7 +66,7 @@
     <!-- 控制器异常处理 -->
     <bean id="exceptionHandlerExceptionResolver" class="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver">
     </bean>
-    <bean class="com.vino.shirospring.exception.DefaultExceptionHandler"/>
+    <bean class="com.vino.scaffold.shiro.exception.DefaultExceptionHandler"/>
 
   
 </beans>

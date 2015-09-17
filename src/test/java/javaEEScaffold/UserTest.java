@@ -9,8 +9,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.vino.shirospring.entity.User;
-import com.vino.shirospring.service.UserService;
+import com.vino.scaffold.shiro.entity.User;
+import com.vino.scaffold.shiro.service.UserService;
 
 public class UserTest {
 	private UserService userService;

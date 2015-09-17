@@ -15,7 +15,7 @@
 
     <!--第一步-->
     <!--定义服务层代码存放的包扫描路径-->
-	<context:component-scan base-package="com.vino.scaffold.service,com.vino.shirospring.service" />
+	<context:component-scan base-package="com.vino.scaffold.service,com.vino.scaffold.shiro.service" />
 
     <!--第二步-->
     <!--定义实体的工厂bean-->
@@ -38,7 +38,7 @@
    <!--  配置了 <jpa:repositories> 后，Spring 初始化容器时将会扫描 base-package 指定的包目录及其子目录，
     	为继承 Repository 或其子接口的接口创建代理对象，并将代理对象注册为 Spring Bean，业务层便可以通过 Spring 自动封装的特性来直接使用该对象。 -->
     <!-- repository实现类的后缀 ，有时候spring data的接口不能满足我们的要求，可以自己写实现类-->
-   	<jpa:repositories base-package="com.vino.scaffold.repository,com.vino.shirospring.repository"
+   	<jpa:repositories base-package="com.vino.scaffold.repository,com.vino.scaffold.shiro.repository"
    					  repository-impl-postfix="Impl" 		
    					  				
    					  entity-manager-factory-ref="entityManagerFactory" 
