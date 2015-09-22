@@ -4,10 +4,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.annotation.Resource;
-import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.vino.scaffold.service.base.AbstractBaseServiceImpl;
 import com.vino.scaffold.shiro.entity.Role;
@@ -75,7 +75,7 @@ public class UserServiceImpl extends AbstractBaseServiceImpl<User, Long>  implem
     public void save(User user) {
         //º”√‹√‹¬Î
         passwordHelper.encryptPassword(user);
-        userRepository.save(user);;
+        userRepository.save(user);
     }
 
     /**

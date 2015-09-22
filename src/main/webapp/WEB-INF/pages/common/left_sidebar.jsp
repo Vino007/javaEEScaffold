@@ -42,9 +42,9 @@
 					<span>系统管理</span> <i class="fa fa-angle-left pull-right"></i></a>
 				<ul class="treeview-menu">
 					<li><a class="sidebarMenuHref" href="user/all">用户管理</a></li>
-					<li><a href="#">角色管理</a></li>
-					<li><a href="#">权限管理</a></li>
-					<li><a href="#">组织机构管理</a></li>
+					<li><a class="sidebarMenuHref" href="role/all">角色管理</a></li>
+					<li><a class="sidebarMenuHref" href="resource/all">资源管理</a></li>
+					<li><a class="sidebarMenuHref" href="organization/all">组织机构管理</a></li>
 				</ul></li>
 		</ul>
 		<!-- /.sidebar-menu -->

@@ -9,4 +9,5 @@
     
  <!-- AdminLTE App -->
     <script src="<%=request.getContextPath()%>/resources/AdminLTE/dist/js/app.min.js"></script>
+    <script src="<%=request.getContextPath()%>/resources/AdminLTE/plugins/iCheck/icheck.min.js"></script>
   

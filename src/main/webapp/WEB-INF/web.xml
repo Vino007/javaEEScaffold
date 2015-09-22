@@ -10,9 +10,7 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
-            classpath:applicationContext.xml,
-            classpath:spring-shiro-web.xml,
-            classpath:spring-mvc.xml
+            classpath:applicationContext.xml         
         </param-value>
     </context-param>
     <listener>

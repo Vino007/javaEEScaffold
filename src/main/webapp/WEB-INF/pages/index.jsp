@@ -51,27 +51,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 		<!-- 内容区域 -->
 		<!-- Content Wrapper. Contains page content -->
-		<div class="content-wrapper">
-			<!-- Content Header (Page header) -->
-			<section class="content-header">
-				<h1>
-					Page Header <small>Optional description</small>
-				</h1>
-				<ol class="breadcrumb">
-					<li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-					<li class="active">Here</li>
-				</ol>
-			</section>
-
-			<!-- Main content -->
-			<section class="content" id="mainContent">
-				
-				<!-- Your Page Content Here！！！！！！ -->
-
-			</section>
-			<!-- /.content -->
+		<div class="content-wrapper" id="content-wrapper">
+			<%-- <%@include file="/WEB-INF/pages/common/main_content.jsp" %><!-- default content --> --%>
+			<%@include file="/WEB-INF/pages/example/simpleTable.jsp"%>
 		</div>
 		<!-- /.content-wrapper -->
+
 		<!-- Main Footer -->
 		<%@include file="/WEB-INF/pages/common/main_footer.jsp"%>
 
@@ -91,7 +76,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
          Both of these plugins are recommended to enhance the
          user experience. Slimscroll is required when using the
          fixed layout. -->
-         <script type="text/javascript">
+	<script type="text/javascript">
          $(document).ready(function(){
         	 $(".sidebarMenuHref").click(function(){
         		 
@@ -107,15 +92,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                      },
                      success:function(data){ //请求成功后处理函数。
                         // alert(data);
-                     $("#mainContent").html(data);
+                     $("#content-wrapper").html(data);
                             //把后台封装好的简单Json格式赋给treeNodes
                      }
         	 });
         	 return false;       		
           	});
           	});
-       
-         	
-         </script>
+          	
+         </script>	
 </body>
 </html>
