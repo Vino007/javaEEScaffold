@@ -25,3 +25,5 @@
 	href="<%=request.getContextPath()%>/resources/AdminLTE/dist/css/skins/skin-blue.min.css">
    <!-- iCheck for checkboxes and radio inputs -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/AdminLTE/plugins/iCheck/all.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/AdminLTE/plugins/select2/select2.min.css">   
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/AdminLTE/plugins/daterangepicker/daterangepicker-bs3.css">   

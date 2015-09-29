@@ -13,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.vino.scaffold.controller.base.BaseController;
+import com.vino.scaffold.entity.Constants;
+import com.vino.scaffold.shiro.entity.User;
 import com.vino.scaffold.shiro.service.UserService;
 
 
@@ -24,14 +26,15 @@ public class HomeController extends BaseController{
 
 	@RequestMapping("/")
 	public String home(Model model){
-		//怎么从session中获取当前用户
 		
 		Subject curUser=SecurityUtils.getSubject();
 		Session session=curUser.getSession();
+		
 		String username=(String) curUser.getPrincipal();
-		Set<String> permissionList=userService.findAllPermissionsByUsername(username);
-		model.addAttribute("permissionList", permissionList);
-		System.out.println(Arrays.toString(permissionList.toArray()));
+	//	Set<String> permissionList=userService.findAllPermissionsByUsername(username);
+		User currentUser=userService.findByUsername(username);
+		session.setAttribute(Constants.CURRENT_USER, currentUser);//将当前用户放入session
+	//	model.addAttribute("permissionList", permissionList);
 		return "index";
 	}
 	

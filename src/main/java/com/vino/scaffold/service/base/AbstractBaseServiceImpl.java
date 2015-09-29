@@ -27,6 +27,9 @@ public abstract class AbstractBaseServiceImpl<T extends BaseEntity<PK>,PK extend
 	public void save(List<T> objs){
 		baseRepository.save(objs);
 	}
+	public void update(T obj){
+		baseRepository.save(obj);
+	}
 	@SuppressWarnings("unchecked")
 	public void delete(PK ...ids){
 		for(PK id:ids)

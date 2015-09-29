@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%><!-- 不加这句，编码会出错！！ -->
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <aside class="main-sidebar">
 
 	<!-- sidebar: style can be found in sidebar.less -->
@@ -12,7 +13,7 @@
 					class="img-circle" alt="User Image">
 			</div>
 			<div class="pull-left info">
-				<p>Alexander Pierce</p>
+				<p>${currentUser.userAlias}</p>
 				<!-- Status -->
 				<a href="#"><i class="fa fa-circle text-success"></i> Online</a>
 			</div>
