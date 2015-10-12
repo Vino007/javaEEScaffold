@@ -1,18 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="vino" tagdir="/WEB-INF/tags" %>
 <!-- Content Header (Page header) -->
 
 <section class="content-header">
 	<h1>
-		用户管理 <small></small>
+		角色管理 <small></small>
 	</h1>
 	<ol class="breadcrumb">
 		<li><a href="#"><i class="fa fa-dashboard"></i>系统管理</a></li>
 		<!-- <li><a href="#">用户管理</a></li> -->
-		<li class="active">用户管理</li>
+		<li class="active">角色管理</li>
 	</ol>
 </section>
 
@@ -31,18 +31,15 @@
 							</div>
 							<div class="box-body">
 								<!-- form start -->
-								<form id="searchForm" action="user/search" method="get">
+								<form id="searchForm" action="role/search" method="get">
 									<div class="box-body">
 										<div class="row">
 											<input hidden="true" name="pageNumber" id="pageNumber">
 											<div class="form-group col-md-2">
-												<label for="usernameLabel">用户名:</label>
-												<input type="text" class="form-control" id="usernameLabel" name="search_username" value="${searchParamsMap.username }">
+												<label for="nameLabel">用户名:</label>
+												<input type="text" class="form-control" id="nameLabel" name="search_name" value="${searchParamsMap.name }">
 											</div>
-											<div class="form-group col-md-2">
-												<label for="aliasLabel">别名:</label> <input
-													type="text" class="form-control" id="aliasLabel" name="search_userAlias" value="${searchParamsMap.userAlias }">
-											</div>											
+																				
 											<!-- Date range -->
 											<div class="form-group  col-md-4">
 												<label>创建时间:</label>
@@ -55,10 +52,7 @@
 												</div>
 												<!-- /.input group -->
 											</div>
-											<!-- <div class="form-group col-md-2">
-												<label for="isLockedLabel" >是否锁定: </label><br>
-												<input id="isLockedLabel" type="checkbox" name="search_locked">
-											</div> -->
+										
 											
 											<!-- /.form group -->
 										</div>
@@ -80,7 +74,7 @@
 				<!-- /.row -->
 				<div class="box box-primary">
 					<div class="box-header with-border">
-						<h3 class="box-title">用户列表</h3>
+						<h3 class="box-title">角色列表</h3>
 					</div>
 					<div class="btn-group">
 						<!-- 注意，为了设置正确的内补（padding），务必在图标和文本之间添加一个空格。 -->
@@ -101,42 +95,42 @@
 									type="checkbox" class="minimal" value="0">
 							</label></th>
 							<th style="width: 10px">#</th>
-							<th>用户名</th>
-							<th>别名</th>
-							<th>角色</th>
+							<th>角色名</th>
+							<th>资源</th>
+							<th>描述</th>
 							<th>创建时间</th>
 							<th>创建人</th>
 							<th style="width: 60px">状态</th>
 							<th style="width: 200px">操作</th>
 
 						</tr>
-						<c:forEach items="${users}" var="user" varStatus="status">
+						<c:forEach items="${roles}" var="role" varStatus="status">
 							<tr>
 								<td><label><input type="checkbox"
-										class="minimal deleteCheckbox" value="${user.id}"></label></td>
+										class="minimal deleteCheckbox" value="${role.id}"></label></td>
 								<td>${status.count}</td>
-								<td>${user.username}</td>
-								<td>${user.userAlias}</td>
-								<td><c:forEach var="role" items="${user.roles}">${role.name}&nbsp;&nbsp;&nbsp;&nbsp;</c:forEach></td>
-								<td><fmt:formatDate  pattern="yyyy-MM-dd HH:mm:ss" value="${user.createTime}"/></td>
-								<td>${user.creatorId}</td>
+								<td>${role.name}</td>
+								<td><c:forEach var="resource" items="${role.resources}">${resource.name}&nbsp;&nbsp;&nbsp;&nbsp;</c:forEach></td>
+								<td>${role.description}</td>
+								<td><fmt:formatDate  pattern="yyyy-MM-dd HH:mm:ss" value="${role.createTime}"/></td>
+								<td>${role.creatorId}</td>
 								<c:choose>
-									<c:when test="${user.locked}">
-										<td><span class="badge bg-red">锁定</span></td>
+									<c:when test="${role.available}">
+										<td><span class="badge bg-red">可用</span></td>
 									</c:when>
 									<c:otherwise>
-										<td><span class="badge bg-green">未锁定</span></td>
+										<td><span class="badge bg-green">不可用</span></td>
 									</c:otherwise>
 								</c:choose>
 								<td><button id="updateBtn" type="button"
 										class="btn btn-xs btn-primary btn-flat " data-toggle="modal"
-										data-target="#updateModal" onclick='updateItem(${user.id})'>编辑</button>
+										data-target="#updateModal" onclick='updateItem(${role.id})'>编辑</button>
 									<button id="detailBtn" type="button"
 										class="btn  btn-xs btn-primary btn-flat " data-toggle="modal"
-										data-target="#detailModal" onclick='detailItem(${user.id})'>详情</button>
+										data-target="#detailModal" onclick='detailItem(${role.id})'>详情</button>
 									<button id="bindRoleBtn" type="button"
 										class="btn  btn-xs btn-primary btn-flat " data-toggle="modal"
-										data-target="#bindModal" onclick='bindItem(${user.id})'>角色绑定</button>
+										data-target="#bindModal" onclick='bindItem(${role.id})'>角色绑定</button>
 								</td>
 							</tr>
 						</c:forEach>
@@ -144,7 +138,7 @@
 				</div>
 				<!-- /.box-body -->
 				<!-- 分页 -->
-				<vino:pagination paginationSize="10" page="${page}" action="user/search" contentSelector="#content-wrapper"></vino:pagination>				
+				<vino:pagination paginationSize="10" page="${page}" action="role/search" contentSelector="#content-wrapper"></vino:pagination>				
 			</div>
 			<!-- /.box -->
 		</div>
@@ -166,24 +160,20 @@
 			</div>
 			<div class="modal-body">
 
-				<form id="addForm" action="user/add" method="post">
+				<form id="addForm" action="role/add" method="post">
 					<div class="form-group">
-						<label for="username" class="control-label">用户名:</label> <input
-							type="text" class="form-control" id="username" name="username">
-					</div>
+						<label for="name" class="control-label">用户名:</label> <input
+							type="text" class="form-control" id="name" name="name">
+					</div>					
 					<div class="form-group">
-						<label for="password" class="control-label">密码:</label> <input
-							class="form-control" id="password" name="password">
-					</div>
-					<div class="form-group">
-						<label for="userAlias" class="control-label">别名:</label> <input
-							type="text" class="form-control" id="userAlias" name="userAlias">
+						<label for="description" class="control-label">描述:</label> <input
+							type="text" class="form-control" id="description" name="description">
 					</div>
 				</form>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary" id="submitBtn">提交</button>
+				<button type="button" class="btn btn-primary" id="addSubmitBtn">提交</button>
 			</div>
 		</div>
 	</div>
@@ -236,14 +226,14 @@
 	/* button监听事件 */
 	$(document).ready(function(){
 		$("#deleteBtn").click(function(){
-			deleteItems("input[class*='deleteCheckbox']","user/delete");
+			deleteItems("input[class*='deleteCheckbox']","role/delete");
 		});
 		
 	});
 		
  	/*modal框事件监听 详情：http://v3.bootcss.com/javascript/#modals-events */
 	$('#addModal').on('shown.bs.modal', function(event) {			
-			$("#submitBtn").click(function() {
+			$("#addSubmitBtn").click(function() {
 				$.ajax({
 					async : false,
 					cache : false,
@@ -251,7 +241,7 @@
 					data : $("#addForm").serialize(),
 				   // contentType : 'application/json',    //发送信息至服务器时内容编码类型
 					//dataType : "json",
-					url : "user/add",//请求的action路径  
+					url : "role/add",//请求的action路径  
 					error : function() {//请求失败处理函数  
 						alert('失败');
 					},
@@ -273,7 +263,7 @@
 			cache : false,
 			type : 'GET',
 			data : $("#searchForm").serialize(),		 
-			url : "user/search",//请求的action路径  
+			url : "role/search",//请求的action路径  
 			error : function() {//请求失败处理函数  
 				alert('失败');
 			},
@@ -286,17 +276,17 @@
 
 	function updateItem(id){
 		$('#updateModal').on('show.bs.modal',function(event){
-			$('#updateModal .modal-content').load('user/'+id);
+			$('#updateModal .modal-content').load('role/'+id);
 		});
 	}
 	function detailItem(id){
 		$('#detailModal').on('show.bs.modal',function(event){
-			$('#detailModal .modal-content').load('user/detail/'+id)
+			$('#detailModal .modal-content').load('role/detail/'+id)
 		});
 	}
 	function bindItem(id){
 		$('#bindModal').on('show.bs.modal',function(event){
-			$('#bindModal .modal-content').load('user/prepareBind/'+id)
+			$('#bindModal .modal-content').load('role/prepareBind/'+id)
 		});
 	}
 	

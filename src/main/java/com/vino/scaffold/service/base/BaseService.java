@@ -10,7 +10,6 @@ import com.vino.scaffold.entity.base.BaseEntity;
 
 public interface BaseService<T extends BaseEntity<PK>,PK extends Serializable> {
 	public List<T> findAll();
-		
 	public T findOne(PK id);
 	public void save(T obj);
 	public void save(List<T> objs);

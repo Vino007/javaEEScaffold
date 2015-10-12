@@ -13,7 +13,8 @@ public abstract class BaseController {
 	protected final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	public Pageable buildPageRequest(int pageNumber) {
-		return new PageRequest(pageNumber, Constants.PAGE_SIZE, new Sort(Direction.ASC,
+		
+		return new PageRequest(pageNumber-1, Constants.PAGE_SIZE, new Sort(Direction.DESC,
 				"id"));
 	}
 }

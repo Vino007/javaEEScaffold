@@ -27,10 +27,10 @@ public class User extends BaseEntity<Long> {
 	@Column(name = "user_alias", length = 50)
 	private String userAlias;
 
-	@Temporal(TemporalType.TIME)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "last_login_time")
 	private Date lastLoginTime;
-	@Temporal(TemporalType.TIME)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "login_time")
 	private Date loginTime;
 	@Column(name = "salt",length=50)

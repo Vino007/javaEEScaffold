@@ -1,6 +1,9 @@
 package com.vino.scaffold.shiro.controller;
 
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.ServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,10 +17,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.vino.scaffold.controller.base.BaseController;
+import com.vino.scaffold.entity.Constants;
 import com.vino.scaffold.shiro.entity.Role;
 import com.vino.scaffold.shiro.entity.User;
+import com.vino.scaffold.shiro.exception.UserDuplicateException;
 import com.vino.scaffold.shiro.service.RoleService;
 import com.vino.scaffold.shiro.service.UserService;
+import com.vino.scaffold.utils.Servlets;
 
 @Controller
 @RequestMapping("/user")
@@ -27,37 +33,57 @@ public class UserController extends BaseController{
 	@Autowired
 	private RoleService roleService;
 	@RequestMapping(value="/all",method=RequestMethod.GET)
-	public String getALLUsers(Model model){
-		
-		model.addAttribute("users", userService.findAll());
+	public String getALLUsers(Model model,@RequestParam(value="pageNumber",defaultValue="1")int pageNumber,
+			@RequestParam(value = "page.size", defaultValue = Constants.PAGE_SIZE+"") int pageSize,
+			@RequestParam(value = "sortType", defaultValue = "auto") String sortType){
+		Page<User> userPage=userService.findAll(buildPageRequest(pageNumber));
+		model.addAttribute("users", userPage.getContent());
+		model.addAttribute("page", userPage);
+		//model.addAttribute("searchParams", "");
 		return "user/list";
 	}
+	
 	@RequestMapping(value="/search",method=RequestMethod.GET)
-	public String getUsersByCondition(Model model,User user,int pageNumber){
-		//List<User> users=userService.findUserByContidionAndPage(user,buildPageRequest(pageNumber));
-		Page<User> userPage=userService.findUserByCondition(user, buildPageRequest(pageNumber));
+	public String getUsersByCondition(Model model,User user,@RequestParam(value="pageNumber",defaultValue="1")int pageNumber,ServletRequest request){
+		Map<String,Object> searchParams=Servlets.getParametersStartingWith(request, "search_");
+		log.info("搜索参数="+searchParams.toString());				
+		Page<User> userPage=userService.findUserByCondition(searchParams, buildPageRequest(pageNumber));
 		model.addAttribute("users",userPage.getContent());
-		model.addAttribute("pager", buildPageRequest(pageNumber));
-		//System.out.println(users);
+		model.addAttribute("page", userPage);	
+		model.addAttribute("searchParams", Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
+		System.out.println("返回到页面的搜索参数"+Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
+		model.addAttribute("searchParamsMap", searchParams);
 		return "user/list";
 	}
 	@RequestMapping(value="/add",method=RequestMethod.POST)
 	public String addUser(Model model ,User user){
-		userService.save(user);
-		model.addAttribute("users", userService.findAll());
+		try {
+			userService.saveWithCheckDuplicate(user);
+			
+		} catch (UserDuplicateException e) {
+			model.addAttribute("userDuplicate", "true");
+			e.printStackTrace();
+		}
+		Page<User> userPage=userService.findAll(buildPageRequest(1));
+		model.addAttribute("users", userPage.getContent());
+		model.addAttribute("page", userPage);
 		return "user/list";	
 	}
 	@RequestMapping(value="/delete",method=RequestMethod.POST)
 	public  String deleteUsers(Model model,@RequestParam("deleteIds[]")Long[] deleteIds){
 		userService.delete(deleteIds);
-		model.addAttribute("users", userService.findAll());
+		Page<User> userPage=userService.findAll(buildPageRequest(1));
+		model.addAttribute("users", userPage.getContent());
+		model.addAttribute("page", userPage);
 		return "user/list";
 		
 	}
 	@RequestMapping(value="/update",method=RequestMethod.POST)	
 	public String updateUser(Model model,User user){
 		userService.update(user);
-		model.addAttribute("users", userService.findAll());
+		Page<User> userPage=userService.findAll(buildPageRequest(1));
+		model.addAttribute("users", userPage.getContent());
+		model.addAttribute("page", userPage);
 		return "user/list";
 		
 	}
@@ -98,7 +124,9 @@ public class UserController extends BaseController{
 		if(roleIds!=null){
 			userService.connectUserAndRole(userId,roleIds);
 		}				
-		model.addAttribute("users", userService.findAll());
+		Page<User> userPage=userService.findAll(buildPageRequest(1));
+		model.addAttribute("users", userPage.getContent());
+		model.addAttribute("page", userPage);
 		return "user/list";
 		
 	}

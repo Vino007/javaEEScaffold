@@ -18,7 +18,7 @@ public abstract class BaseEntity<PK extends Serializable> {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	@Temporal(TemporalType.TIME)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="create_time")
 	private Date createTime;
 	@Column(name="creator_id")

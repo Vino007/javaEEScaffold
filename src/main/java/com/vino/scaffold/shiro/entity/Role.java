@@ -16,9 +16,9 @@ import com.vino.scaffold.entity.base.BaseEntity;
 @Entity
 @Table(name="t_role")
 public class Role extends BaseEntity<Long> {
-	@Column(name="mark",length=100)
+	/*@Column(name="mark",length=100)
 	private String mark;//角色标识，在dao层做唯一约束
-	@Column(name="name",length=100)
+*/	@Column(name="name",length=100)
 	private String name;
 	@Column(name="description",length=200)
 	private String description;
@@ -35,16 +35,16 @@ public class Role extends BaseEntity<Long> {
 	}
 	
 	public Role(String mark, String name) {
-		this.mark = mark;
+		//this.mark = mark;
 		this.name = name;
 	}
 
-	public String getMark() {
+/*	public String getMark() {
 		return mark;
 	}
 	public void setMark(String mark) {
 		this.mark = mark;
-	}
+	}*/
 	public Set<User> getUsers() {
 		return users;
 	}

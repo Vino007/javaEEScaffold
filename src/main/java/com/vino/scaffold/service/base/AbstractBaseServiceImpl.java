@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 
 import com.vino.scaffold.entity.base.BaseEntity;
 import com.vino.scaffold.repository.base.BaseRepository;
+import com.vino.scaffold.shiro.exception.UserDuplicateException;
 @Transactional
 public abstract class AbstractBaseServiceImpl<T extends BaseEntity<PK>,PK extends Serializable> {
 	@Autowired
@@ -21,7 +22,7 @@ public abstract class AbstractBaseServiceImpl<T extends BaseEntity<PK>,PK extend
 	public T findOne(PK id){
 		return baseRepository.findOne(id);
 	}
-	public void save(T obj){
+	public void save(T obj) {
 		baseRepository.save(obj);
 	}
 	public void save(List<T> objs){

@@ -1,9 +1,14 @@
 package com.vino.scaffold.shiro.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
+import java.util.logging.SimpleFormatter;
 
 import javax.annotation.Resource;
 import javax.persistence.TypedQuery;
@@ -12,6 +17,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.vino.scaffold.service.base.AbstractBaseServiceImpl;
 import com.vino.scaffold.shiro.entity.Role;
 import com.vino.scaffold.shiro.entity.User;
+import com.vino.scaffold.shiro.exception.UserDuplicateException;
 import com.vino.scaffold.shiro.repository.RoleRepository;
 import com.vino.scaffold.shiro.repository.UserRepository;
 @Transactional
@@ -37,18 +45,56 @@ public class UserServiceImpl extends AbstractBaseServiceImpl<User, Long>  implem
     /**
      * 创建动态查询条件组合.
      */
-    private Specification<User> buildSpecification(final User user) {
-       // Map<String, SearchFilter> filters = SearchFilter.parse(searchParams);
-      //  filters.put("user.id", new SearchFilter("user.id", Operator.EQ, userId));
-        Specification<User> spec = new Specification<User>(){
-
+    private Specification<User> buildSpecification(final Map<String,Object> searchParams) {
+    	
+		
+        Specification<User> spec = new Specification<User>(){           
 			@Override
 			public Predicate toPredicate(Root<User> root,
 				CriteriaQuery<?> cq, CriteriaBuilder cb) {
-				Predicate condition1=cb.like(root.get("username").as(String.class),"%"+user.getUsername()+"%");
-				Predicate condition2=cb.like(root.get("userAlias").as(String.class),"%"+user.getUserAlias()+"%");
-									
-				return cb.and(condition1,condition2);
+				Predicate allCondition = null;
+				String username=(String) searchParams.get("username");
+				String userAlias=(String) searchParams.get("userAlias");
+				String createTimeRange=(String) searchParams.get("createTimeRange");
+				if(username!=null&&!"".equals(username)){
+					Predicate condition=cb.like(root.get("username").as(String.class),"%"+searchParams.get("username")+"%");
+					if(null==allCondition)
+						allCondition=cb.and(condition);//此处初始化allCondition,若按cb.and(allCondition,condition)这种写法，会导致空指针
+					else
+						allCondition=cb.and(allCondition,condition);
+					}
+				if(userAlias!=null&&!"".equals(userAlias)){
+					Predicate condition=cb.like(root.get("userAlias").as(String.class),"%"+searchParams.get("userAlias")+"%");
+					if(null==allCondition)
+						allCondition=cb.and(condition);//此处初始化allCondition,若按cb.and(allCondition,condition)这种写法，会导致空指针
+					else
+						allCondition=cb.and(allCondition,condition);
+					
+					}
+											
+				if(createTimeRange!=null&&!"".equals(createTimeRange)){			
+					String createTimeStartStr=createTimeRange.split(" - ")[0]+":00:00:00";
+					String createTimeEndStr=createTimeRange.split(" - ")[1]+":23:59:59";
+					SimpleDateFormat format=new SimpleDateFormat("MM/dd/yyyy:hh:mm:ss");
+					System.out.println(createTimeStartStr);
+					try {
+						Date createTimeStart = format.parse(createTimeStartStr);
+						Date createTimeEnd=format.parse(createTimeEndStr);
+						Predicate condition=cb.between(root.get("createTime").as(Date.class),createTimeStart, createTimeEnd);
+						if(null==allCondition)
+							allCondition=cb.and(condition);//此处初始化allCondition,若按cb.and(allCondition,condition)这种写法，会导致空指针
+						else
+							allCondition=cb.and(allCondition,condition);
+						
+					} catch (ParseException e) {
+						e.printStackTrace();
+						Logger log =LoggerFactory.getLogger(this.getClass());
+						log.error("createTime 转换时间出错");
+					}
+					
+				
+				}					
+				return allCondition;
 			}
         	
         };
@@ -57,9 +103,9 @@ public class UserServiceImpl extends AbstractBaseServiceImpl<User, Long>  implem
     
     
 	@Override
-	public Page<User> findUserByCondition(User user, Pageable pageable) {
-		
-		return userRepository.findAll(buildSpecification(user), pageable);
+	public Page<User> findUserByCondition(Map<String,Object> searchParams, Pageable pageable) {
+	
+		return userRepository.findAll(buildSpecification(searchParams), pageable);
 	}
 
 
@@ -83,7 +129,7 @@ public class UserServiceImpl extends AbstractBaseServiceImpl<User, Long>  implem
 		Set<Role> roles=user.getRoles();
 		Set<String> roleNames=new HashSet<String>();
 		for(Role r : roles){
-			roleNames.add(r.getMark());
+			roleNames.add(r.getName());
 		}
 		return roleNames;
 	}
@@ -104,11 +150,16 @@ public class UserServiceImpl extends AbstractBaseServiceImpl<User, Long>  implem
 	 /**
      * 创建用户
      * @param user
+	 * @throws UserDuplicateException 
      */
-    @Override
-    public void save(User user) {
+    
+    public void saveWithCheckDuplicate(User user) throws UserDuplicateException{
+    	//校验是否用户重复
+    	if(userRepository.findByUsername(user.getUsername())!=null)
+    		throw new UserDuplicateException();
         //加密密码
         passwordHelper.encryptPassword(user);
+        user.setCreateTime(new Date());
         userRepository.save(user);
     }
     @Override
@@ -173,10 +224,6 @@ public class UserServiceImpl extends AbstractBaseServiceImpl<User, Long>  implem
 		user.getRoles().clear();
 	}
 
-	/*@Override
-	public List<User> findUserByContidionAndPage(User user,Pageable pageable) {
-		
-		return userRepository.getUsersByCondition(user,pageable);
-	}*/
+	
 
 }
