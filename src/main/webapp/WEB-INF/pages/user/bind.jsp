@@ -6,31 +6,31 @@
 		aria-label="Close">
 		<span aria-hidden="true">&times;</span>
 	</button>
-	<h4 class="modal-title" id="exampleModalLabel">编辑用户</h4>
+	<h4 class="modal-title" id="exampleModalLabel">资源绑定</h4>
 </div>
 
 <div class="modal-body">
 	<form id="bindForm" method="post">
-		<input name="id" value="${user.id}" hidden="true" />
+		<input name="id" value="${role.id}" hidden="true" />
 		<div class="form-group">
-			<label for="username" class="control-label">用户名:</label>${user.username}
+			<label for="name" class="control-label">角色名:</label>${role.name}
 		</div>
 		<div class="form-group">
-			<label for="roleSelect" class="control-label">绑定角色:</label> <select
-				id="roleSelect" data-placeholder="选择角色"
+			<label for="resourceSelect" class="control-label">绑定资源:</label> <select
+				id="resourceSelect" data-placeholder="选择资源"
 				class="form-control select2  js-example-placeholder-multiple"
 				tabindex="-1" multiple="multiple" style="width: 100%">
 
-				<optgroup label="已持有角色">
-					<c:forEach var="role" items="${user.roles}" varStatus="status">
-						<option value="${role.id}" selected="selected">${role.name}</option>
+				<optgroup label="已持有资源">
+					<c:forEach var="resource" items="${role.resources}" varStatus="status">
+						<option value="${resource.id}" selected="selected">${resource.name}</option>
 					</c:forEach>
 					<!-- 	<option value="primaryRole" selected="selected">初级用户</option>
 					<option value="seniorRole" selected="selected">中级用户</option> -->
 				</optgroup>
-				<optgroup label="可选角色">
-					<c:forEach var="role" items="${availableRoles}" varStatus="status">
-						<option value="${role.id}">${role.name}</option>
+				<optgroup label="可选资源">
+					<c:forEach var="resource" items="${availableRoles}" varStatus="status">
+						<option value="${resource.id}">${resource.name}</option>
 					</c:forEach>
 
 				</optgroup>
@@ -48,11 +48,11 @@
 	$('#bindModal').on('shown.bs.modal', function(event) {
 
 		$("#bindSubmitBtn").click(function() {
-			var roleIds=[];
+			var resourceIds=[];
 			var i=0;
 			$("select option").each(function(index,item){			
 				if(item.selected==true)
-					roleIds[i++]=this.value;
+					resourceIds[i++]=this.value;
 				
 			});
 			
@@ -61,12 +61,12 @@
 				cache : false,
 				type : 'POST',
 				data : $.param({
-					roleIds:roleIds,
-					userId:${user.id}
+					resourceIds:resourceIds,
+					roleId:${role.id}
 				}),
 			   // contentType : 'application/json',    //发送信息至服务器时内容编码类型
 				//dataType : "json",
-				url : "user/bind",//请求的action路径  
+				url : "role/bind",//请求的action路径  
 				error : function() {//请求失败处理函数  
 					alert('失败');
 				},

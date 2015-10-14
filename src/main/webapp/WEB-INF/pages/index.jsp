@@ -93,7 +93,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                      success:function(data){ //请求成功后处理函数。
                         // alert(data);
                      $("#content-wrapper").html(data);
-                            //把后台封装好的简单Json格式赋给treeNodes
                      }
         	 });
         	 return false;       		

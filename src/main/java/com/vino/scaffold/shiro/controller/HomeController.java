@@ -28,13 +28,10 @@ public class HomeController extends BaseController{
 	public String home(Model model){
 		
 		Subject curUser=SecurityUtils.getSubject();
-		Session session=curUser.getSession();
-		
+		Session session=curUser.getSession();	
 		String username=(String) curUser.getPrincipal();
-	//	Set<String> permissionList=userService.findAllPermissionsByUsername(username);
 		User currentUser=userService.findByUsername(username);
 		session.setAttribute(Constants.CURRENT_USER, currentUser);//将当前用户放入session
-	//	model.addAttribute("permissionList", permissionList);
 		return "index";
 	}
 	

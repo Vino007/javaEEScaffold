@@ -23,7 +23,7 @@ public interface RoleService extends  BaseService<Role, Long> {
 	public void disconnnectRoleAndResource(Long roledId,Long... resourceIds);
 	public void clearAllRoleAndResourceConnection(Long roleId);
 	public void update(Role role);
-	public void saveWithCheckDuplicate(Role role) throws RoleDuplicateException;
+	public void saveWithCheckDuplicate(Role role,User user) throws RoleDuplicateException;
 	public Page<Role> findRoleByCondition(Map<String, Object> searchParams,
 			Pageable pageable);
 }

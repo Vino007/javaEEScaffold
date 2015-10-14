@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -56,9 +57,10 @@ public class UserController extends BaseController{
 		return "user/list";
 	}
 	@RequestMapping(value="/add",method=RequestMethod.POST)
-	public String addUser(Model model ,User user){
+	public String addUser(Model model ,User user,HttpSession session){
+		User curUser=(User) session.getAttribute(Constants.CURRENT_USER);
 		try {
-			userService.saveWithCheckDuplicate(user);
+			userService.saveWithCheckDuplicate(user,curUser);
 			
 		} catch (UserDuplicateException e) {
 			model.addAttribute("userDuplicate", "true");

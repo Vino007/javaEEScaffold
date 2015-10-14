@@ -2,6 +2,7 @@ package com.vino.scaffold.utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import com.vino.scaffold.shiro.entity.Resource;
 import com.vino.scaffold.shiro.entity.Role;
@@ -19,11 +20,15 @@ public class TreeUtils {
 		tree.setpId(0L);
 		return tree;
 	}
-	public static Tree formatResourceToTree(Resource resource){
+	public static Tree formatResourceToTree(Resource resource,boolean checked){
 		Tree tree=new Tree();
 		tree.setId(resource.getId());
 		tree.setName(resource.getName());
 		tree.setpId(resource.getParentId());
+		if(checked){
+			tree.setChecked(true);
+		}else
+			tree.setChecked(false);
 		return tree;
 	}
 	
@@ -35,10 +40,14 @@ public class TreeUtils {
 		return tree;
 	}
 	
-	public static List<Tree> fomatResourceToTree(List<Resource> resources){
+	public static List<Tree> fomatResourceToTree(List<Resource> uncheckedResources,Set<Resource> checkedResources){
 		List<Tree> trees=new ArrayList<Tree>();
-		for(Resource res:resources){
-			Tree tree=TreeUtils.formatResourceToTree(res);
+		for(Resource res:uncheckedResources){
+			Tree tree=TreeUtils.formatResourceToTree(res,false);
+			trees.add(tree);
+		}
+		for(Resource res:checkedResources){
+			Tree tree=TreeUtils.formatResourceToTree(res,true);
 			trees.add(tree);
 		}
 		return trees;

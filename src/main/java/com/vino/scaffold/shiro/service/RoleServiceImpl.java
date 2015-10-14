@@ -4,6 +4,7 @@ package com.vino.scaffold.shiro.service;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -31,6 +32,7 @@ import com.vino.scaffold.shiro.exception.RoleDuplicateException;
 import com.vino.scaffold.shiro.repository.ResourceRepository;
 import com.vino.scaffold.shiro.repository.RoleRepository;
 @Service("roleService")
+@Transactional
 public class RoleServiceImpl extends AbstractBaseServiceImpl<Role, Long> implements RoleService{
 	@PersistenceContext(name="userPU")
 	private EntityManager em;
@@ -75,20 +77,17 @@ public class RoleServiceImpl extends AbstractBaseServiceImpl<Role, Long> impleme
 	}
 
 	@Override
-	@Transactional
 	public void connectRoleAndResource(Long roleId, Long... resourceIds) {
 		Role role=findOne(roleId);
-		role.setDescription("访客，拥有查看的部分内容的权限");
-		Set<Resource> resources=role.getResources();
+		
+		Set<Resource> resources=new HashSet<Resource>();
 		for(Long resId:resourceIds){
 			resources.add(resourceRepository.findOne(resId));
 		}
 		role.setResources(resources);
-		em.flush();
 	}
 
 	@Override
-	@Transactional
 	public void disconnnectRoleAndResource(Long roledId, Long... resourceIds) {
 		for(Long resourceId : resourceIds)
 		roleRepository.findOne(roledId).getResources().remove(resourceRepository.findOne(resourceId));
@@ -102,12 +101,12 @@ public class RoleServiceImpl extends AbstractBaseServiceImpl<Role, Long> impleme
 	}
 
 	@Override
-	public void saveWithCheckDuplicate(Role role) throws RoleDuplicateException {
+	public void saveWithCheckDuplicate(Role role,User user) throws RoleDuplicateException {
 		if(roleRepository.findByName(role.getName())!=null)
 			throw new RoleDuplicateException();
 		else{
 			role.setCreateTime(new Date());
-			
+			role.setCreatorName(user.getUsername());
 			roleRepository.save(role);
 			
 		}

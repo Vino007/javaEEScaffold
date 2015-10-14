@@ -23,7 +23,16 @@ public abstract class BaseEntity<PK extends Serializable> {
 	private Date createTime;
 	@Column(name="creator_id")
 	private Long creatorId;
+	@Column(name="creator_name")
+	private String creatorName;
 	
+	
+	public String getCreatorName() {
+		return creatorName;
+	}
+	public void setCreatorName(String creatorName) {
+		this.creatorName = creatorName;
+	}
 	public Long getId() {
 		return id;
 	}

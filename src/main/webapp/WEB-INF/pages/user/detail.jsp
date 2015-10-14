@@ -23,7 +23,7 @@
 								</c:otherwise>
 							</c:choose></tr>
 				<tr><td>上次登录时间:</td><td>${user.lastLoginTime}	</td></tr>
-				<tr><td>创建者:</td><td>${user.creatorId}	</td></tr>
+				<tr><td>创建者:</td><td>${user.creatorName}	</td></tr>
 				<tr><td>创建时间:</td><td>${user.createTime}	</td></tr>
 				</table>																										
 			</div>

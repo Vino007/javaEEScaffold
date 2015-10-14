@@ -11,11 +11,14 @@
 			</div>
 			<div class="modal-body">
 				<table  class="table table-striped">
-				<tr><td>用户名:</td><td>${role.name}	</td></tr>
-				<tr><td>描述:</td><td>${role.description}</td></tr>
-				<tr><td>资源:</td><td><c:forEach var="resource" items="${role.resources}">${resource.name}&nbsp;&nbsp;&nbsp;&nbsp;</c:forEach></td></tr>
+				<tr><td>资源名:</td><td>${resource.name}</td></tr>
+				<tr><td>权限字符串:</td><td>${resource.permission}</td></tr>
+				<tr><td>类型:</td><td>${resource.type}</td></tr>
+				<tr><td>排序优先级:</td><td>${resource.priority}</td></tr>
+				<tr><td>菜单路径URL:</td><td>${resource.url}</td></tr>				
+				<tr><td>上级资源ID:</td><td>${resource.parentId}</td></tr>
 				<tr><td>状态:</td><c:choose>
-								<c:when test="${role.available}">
+								<c:when test="${resource.available}">
 									<td><span class="badge bg-red">可用</span></td>
 								</c:when>
 								<c:otherwise>
@@ -23,8 +26,8 @@
 								</c:otherwise>
 							</c:choose></tr>
 				
-				<tr><td>创建者:</td><td>${role.creatorName}	</td></tr>
-				<tr><td>创建时间:</td><td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${role.createTime}"/>	</td></tr>
+				<tr><td>创建者:</td><td>${resource.creatorName}</td></tr>
+				<tr><td>创建时间:</td><td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${resource.createTime}"/>	</td></tr>
 				</table>																										
 			</div>
 			<div class="modal-footer">

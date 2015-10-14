@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,10 +23,11 @@ import com.vino.scaffold.shiro.entity.Resource;
 import com.vino.scaffold.shiro.entity.Role;
 import com.vino.scaffold.shiro.entity.User;
 import com.vino.scaffold.shiro.exception.RoleDuplicateException;
-import com.vino.scaffold.shiro.exception.UserDuplicateException;
 import com.vino.scaffold.shiro.service.ResourceService;
 import com.vino.scaffold.shiro.service.RoleService;
 import com.vino.scaffold.utils.Servlets;
+import com.vino.scaffold.utils.Tree;
+import com.vino.scaffold.utils.TreeUtils;
 
 @Controller
 @RequestMapping("/role")
@@ -44,8 +46,9 @@ public class RoleController extends BaseController{
 	}
 	
 	
+	
 	@RequestMapping(value="/search",method=RequestMethod.GET)
-	public String getUsersByCondition(Model model,Role role,@RequestParam(value="pageNumber",defaultValue="1")int pageNumber,ServletRequest request){
+	public String getRolesByCondition(Model model,Role role,@RequestParam(value="pageNumber",defaultValue="1")int pageNumber,ServletRequest request){
 		Map<String,Object> searchParams=Servlets.getParametersStartingWith(request, "search_");
 		log.info("ËÑË÷²ÎÊý="+searchParams.toString());				
 		Page<Role> rolePage=roleService.findRoleByCondition(searchParams, buildPageRequest(pageNumber));
@@ -57,9 +60,10 @@ public class RoleController extends BaseController{
 		return "role/list";
 	}
 	@RequestMapping(value="/add",method=RequestMethod.POST)
-	public String addUser(Model model ,Role role){
+	public String addRole(Model model ,Role role,HttpSession session){
+		User curUser=(User) session.getAttribute(Constants.CURRENT_USER);
 		try {
-			roleService.saveWithCheckDuplicate(role);
+			roleService.saveWithCheckDuplicate(role,curUser);
 			
 		} catch (RoleDuplicateException e) {
 			model.addAttribute("roleDuplicate", "true");
@@ -71,7 +75,7 @@ public class RoleController extends BaseController{
 		return "role/list";	
 	}
 	@RequestMapping(value="/delete",method=RequestMethod.POST)
-	public  String deleteUsers(Model model,@RequestParam("deleteIds[]")Long[] deleteIds){
+	public  String deleteRoles(Model model,@RequestParam("deleteIds[]")Long[] deleteIds){
 		roleService.delete(deleteIds);
 		Page<Role> rolePage=roleService.findAll(buildPageRequest(1));
 		model.addAttribute("roles", rolePage.getContent());
@@ -80,7 +84,7 @@ public class RoleController extends BaseController{
 		
 	}
 	@RequestMapping(value="/update",method=RequestMethod.POST)	
-	public String updateUser(Model model,Role role){
+	public String updateRole(Model model,Role role){
 		roleService.update(role);
 		Page<Role> rolePage=roleService.findAll(buildPageRequest(1));
 		model.addAttribute("roles", rolePage.getContent());
@@ -89,13 +93,13 @@ public class RoleController extends BaseController{
 		
 	}
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
-	public String prepareUpdateUser(Model model,@PathVariable("id") Long id){
+	public String prepareUpdateRole(Model model,@PathVariable("id") Long id){
 		model.addAttribute("role", roleService.findOne(id));
 		return "role/edit";
 		
 	}
 	@RequestMapping(value="/detail/{id}",method=RequestMethod.GET)
-	public String findUser(Model model,@PathVariable("id") Long id){
+	public String findRole(Model model,@PathVariable("id") Long id){
 		model.addAttribute("role", roleService.findOne(id));
 		return "role/detail";
 		
@@ -112,15 +116,28 @@ public class RoleController extends BaseController{
 		Role role=roleService.findOne(id);
 		model.addAttribute("role", role);
 		List<Resource> resources=resourceService.findAll();
-		for(Resource r:role.getResources())
-			resources.remove(r);
 		model.addAttribute("availableResources",resources);
 		return "role/bind";
 		
 	}
+	@ResponseBody
+	@RequestMapping(value="/json/getResources/{id}",method=RequestMethod.GET)
+	public List<Tree> getResourcesByRole(@PathVariable("id") Long roleId){
+		List<Resource> allResources=resourceService.findAll();
+		Role role=roleService.findOne(roleId);
+		Set<Resource> checkedResources=role.getResources();
+		List<Resource> unCheckedResources=resourceService.findAll();
+		for(Resource res:checkedResources){
+			if(allResources.contains(res))
+				unCheckedResources.remove(res);
+		}
+		return TreeUtils.fomatResourceToTree(unCheckedResources,checkedResources);
+	
+		
+	}
 	
 	@RequestMapping(value="/bind",method=RequestMethod.POST)
-	public String bind(Model model,@RequestParam("roleId")Long roleId,@RequestParam(value="roleIds[]",required=false)Long[] resourceIds){
+	public String bind(Model model,@RequestParam("roleId")Long roleId,@RequestParam(value="resourceIds[]",required=false)Long[] resourceIds){
 		roleService.clearAllRoleAndResourceConnection(roleId);
 		if(resourceIds!=null){
 			roleService.connectRoleAndResource(roleId,resourceIds);

@@ -7,12 +7,11 @@
 
 <section class="content-header">
 	<h1>
-		角色管理 <small></small>
+		资源管理 <small></small>
 	</h1>
 	<ol class="breadcrumb">
 		<li><a href="#"><i class="fa fa-dashboard"></i>系统管理</a></li>
-		<!-- <li><a href="#">用户管理</a></li> -->
-		<li class="active">角色管理</li>
+		<li class="active">资源管理</li>
 	</ol>
 </section>
 
@@ -36,7 +35,7 @@
 										<div class="row">
 											<input hidden="true" name="pageNumber" id="pageNumber">
 											<div class="form-group col-md-2">
-												<label for="nameLabel">用户名:</label>
+												<label for="nameLabel">资源名:</label>
 												<input type="text" class="form-control" id="nameLabel" name="search_name" value="${searchParamsMap.name }">
 											</div>
 																				
@@ -74,7 +73,7 @@
 				<!-- /.row -->
 				<div class="box box-primary">
 					<div class="box-header with-border">
-						<h3 class="box-title">角色列表</h3>
+						<h3 class="box-title">资源列表</h3>
 					</div>
 					<div class="btn-group">
 						<!-- 注意，为了设置正确的内补（padding），务必在图标和文本之间添加一个空格。 -->
@@ -95,27 +94,36 @@
 									type="checkbox" class="minimal" value="0">
 							</label></th>
 							<th style="width: 10px">#</th>
-							<th>角色名</th>
-							<th>资源</th>
-							<th>描述</th>
+							<th>资源名</th>	
+							<th>权限字符串</th>						
+							<th>类型</th>
+							<th>排序优先级</th>
+							<th>菜单路径URL</th>
+						
+							<th>上级资源ID</th>
 							<th>创建时间</th>
 							<th>创建人</th>
 							<th style="width: 60px">状态</th>
 							<th style="width: 200px">操作</th>
 
 						</tr>
-						<c:forEach items="${roles}" var="role" varStatus="status">
+						<c:forEach items="${resources}" var="resource" varStatus="status">
 							<tr>
 								<td><label><input type="checkbox"
-										class="minimal deleteCheckbox" value="${role.id}"></label></td>
+										class="minimal deleteCheckbox" value="${resource.id}"></label></td>
 								<td>${status.count}</td>
-								<td>${role.name}</td>
-								<td><c:forEach var="resource" items="${role.resources}">${resource.name}&nbsp;&nbsp;&nbsp;&nbsp;</c:forEach></td>
-								<td>${role.description}</td>
-								<td><fmt:formatDate  pattern="yyyy-MM-dd HH:mm:ss" value="${role.createTime}"/></td>
-								<td>${role.creatorName}</td>
+								
+								<td>${resource.name}</td>
+								<td>${resource.permission}</td>	
+								<td>${resource.type}</td>		
+								<td>${resource.priority}</td>	
+								<td>${resource.url}</td>	
+									
+								<td>${resource.parentId}</td>												
+								<td><fmt:formatDate  pattern="yyyy-MM-dd HH:mm:ss" value="${resource.createTime}"/></td>
+								<td>${resource.creatorName}</td>
 								<c:choose>
-									<c:when test="${role.available}">
+									<c:when test="${resource.available}">
 										<td><span class="badge bg-red">可用</span></td>
 									</c:when>
 									<c:otherwise>
@@ -124,13 +132,11 @@
 								</c:choose>
 								<td><button id="updateBtn" type="button"
 										class="btn btn-xs btn-primary btn-flat " data-toggle="modal"
-										data-target="#updateModal" onclick='updateItem(${role.id})'>编辑</button>
+										data-target="#updateModal" onclick='updateItem(${resource.id})'>编辑</button>
 									<button id="detailBtn" type="button"
 										class="btn  btn-xs btn-primary btn-flat " data-toggle="modal"
-										data-target="#detailModal" onclick='detailItem(${role.id})'>详情</button>
-									<button id="bindRoleBtn" type="button"
-										class="btn  btn-xs btn-primary btn-flat " data-toggle="modal"
-										data-target="#bindModal" onclick='bindItem(${role.id})'>资源绑定</button>
+										data-target="#detailModal" onclick='detailItem(${resource.id})'>详情</button>
+									
 								</td>
 							</tr>
 						</c:forEach>
@@ -138,7 +144,7 @@
 				</div>
 				<!-- /.box-body -->
 				<!-- 分页 -->
-				<vino:pagination paginationSize="10" page="${page}" action="role/search" contentSelector="#content-wrapper"></vino:pagination>				
+				<vino:pagination paginationSize="10" page="${page}" action="resource/search" contentSelector="#content-wrapper"></vino:pagination>				
 			</div>
 			<!-- /.box -->
 		</div>
@@ -156,19 +162,37 @@
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				<h4 class="modal-title" id="exampleModalLabel">新增角色</h4>
+				<h4 class="modal-title" id="exampleModalLabel">新增资源</h4>
 			</div>
 			<div class="modal-body">
 
-				<form id="addForm" action="role/add" method="post">
+				<form id="addForm" action="resource/add" method="post">
 					<div class="form-group">
-						<label for="name" class="control-label">角色名:</label> <input
+						<label for="name" class="control-label">资源名:</label> <input
 							type="text" class="form-control" id="name" name="name">
-					</div>					
-					<div class="form-group">
-						<label for="description" class="control-label">描述:</label> <input
-							type="text" class="form-control" id="description" name="description">
 					</div>
+					<div class="form-group">
+						<label for="permission" class="control-label">权限字符串:</label> <input
+							type="text" class="form-control" id="permission" name="permission">
+					</div>
+					<div class="form-group">
+						<label for="type" class="control-label">资源类型:</label> <input
+							type="text" class="form-control" id="type" name="type">
+					</div>
+					<div class="form-group">
+						<label for="url" class="control-label">菜单路径URL:</label> <input
+							type="text" class="form-control" id="url" name="url">
+					</div>
+					<div class="form-group">
+						<label for="priority" class="control-label">排序优先级:</label> <input
+							type="text" class="form-control" id="priority" name="priority">
+					</div>		
+					<div class="form-group">
+						<label for="parentId" class="control-label">上级资源ID:</label> <input
+							type="text" class="form-control" id="parentId" name="parentId">
+					</div>
+								
+					
 				</form>
 			</div>
 			<div class="modal-footer">
@@ -196,13 +220,7 @@
 	</div>
 </div>
 
-<!-- bind页面 modal框  -->
-<div class="modal fade" id="bindModal" tabindex="-1" role="dialog"
-	aria-labelledby="exampleModalLabel">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content"></div>
-	</div>
-</div>
+
 
 <script>
 	/*   */
@@ -226,7 +244,7 @@
 	/* button监听事件 */
 	$(document).ready(function(){
 		$("#deleteBtn").click(function(){
-			deleteItems("input[class*='deleteCheckbox']","role/delete");
+			deleteItems("input[class*='deleteCheckbox']","resource/delete");
 		});
 		
 	});
@@ -241,7 +259,7 @@
 					data : $("#addForm").serialize(),
 				   // contentType : 'application/json',    //发送信息至服务器时内容编码类型
 					//dataType : "json",
-					url : "role/add",//请求的action路径  
+					url : "resource/add",//请求的action路径  
 					error : function() {//请求失败处理函数  
 						alert('失败');
 					},
@@ -263,7 +281,7 @@
 			cache : false,
 			type : 'GET',
 			data : $("#searchForm").serialize(),		 
-			url : "role/search",//请求的action路径  
+			url : "resource/search",//请求的action路径  
 			error : function() {//请求失败处理函数  
 				alert('失败');
 			},
@@ -276,18 +294,14 @@
 
 	function updateItem(id){
 		$('#updateModal').on('show.bs.modal',function(event){
-			$('#updateModal .modal-content').load('role/'+id);
+			$('#updateModal .modal-content').load('resource/'+id);
 		});
 	}
 	function detailItem(id){
 		$('#detailModal').on('show.bs.modal',function(event){
-			$('#detailModal .modal-content').load('role/detail/'+id)
+			$('#detailModal .modal-content').load('resource/detail/'+id)
 		});
 	}
-	function bindItem(id){
-		$('#bindModal').on('show.bs.modal',function(event){
-			$('#bindModal .modal-content').load('role/prepareBind/'+id)
-		});
-	}
+	
 	
 </script>

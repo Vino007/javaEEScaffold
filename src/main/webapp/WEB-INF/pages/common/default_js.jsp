@@ -7,8 +7,8 @@
 <script type="text/javascript"
 	src="<%=request.getContextPath()%>/resources/js/utils.js"></script>
 <script type="text/javascript"
-	src="<%=request.getContextPath()%>/resources/js/jquery.ztree.core-3.5.js"></script>
-
+	src="<%=request.getContextPath()%>/resources/js/jquery.ztree.core-3.5.min.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery.ztree.excheck-3.5.min.js"></script>
 
 
 <!-- AdminLTE App -->

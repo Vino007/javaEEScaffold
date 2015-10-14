@@ -7,24 +7,41 @@
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				<h4 class="modal-title" id="exampleModalLabel">编辑角色</h4>
+				<h4 class="modal-title" id="exampleModalLabel">编辑资源</h4>
 			</div>
-				<form id="updateForm" action="role/update" method="post">
+				<form id="updateForm" action="resource/update" method="post">
 			<div class="modal-body">
 
-					<input name="id" value="${role.id}" hidden="true"/>
+					<input name="id" value="${resource.id}" hidden="true"/>
 					<div class="form-group">
-						<label for="name" class="control-label">角色名:</label> <input
-							type="text" class="form-control" id="name" name="name" disabled="disabled" value="${role.name}" >
-					</div>					
+						<label for="name" class="control-label">资源名:</label> <input
+							type="text" class="form-control" id="name" name="name" disabled="disabled" value="${resource.name}" >
+					</div>		
 					<div class="form-group">
-						<label for="description" class="control-label">描述:</label> <input
-							type="text" class="form-control" id="description" name="description" value="${role.description}">
+						<label for="permission" class="control-label">权限字符串:</label> <input
+							type="text" class="form-control" id="permission" name="permission" value="${resource.permission}">
+					</div>			
+					<div class="form-group">
+						<label for="type" class="control-label">类型:</label> <input
+							type="text" class="form-control" id="type" name="type" value="${resource.type}">
+					</div>
+					
+					<div class="form-group">
+						<label for="priority" class="control-label">排序优先级:</label> <input
+							type="text" class="form-control" id="priority" name="priority" value="${resource.priority}">
+					</div>
+					<div class="form-group">
+						<label for="parentId" class="control-label">上级资源ID:</label> <input
+							type="text" class="form-control" id="parentId" name="parentId" value="${resource.parentId}">
+					</div>
+					<div class="form-group">
+						<label for="url" class="control-label">菜单路径URL:</label> <input
+							type="text" class="form-control" id="url" name="url" value="${resource.url}">
 					</div>
 					<div class="form-group">
 						<label for="available" class="control-label">状态:</label> 
 						<c:choose>
-							<c:when test="${role.available}">
+							<c:when test="${resource.available}">
 							<input  name="available"  type="radio" checked="checked" value="true">可用
 							<input  name="available"  type="radio" value="false">不可用
 							</c:when>
@@ -51,9 +68,8 @@ $('#updateModal').on('shown.bs.modal', function(event) {
 				cache : false,
 				type : 'POST',
 				data : $("#updateForm").serialize(),
-			   // contentType : 'application/json',    //发送信息至服务器时内容编码类型
-				//dataType : "json",
-				url : "role/update",//请求的action路径  
+			   
+				url : "resource/update",//请求的action路径  
 				error : function() {//请求失败处理函数  
 					alert('失败');
 				},

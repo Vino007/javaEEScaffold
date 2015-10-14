@@ -36,5 +36,5 @@ public interface UserService extends  BaseService<User, Long>{
 	//取消关联
 	public void disconnectUserAndRole(Long userId,Long... roleIds);
 	public void update(User user);
-	public void saveWithCheckDuplicate(User user) throws UserDuplicateException;
+	public void saveWithCheckDuplicate(User user,User curUser) throws UserDuplicateException;
 }

@@ -4,6 +4,13 @@ public class Tree {
 	private Long id;
 	private Long pId;
 	private String name;
+	private boolean checked=false;
+	public boolean isChecked() {
+		return checked;
+	}
+	public void setChecked(boolean checked) {
+		this.checked = checked;
+	}
 	public Long getId() {
 		return id;
 	}

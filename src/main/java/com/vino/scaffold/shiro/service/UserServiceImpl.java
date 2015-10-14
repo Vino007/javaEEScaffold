@@ -153,13 +153,14 @@ public class UserServiceImpl extends AbstractBaseServiceImpl<User, Long>  implem
 	 * @throws UserDuplicateException 
      */
     
-    public void saveWithCheckDuplicate(User user) throws UserDuplicateException{
+    public void saveWithCheckDuplicate(User user,User curUser) throws UserDuplicateException{
     	//校验是否用户重复
     	if(userRepository.findByUsername(user.getUsername())!=null)
     		throw new UserDuplicateException();
         //加密密码
         passwordHelper.encryptPassword(user);
         user.setCreateTime(new Date());
+        user.setCreatorName(curUser.getUsername());
         userRepository.save(user);
     }
     @Override

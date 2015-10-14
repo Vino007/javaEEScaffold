@@ -31,8 +31,7 @@ public class Resource extends BaseEntity<Long> {
 	private String url;
 	@ManyToMany(mappedBy="resources",targetEntity=Role.class)
 	private Set<Role> roles=new HashSet<Role>();
-	
-	
+		
 	public Resource() {
 		
 	}

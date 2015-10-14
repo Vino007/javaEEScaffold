@@ -119,7 +119,7 @@
 								<td>${user.userAlias}</td>
 								<td><c:forEach var="role" items="${user.roles}">${role.name}&nbsp;&nbsp;&nbsp;&nbsp;</c:forEach></td>
 								<td><fmt:formatDate  pattern="yyyy-MM-dd HH:mm:ss" value="${user.createTime}"/></td>
-								<td>${user.creatorId}</td>
+								<td>${user.creatorName}</td>
 								<c:choose>
 									<c:when test="${user.locked}">
 										<td><span class="badge bg-red">锁定</span></td>
