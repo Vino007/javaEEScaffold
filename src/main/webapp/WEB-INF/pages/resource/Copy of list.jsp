@@ -22,11 +22,58 @@
 		<div class="box">
 			<!-- /.box-header -->
 			<div class="box-body">
-			
+				<div class="row">
+					<div class="col-md-12">
+						<div class="box box-primary">
+							<div class="box-header with-border">
+								<h3 class="box-title">数据查询</h3>
+							</div>
+							<div class="box-body">
+								<!-- form start -->
+								<form id="searchForm" action="role/search" method="get">
+									<div class="box-body">
+										<div class="row">
+											<input hidden="true" name="pageNumber" id="pageNumber">
+											<div class="form-group col-md-2">
+												<label for="nameLabel">资源名:</label>
+												<input type="text" class="form-control" id="nameLabel" name="search_name" value="${searchParamsMap.name }">
+											</div>
+																				
+											<!-- Date range -->
+											<div class="form-group  col-md-4">
+												<label>创建时间:</label>
+												<div class="input-group">
+													<div class="input-group-addon">
+														<i class="fa fa-calendar"></i>
+													</div>
+													<input type="text" class="form-control pull-right"
+														id="reservation" name="search_createTimeRange" value=${searchParamsMap.createTimeRange }>
+												</div>
+												<!-- /.input group -->
+											</div>
+										
+											
+											<!-- /.form group -->
+										</div>
+										<!-- other rows -->																					
+										</div>																			
+									<!-- /.box-body -->
+									<div class="box-footer">
+										<button id="searchBtn" type="submit" class="btn btn-info pull-right">查询</button>
+									</div>
+									<!-- /.box-footer -->
+								</form>
+							</div>
+							<!-- /.box-body -->
+						</div>
+						<!-- /.box -->
+					</div>
+					<!-- /.col (right) -->
+				</div>
 				<!-- /.row -->
 				<div class="box box-primary">
 					<div class="box-header with-border">
-						<h3 class="box-title">资源树</h3>
+						<h3 class="box-title">资源列表</h3>
 					</div>
 					<div class="btn-group">
 						<!-- 注意，为了设置正确的内补（padding），务必在图标和文本之间添加一个空格。 -->
@@ -34,24 +81,70 @@
 							class="btn  btn-primary btn-flat margin" data-toggle="modal"
 							data-target="#addModal">
 							<span class="fa fa-fw  fa-plus" aria-hidden="true"></span> 新增
-						</button>					
+						</button>
+						
 						<button id="deleteBtn" type="button"
 							class="btn  btn-danger btn-flat margin">
-							<span class="fa fa-fw fa-remove" aria-hidden="true"></span> 删除</button>		
-						<button id="detailBtn" type="button"
-							class="btn  btn-danger btn-flat margin" data-toggle="modal"
-										data-target="#detailModal" onclick=''>
-							<span class="fa fa-fw fa-newspaper-o" aria-hidden="true"></span> 详情</button>	
-						<button id="updateBtn" type="button"
-							class="btn  btn-danger btn-flat margin" data-toggle="modal"
-										data-target="#updateModal" onclick=''>
-							<span class="fa fa-fw fa-pencil-square-o" aria-hidden="true"></span> 编辑</button>			
+							<span class="fa fa-fw fa-remove" aria-hidden="true"></span> 删除</button>
+				
 					</div>
-					<div class="zTreeDemoBackground right">
-						<ul id="resourceTree" class="ztree"></ul>
-					</div>
+					<table class="table table-hover">
+						<tr>
+							<th style="width: 10px"><label> <input id="allCheck"
+									type="checkbox" class="minimal" value="0">
+							</label></th>
+							<th style="width: 10px">#</th>
+							<th>资源名</th>	
+							<th>权限字符串</th>						
+							<th>类型</th>
+							<th>排序优先级</th>
+							<th>菜单路径URL</th>
+						
+							<th>上级资源ID</th>
+							<th>创建时间</th>
+							<th>创建人</th>
+							<th style="width: 60px">状态</th>
+							<th style="width: 200px">操作</th>
+
+						</tr>
+						<c:forEach items="${resources}" var="resource" varStatus="status">
+							<tr>
+								<td><label><input type="checkbox"
+										class="minimal deleteCheckbox" value="${resource.id}"></label></td>
+								<td>${status.count}</td>
+								
+								<td>${resource.name}</td>
+								<td>${resource.permission}</td>	
+								<td>${resource.type}</td>		
+								<td>${resource.priority}</td>	
+								<td>${resource.url}</td>	
+									
+								<td>${resource.parentId}</td>												
+								<td><fmt:formatDate  pattern="yyyy-MM-dd HH:mm:ss" value="${resource.createTime}"/></td>
+								<td>${resource.creatorName}</td>
+								<c:choose>
+									<c:when test="${resource.available}">
+										<td><span class="badge bg-red">可用</span></td>
+									</c:when>
+									<c:otherwise>
+										<td><span class="badge bg-green">不可用</span></td>
+									</c:otherwise>
+								</c:choose>
+								<td><button id="updateBtn" type="button"
+										class="btn btn-xs btn-primary btn-flat " data-toggle="modal"
+										data-target="#updateModal" onclick='updateItem(${resource.id})'>编辑</button>
+									<button id="detailBtn" type="button"
+										class="btn  btn-xs btn-primary btn-flat " data-toggle="modal"
+										data-target="#detailModal" onclick='detailItem(${resource.id})'>详情</button>
+									
+								</td>
+							</tr>
+						</c:forEach>
+					</table>
 				</div>
 				<!-- /.box-body -->
+				<!-- 分页 -->
+				<vino:pagination paginationSize="10" page="${page}" action="resource/search" contentSelector="#content-wrapper"></vino:pagination>				
 			</div>
 			<!-- /.box -->
 		</div>
@@ -72,10 +165,7 @@
 				<h4 class="modal-title" id="exampleModalLabel">新增资源</h4>
 			</div>
 			<div class="modal-body">
-					
-				<label for="parentName" class="control-label">上级资源:</label> 
-						<font color="red"><span id="parentName">请返回,选定上级资源再进行操作</span></font>
-					
+
 				<form id="addForm" action="resource/add" method="post">
 					<div class="form-group">
 						<label for="name" class="control-label">资源名:</label> <input
@@ -96,11 +186,13 @@
 					<div class="form-group">
 						<label for="priority" class="control-label">排序优先级:</label> <input
 							type="text" class="form-control" id="priority" name="priority">
-					</div>	
-						
+					</div>		
+					<div class="form-group">
+						<label for="parentId" class="control-label">上级资源ID:</label> <input
+							type="text" class="form-control" id="parentId" name="parentId">
+					</div>
+								
 					
-					<input type="hidden" class="form-control" id="parentId" name="parentId" >
-									
 				</form>
 			</div>
 			<div class="modal-footer">
@@ -148,21 +240,11 @@
 		
 	});
 	
-	function getCheckedResourceIds(){
-		var treeObj = $.fn.zTree.getZTreeObj("resourceTree");
-		var nodes = treeObj.getCheckedNodes(true);
 
-		var resourceIds=[];
-		for(var i=0;i<nodes.length;i++){
-			resourceIds[i]=nodes[i].id;
-		}
-		return resourceIds;	
-		}
-	
 	/* button监听事件 */
 	$(document).ready(function(){
 		$("#deleteBtn").click(function(){
-			deleteItemsById(getCheckedResourceIds(),"resource/delete");
+			deleteItems("input[class*='deleteCheckbox']","resource/delete");
 		});
 		
 	});
@@ -170,11 +252,6 @@
  	/*modal框事件监听 详情：http://v3.bootcss.com/javascript/#modals-events */
 	$('#addModal').on('shown.bs.modal', function(event) {			
 			$("#addSubmitBtn").click(function() {
-				if($('#parentId').val()==""){
-					alert("请返回,选定上级资源再进行操作");
-					return;
-				}
-				
 				$.ajax({
 					async : false,
 					cache : false,
@@ -225,55 +302,6 @@
 			$('#detailModal .modal-content').load('resource/detail/'+id)
 		});
 	}
-	/* ztree */
-	/* 节点点击的时候回调函数*/
-	function onTreeNodeClick(event, treeId, treeNode, clickFlag) {
-			$("#parentId").val(treeNode.id);//设置上级资源id
-			$("#parentName").text(treeNode.name);
-			$("#detailBtn").attr("onclick","detailItem("+treeNode.id+")");//设置要显示的详情的id
-			$("#updateBtn").attr("onclick","updateItem("+treeNode.id+")");//设置要显示的编辑页面的id
-		}	
-    var setting = {  
-    	data: {
-			simpleData: {
-					enable: true,
-					idKey:"id",
-					pIdKey:"pId"
-				},
-			
-    		view: {
-				showIcon: true
-				}
-			},
-	    check: {
-			enable: true,
-			chkboxType: { "Y": "s", "N": "s" }//设置勾选行为
-		},
-		callback: {
-			
-			onClick: onTreeNodeClick
-		}
-	};  
-   	 
-	   var zNodes;  
-	   $(document).ready(function(){  
-		   $.ajax({  
-	            async : false,  
-	            cache:false,  
-	            type: 'GET',  
-	            dataType : "json",  
-	            url: "resource/json/all",//请求的action路径  
-	            error: function () {//请求失败处理函数  
-	                alert('请求失败');  
-	            },  
-	            success:function(data){ //请求成功后处理函数。    	                
-	                zNodes = data;   //把后台封装好的简单Json格式赋给treeNodes  
-	            }  
-	        });  
-	      
-	       $.fn.zTree.init($("#resourceTree"), setting, zNodes);
-	   });
-	   	     
 	
 	
 </script>

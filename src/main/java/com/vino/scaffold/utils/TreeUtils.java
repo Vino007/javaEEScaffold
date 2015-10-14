@@ -52,4 +52,18 @@ public class TreeUtils {
 		}
 		return trees;
 	}
+	public static List<Tree> fomatResourceToTree(List<Resource> resources){
+		List<Tree> trees=new ArrayList<Tree>();
+		Tree root=new Tree();
+		root.setId((long) 0);//根节点的id为0
+		root.setpId(0l);
+		root.setName("Root节点");
+		root.setChecked(false);
+		trees.add(root);
+		for(Resource res:resources){
+			Tree tree=TreeUtils.formatResourceToTree(res,false);//checkbox无选中
+			trees.add(tree);
+		}
+		return trees;
+	}
 }

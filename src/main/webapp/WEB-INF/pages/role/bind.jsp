@@ -28,7 +28,7 @@
 </div>
 
 <script type="text/javascript">	
-
+/*获取选中的resourceid*/
 function getCheckedResourceIds(){
 	var treeObj = $.fn.zTree.getZTreeObj("resourceTree");
 	var nodes = treeObj.getCheckedNodes(true);

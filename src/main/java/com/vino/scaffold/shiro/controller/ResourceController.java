@@ -43,6 +43,13 @@ public class ResourceController extends BaseController{
 		model.addAttribute("page", resourcePage);
 		return "resource/list";
 	}
+	@ResponseBody
+	@RequestMapping(value="/json/all",method=RequestMethod.GET)
+	public List<Tree> getAllResources(){	
+		List<Resource> resources=resourceService.findAll();
+		
+		return TreeUtils.fomatResourceToTree(resources);
+	}
 	
 	
 	

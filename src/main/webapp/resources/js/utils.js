@@ -52,3 +52,25 @@ function deleteItems(checkboxSelector, action) {
 	});
 }
 
+/* 遍历checkbox，进行删除 */
+function deleteItemsById(deleteIds, action) {	
+	$.ajax({
+		async : false,
+		cache : false,
+		type : 'POST',
+		data : $.param({
+			deleteIds : deleteIds
+		}),
+		// contentType : 'application/json', //发送信息至服务器时内容编码类型
+		// dataType : "json",//返回的数据类型
+		url : action,// 请求的action路径
+		error : function() {// 请求失败处理函数
+			alert('失败');
+		},
+		success : function(data) { // 请求成功后处理函数。
+			alert("成功");
+			$("#content-wrapper").html(data);// 刷新content页面
+		}
+	});
+}
+
