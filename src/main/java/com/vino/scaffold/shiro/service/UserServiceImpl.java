@@ -2,6 +2,7 @@ package com.vino.scaffold.shiro.service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -124,13 +125,14 @@ public class UserServiceImpl extends AbstractBaseServiceImpl<User, Long>  implem
 	}
 
 	@Override
-	public Set<String> findAllRoleMarksByUsername(String username) {
+	public Set<String> findAllRoleNamesByUsername(String username) {
 		User user=userRepository.findByUsername(username);
 		Set<Role> roles=user.getRoles();
 		Set<String> roleNames=new HashSet<String>();
 		for(Role r : roles){
 			roleNames.add(r.getName());
 		}
+		System.out.println(Arrays.toString(roleNames.toArray()));
 		return roleNames;
 	}
 

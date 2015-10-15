@@ -5,6 +5,14 @@ public class Tree {
 	private Long pId;
 	private String name;
 	private boolean checked=false;
+	private boolean open=true;
+	
+	public boolean isOpen() {
+		return open;
+	}
+	public void setOpen(boolean open) {
+		this.open = open;
+	}
 	public boolean isChecked() {
 		return checked;
 	}

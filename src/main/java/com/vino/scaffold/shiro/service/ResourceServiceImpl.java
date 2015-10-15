@@ -76,6 +76,7 @@ public class ResourceServiceImpl extends AbstractBaseServiceImpl<Resource, Long>
 			resource.setCreatorName(user.getUsername());
 			resourceRepository.save(resource);
 			
+			
 		}
 		
 	}
@@ -133,6 +134,12 @@ public class ResourceServiceImpl extends AbstractBaseServiceImpl<Resource, Long>
 	public Page<Resource> findResourceByCondition(
 			Map<String, Object> searchParams, Pageable pageable) {
 		return resourceRepository.findAll(buildSpecification(searchParams), pageable);
+	}
+
+	@Override
+	public Resource findByName(String name) {
+		
+		return resourceRepository.findByName(name);
 	}
 
 

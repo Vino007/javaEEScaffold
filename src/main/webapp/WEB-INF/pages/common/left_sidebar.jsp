@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%><!-- 不加这句，编码会出错！！ -->
 <%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <aside class="main-sidebar">
 
 	<!-- sidebar: style can be found in sidebar.less -->
@@ -39,13 +40,31 @@
 			<li class="active"><a href="#"><i class="fa fa-link"></i> <span>权限管理</span></a></li>
 			<li><a href="#"><i class="fa fa-link"></i> <span>Another
 						Link</span></a></li>
+			
 			<li class="treeview"><a href="#"><i class="fa fa-link"></i>
 					<span>系统管理</span> <i class="fa fa-angle-left pull-right"></i></a>
 				<ul class="treeview-menu">
-					<li><a class="sidebarMenuHref" href="user/all">用户管理</a></li>
+					<shiro:lacksRole name="admin">
+					<c:forEach var="role" items="${currentUser.roles}">
+						<c:forEach var="resource" items="${role.resources}">
+							<c:if test="${resource.type=='menu'}">
+							<li><a class="sidebarMenuHref" href="${resource.url}">${resource.name}</a></li>
+							</c:if>							
+						</c:forEach>
+					</c:forEach>
+					</shiro:lacksRole>
+					<shiro:hasRole name="admin">
+					
+					<c:forEach var="resource" items="${resources}">
+							<c:if test="${resource.type=='menu'}">
+							<li><a class="sidebarMenuHref" href="${resource.url}">${resource.name}</a></li>
+							</c:if>							
+						</c:forEach>
+					</shiro:hasRole>
+					<!-- <li><a class="sidebarMenuHref" href="user/all">用户管理</a></li>
 					<li><a class="sidebarMenuHref" href="role/all">角色管理</a></li>
 					<li><a class="sidebarMenuHref" href="resource/all">资源管理</a></li>
-					<li><a class="sidebarMenuHref" href="organization/all">组织机构管理</a></li>
+					<li><a class="sidebarMenuHref" href="organization/all">组织机构管理</a></li>  -->
 				</ul></li>
 		</ul>
 		<!-- /.sidebar-menu -->

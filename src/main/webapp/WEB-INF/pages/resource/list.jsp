@@ -3,6 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="vino" tagdir="/WEB-INF/tags" %>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <!-- Content Header (Page header) -->
 
 <section class="content-header">
@@ -29,23 +30,34 @@
 						<h3 class="box-title">资源树</h3>
 					</div>
 					<div class="btn-group">
+						
+						
 						<!-- 注意，为了设置正确的内补（padding），务必在图标和文本之间添加一个空格。 -->
+						<shiro:hasPermission name="resource:create">
 						<button id="addBtn" type="button"
 							class="btn  btn-primary btn-flat margin" data-toggle="modal"
 							data-target="#addModal">
 							<span class="fa fa-fw  fa-plus" aria-hidden="true"></span> 新增
-						</button>					
+						</button>	
+						</shiro:hasPermission>
+						<shiro:hasPermission name="resource:delete">				
 						<button id="deleteBtn" type="button"
 							class="btn  btn-danger btn-flat margin">
-							<span class="fa fa-fw fa-remove" aria-hidden="true"></span> 删除</button>		
+							<span class="fa fa-fw fa-remove" aria-hidden="true"></span> 删除</button>
+						</shiro:hasPermission>	
+						<shiro:hasPermission name="resource:view">
 						<button id="detailBtn" type="button"
-							class="btn  btn-danger btn-flat margin" data-toggle="modal"
+							class="btn  btn-primary btn-flat margin" data-toggle="modal"
 										data-target="#detailModal" onclick=''>
 							<span class="fa fa-fw fa-newspaper-o" aria-hidden="true"></span> 详情</button>	
+						</shiro:hasPermission>
+						<shiro:hasPermission name="resource:update">
 						<button id="updateBtn" type="button"
-							class="btn  btn-danger btn-flat margin" data-toggle="modal"
+							class="btn  btn-primary btn-flat margin" data-toggle="modal"
 										data-target="#updateModal" onclick=''>
-							<span class="fa fa-fw fa-pencil-square-o" aria-hidden="true"></span> 编辑</button>			
+							<span class="fa fa-fw fa-pencil-square-o" aria-hidden="true"></span> 编辑</button>	
+							</shiro:hasPermission>	
+							
 					</div>
 					<div class="zTreeDemoBackground right">
 						<ul id="resourceTree" class="ztree"></ul>

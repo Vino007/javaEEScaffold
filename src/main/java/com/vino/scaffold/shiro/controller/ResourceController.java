@@ -23,6 +23,7 @@ import com.vino.scaffold.shiro.entity.Resource;
 import com.vino.scaffold.shiro.entity.User;
 import com.vino.scaffold.shiro.exception.ResourceDuplicateException;
 import com.vino.scaffold.shiro.service.ResourceService;
+import com.vino.scaffold.shiro.service.RoleService;
 import com.vino.scaffold.utils.Servlets;
 import com.vino.scaffold.utils.Tree;
 import com.vino.scaffold.utils.TreeUtils;
@@ -32,6 +33,8 @@ import com.vino.scaffold.utils.TreeUtils;
 public class ResourceController extends BaseController{
 	@Autowired
 	private ResourceService resourceService;
+	@Autowired
+	private RoleService roleService;
 	public void setResourceService(ResourceService resourceService) {
 		this.resourceService = resourceService;
 	}
@@ -70,7 +73,7 @@ public class ResourceController extends BaseController{
 		User curUser=(User) session.getAttribute(Constants.CURRENT_USER);
 		try {
 			resourceService.saveWithCheckDuplicate(resource,curUser);
-			
+			roleService.connectRoleAndResource(1l,resourceService.findByName(resource.getName()).getId() );//新建一个资源就绑定给超级角色admin，使得admin拥有所有权限
 		} catch (ResourceDuplicateException e) {
 			model.addAttribute("resourceDuplicate", "true");
 			e.printStackTrace();

@@ -3,6 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="vino" tagdir="/WEB-INF/tags" %>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <!-- Content Header (Page header) -->
 
 <section class="content-header">
@@ -78,16 +79,19 @@
 					</div>
 					<div class="btn-group">
 						<!-- 注意，为了设置正确的内补（padding），务必在图标和文本之间添加一个空格。 -->
+			
+						<shiro:hasPermission name="role:create">
 						<button id="addBtn" type="button"
 							class="btn  btn-primary btn-flat margin" data-toggle="modal"
 							data-target="#addModal">
 							<span class="fa fa-fw  fa-plus" aria-hidden="true"></span> 新增
 						</button>
-						
+						</shiro:hasPermission>
+						<shiro:hasPermission name="role:delete">
 						<button id="deleteBtn" type="button"
 							class="btn  btn-danger btn-flat margin">
 							<span class="fa fa-fw fa-remove" aria-hidden="true"></span> 删除</button>
-				
+						</shiro:hasPermission>
 					</div>
 					<table class="table table-hover">
 						<tr>
@@ -122,15 +126,22 @@
 										<td><span class="badge bg-green">不可用</span></td>
 									</c:otherwise>
 								</c:choose>
-								<td><button id="updateBtn" type="button"
+								<td>
+									<shiro:hasPermission name="role:update">
+									<button id="updateBtn" type="button"
 										class="btn btn-xs btn-primary btn-flat " data-toggle="modal"
 										data-target="#updateModal" onclick='updateItem(${role.id})'>编辑</button>
+									</shiro:hasPermission>
+									<shiro:hasPermission name="role:view">
 									<button id="detailBtn" type="button"
 										class="btn  btn-xs btn-primary btn-flat " data-toggle="modal"
 										data-target="#detailModal" onclick='detailItem(${role.id})'>详情</button>
+									</shiro:hasPermission>
+									<shiro:hasPermission name="role:bind">
 									<button id="bindRoleBtn" type="button"
 										class="btn  btn-xs btn-primary btn-flat " data-toggle="modal"
 										data-target="#bindModal" onclick='bindItem(${role.id})'>资源绑定</button>
+									</shiro:hasPermission>
 								</td>
 							</tr>
 						</c:forEach>

@@ -32,7 +32,7 @@ public class UserRealm extends AuthorizingRealm {
         String username = (String)principals.getPrimaryPrincipal();
 
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-        authorizationInfo.setRoles(userService.findAllRoleMarksByUsername(username));//查询用户的角色放入凭证中
+        authorizationInfo.setRoles(userService.findAllRoleNamesByUsername(username));//查询用户的角色放入凭证中
         authorizationInfo.setStringPermissions(userService.findAllPermissionsByUsername(username));//查询用户权限放入凭证中
 
         return authorizationInfo;

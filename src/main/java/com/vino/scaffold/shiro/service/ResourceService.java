@@ -22,5 +22,6 @@ public interface ResourceService extends  BaseService<Resource, Long> {
 
 	Page<Resource> findResourceByCondition(Map<String, Object> searchParams,
 			Pageable pageable);
+	Resource findByName(String name);
 
 }

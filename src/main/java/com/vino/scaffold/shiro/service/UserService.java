@@ -27,7 +27,7 @@ public interface UserService extends  BaseService<User, Long>{
 	public User findByUsername(String username);
 //	public List<User> findUserByContidionAndPage(User user,Pageable pageable);
 	public Page<User> findUserByCondition(Map<String,Object> searchParams,Pageable pageable);
-	public Set<String> findAllRoleMarksByUsername(String username);
+	public Set<String> findAllRoleNamesByUsername(String username);
 	public Set<String> findAllPermissionsByUsername(String username);
 	void changePassword(Long userId, String newPassword);
 	public void clearAllUserAndRoleConnection(Long userId);

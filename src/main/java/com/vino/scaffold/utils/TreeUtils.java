@@ -39,7 +39,12 @@ public class TreeUtils {
 		tree.setpId(0L);
 		return tree;
 	}
-	
+	/**
+	 * 将resource转换成相应的tree,并且返回是否checked
+	 * @param uncheckedResources
+	 * @param checkedResources
+	 * @return
+	 */
 	public static List<Tree> fomatResourceToTree(List<Resource> uncheckedResources,Set<Resource> checkedResources){
 		List<Tree> trees=new ArrayList<Tree>();
 		for(Resource res:uncheckedResources){
@@ -52,6 +57,7 @@ public class TreeUtils {
 		}
 		return trees;
 	}
+	
 	public static List<Tree> fomatResourceToTree(List<Resource> resources){
 		List<Tree> trees=new ArrayList<Tree>();
 		Tree root=new Tree();
@@ -59,6 +65,7 @@ public class TreeUtils {
 		root.setpId(0l);
 		root.setName("Root节点");
 		root.setChecked(false);
+		
 		trees.add(root);
 		for(Resource res:resources){
 			Tree tree=TreeUtils.formatResourceToTree(res,false);//checkbox无选中
