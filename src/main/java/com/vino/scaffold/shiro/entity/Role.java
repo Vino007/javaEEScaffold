@@ -28,7 +28,7 @@ public class Role extends BaseEntity<Long> {
 	@ManyToMany(targetEntity=Resource.class)
 	@JoinTable(name="t_role_resource",joinColumns=@JoinColumn(name="role_id"),inverseJoinColumns=@JoinColumn(name="resource_id"))
 	private Set<Resource> resources=new HashSet<Resource>();
-	@ManyToMany(targetEntity=User.class,mappedBy="roles",cascade=CascadeType.ALL)
+	@ManyToMany(targetEntity=User.class,mappedBy="roles",cascade=CascadeType.REMOVE)
 	private Set<User> users=new HashSet<User>();
 	
 	

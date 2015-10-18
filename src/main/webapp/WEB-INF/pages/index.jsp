@@ -8,7 +8,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 -->
 <html>
 <head>
-<title>AdminLTE 2 | Starter</title>
+<title>JavaEE Scaffold</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <%@ include file="/WEB-INF/pages/common/default_header.jsp"%>
@@ -52,8 +52,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		<!-- 内容区域 -->
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper" id="content-wrapper">
-			<%-- <%@include file="/WEB-INF/pages/common/main_content.jsp" %><!-- default content --> --%>
-			<%@include file="/WEB-INF/pages/example/simpleTable.jsp"%>
+			 <%@include file="/WEB-INF/pages/common/main_content.jsp" %><!-- default content --> 
+			<%-- <%@include file="/WEB-INF/pages/example/simpleTable.jsp"%> --%>
 		</div>
 		<!-- /.content-wrapper -->
 
