@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -37,6 +38,7 @@ public class RoleController extends BaseController{
 	private RoleService roleService;
 	@Autowired
 	private ResourceService resourceService;
+	@RequiresPermissions("role:menu")
 	@RequestMapping(value="/all",method=RequestMethod.GET)
 	public String getAllRoles(Model model,@RequestParam(value="pageNumber",defaultValue="1")int pageNumber){	
 		Page<Role> rolePage=roleService.findAll(buildPageRequest(pageNumber));
@@ -46,7 +48,7 @@ public class RoleController extends BaseController{
 	}
 	
 	
-	
+	@RequiresPermissions("role:view")
 	@RequestMapping(value="/search",method=RequestMethod.GET)
 	public String getRolesByCondition(Model model,Role role,@RequestParam(value="pageNumber",defaultValue="1")int pageNumber,ServletRequest request){
 		Map<String,Object> searchParams=Servlets.getParametersStartingWith(request, "search_");
@@ -59,6 +61,7 @@ public class RoleController extends BaseController{
 		model.addAttribute("searchParamsMap", searchParams);
 		return "role/list";
 	}
+	@RequiresPermissions("role:create")
 	@RequestMapping(value="/add",method=RequestMethod.POST)
 	public String addRole(Model model ,Role role,HttpSession session){
 		User curUser=(User) session.getAttribute(Constants.CURRENT_USER);
@@ -74,6 +77,7 @@ public class RoleController extends BaseController{
 		model.addAttribute("page", rolePage);
 		return "role/list";	
 	}
+	@RequiresPermissions("role:delete")
 	@RequestMapping(value="/delete",method=RequestMethod.POST)
 	public  String deleteRoles(Model model,@RequestParam("deleteIds[]")Long[] deleteIds){
 		roleService.delete(deleteIds);
@@ -83,6 +87,7 @@ public class RoleController extends BaseController{
 		return "role/list";
 		
 	}
+	@RequiresPermissions("role:update")
 	@RequestMapping(value="/update",method=RequestMethod.POST)	
 	public String updateRole(Model model,Role role){
 		roleService.update(role);
@@ -92,12 +97,14 @@ public class RoleController extends BaseController{
 		return "role/list";
 		
 	}
+	@RequiresPermissions("role:update")
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
 	public String prepareUpdateRole(Model model,@PathVariable("id") Long id){
 		model.addAttribute("role", roleService.findOne(id));
 		return "role/edit";
 		
 	}
+	@RequiresPermissions("role:view")
 	@RequestMapping(value="/detail/{id}",method=RequestMethod.GET)
 	public String findRole(Model model,@PathVariable("id") Long id){
 		model.addAttribute("role", roleService.findOne(id));
@@ -110,6 +117,7 @@ public class RoleController extends BaseController{
 	 * @param id
 	 * @return 
 	 */
+	@RequiresPermissions("role:bind")
 	@RequestMapping(value="/prepareBind/{id}",method=RequestMethod.GET)
 	public String prepareBind(Model model,@PathVariable("id") Long id){
 	
@@ -120,6 +128,7 @@ public class RoleController extends BaseController{
 		return "role/bind";
 		
 	}
+	@RequiresPermissions("role:view")
 	@ResponseBody
 	@RequestMapping(value="/json/getResources/{id}",method=RequestMethod.GET)
 	public List<Tree> getResourcesByRole(@PathVariable("id") Long roleId){
@@ -135,7 +144,7 @@ public class RoleController extends BaseController{
 	
 		
 	}
-	
+	@RequiresPermissions("role:bind")
 	@RequestMapping(value="/bind",method=RequestMethod.POST)
 	public String bind(Model model,@RequestParam("roleId")Long roleId,@RequestParam(value="resourceIds[]",required=false)Long[] resourceIds){
 		roleService.clearAllRoleAndResourceConnection(roleId);

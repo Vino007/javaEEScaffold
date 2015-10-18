@@ -3,6 +3,7 @@ package com.vino.scaffold.shiro.entity;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -27,7 +28,7 @@ public class Role extends BaseEntity<Long> {
 	@ManyToMany(targetEntity=Resource.class)
 	@JoinTable(name="t_role_resource",joinColumns=@JoinColumn(name="role_id"),inverseJoinColumns=@JoinColumn(name="resource_id"))
 	private Set<Resource> resources=new HashSet<Resource>();
-	@ManyToMany(targetEntity=User.class,mappedBy="roles")
+	@ManyToMany(targetEntity=User.class,mappedBy="roles",cascade=CascadeType.ALL)
 	private Set<User> users=new HashSet<User>();
 	
 	

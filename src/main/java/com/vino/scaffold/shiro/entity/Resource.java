@@ -3,6 +3,7 @@ package com.vino.scaffold.shiro.entity;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -29,7 +30,7 @@ public class Resource extends BaseEntity<Long> {
 	private Boolean available=Boolean.TRUE;
 	@Column(name="url",length=200)
 	private String url;
-	@ManyToMany(mappedBy="resources",targetEntity=Role.class)
+	@ManyToMany(mappedBy="resources",targetEntity=Role.class,cascade=CascadeType.ALL)
 	private Set<Role> roles=new HashSet<Role>();
 		
 	public Resource() {

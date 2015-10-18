@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -33,6 +34,7 @@ public class UserController extends BaseController{
 	private UserService userService;
 	@Autowired
 	private RoleService roleService;
+	@RequiresPermissions("user:menu")
 	@RequestMapping(value="/all",method=RequestMethod.GET)
 	public String getALLUsers(Model model,@RequestParam(value="pageNumber",defaultValue="1")int pageNumber,
 			@RequestParam(value = "page.size", defaultValue = Constants.PAGE_SIZE+"") int pageSize,
@@ -43,7 +45,7 @@ public class UserController extends BaseController{
 		//model.addAttribute("searchParams", "");
 		return "user/list";
 	}
-	
+	@RequiresPermissions("user:view")
 	@RequestMapping(value="/search",method=RequestMethod.GET)
 	public String getUsersByCondition(Model model,User user,@RequestParam(value="pageNumber",defaultValue="1")int pageNumber,ServletRequest request){
 		Map<String,Object> searchParams=Servlets.getParametersStartingWith(request, "search_");
@@ -56,6 +58,7 @@ public class UserController extends BaseController{
 		model.addAttribute("searchParamsMap", searchParams);
 		return "user/list";
 	}
+	@RequiresPermissions("user:create")
 	@RequestMapping(value="/add",method=RequestMethod.POST)
 	public String addUser(Model model ,User user,HttpSession session){
 		User curUser=(User) session.getAttribute(Constants.CURRENT_USER);
@@ -71,6 +74,7 @@ public class UserController extends BaseController{
 		model.addAttribute("page", userPage);
 		return "user/list";	
 	}
+	@RequiresPermissions("user:delete")
 	@RequestMapping(value="/delete",method=RequestMethod.POST)
 	public  String deleteUsers(Model model,@RequestParam("deleteIds[]")Long[] deleteIds){
 		userService.delete(deleteIds);
@@ -80,6 +84,7 @@ public class UserController extends BaseController{
 		return "user/list";
 		
 	}
+	@RequiresPermissions("user:update")
 	@RequestMapping(value="/update",method=RequestMethod.POST)	
 	public String updateUser(Model model,User user){
 		userService.update(user);
@@ -89,12 +94,14 @@ public class UserController extends BaseController{
 		return "user/list";
 		
 	}
+	@RequiresPermissions("user:update")
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
 	public String prepareUpdateUser(Model model,@PathVariable("id") Long id){
 		model.addAttribute("user", userService.findOne(id));
 		return "user/edit";
 		
 	}
+	@RequiresPermissions("user:view")
 	@RequestMapping(value="/detail/{id}",method=RequestMethod.GET)
 	public String findUser(Model model,@PathVariable("id") Long id){
 		model.addAttribute("user", userService.findOne(id));
@@ -107,6 +114,7 @@ public class UserController extends BaseController{
 	 * @param id
 	 * @return 
 	 */
+	@RequiresPermissions("user:bind")
 	@RequestMapping(value="/prepareBind/{id}",method=RequestMethod.GET)
 	public String prepareBind(Model model,@PathVariable("id") Long id){
 	
@@ -119,7 +127,7 @@ public class UserController extends BaseController{
 		return "user/bind";
 		
 	}
-	
+	@RequiresPermissions("user:bind")
 	@RequestMapping(value="/bind",method=RequestMethod.POST)
 	public String bind(Model model,@RequestParam("userId")Long userId,@RequestParam(value="roleIds[]",required=false)Long[] roleIds){
 		userService.clearAllUserAndRoleConnection(userId);

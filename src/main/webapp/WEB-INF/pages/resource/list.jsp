@@ -40,10 +40,13 @@
 							<span class="fa fa-fw  fa-plus" aria-hidden="true"></span> 新增
 						</button>	
 						</shiro:hasPermission>
-						<shiro:hasPermission name="resource:delete">				
+						
+						<shiro:hasPermission name="resource:delete">
+										
 						<button id="deleteBtn" type="button"
 							class="btn  btn-danger btn-flat margin">
 							<span class="fa fa-fw fa-remove" aria-hidden="true"></span> 删除</button>
+						
 						</shiro:hasPermission>	
 						<shiro:hasPermission name="resource:view">
 						<button id="detailBtn" type="button"

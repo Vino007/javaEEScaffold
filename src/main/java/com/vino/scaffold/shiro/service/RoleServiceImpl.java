@@ -80,7 +80,7 @@ public class RoleServiceImpl extends AbstractBaseServiceImpl<Role, Long> impleme
 	public void connectRoleAndResource(Long roleId, Long... resourceIds) {
 		Role role=findOne(roleId);
 		
-		Set<Resource> resources=new HashSet<Resource>();
+		Set<Resource> resources=role.getResources();
 		for(Long resId:resourceIds){
 			resources.add(resourceRepository.findOne(resId));
 		}

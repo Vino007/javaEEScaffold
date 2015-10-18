@@ -21,7 +21,7 @@
         <property name="securityManager" ref="securityManager"/>
     </bean>
 
-    <mvc:annotation-driven>
+    <mvc:annotation-driven >
     <mvc:message-converters register-defaults="true">
             <!-- 配置Fastjson支持 -->
             <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
@@ -65,6 +65,6 @@
     <bean id="exceptionHandlerExceptionResolver" class="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver">
     </bean>
     <bean class="com.vino.scaffold.shiro.exception.DefaultExceptionHandler"/>
-
+	<import resource="spring-shiro-mvc.xml"/>
   
 </beans>

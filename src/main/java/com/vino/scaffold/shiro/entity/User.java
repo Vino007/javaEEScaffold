@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -38,7 +39,7 @@ public class User extends BaseEntity<Long> {
 	@Column(name = "locked")
 	private Boolean locked = Boolean.FALSE;
 	
-	@ManyToMany(targetEntity=Role.class,fetch=FetchType.EAGER)
+	@ManyToMany(targetEntity=Role.class,fetch=FetchType.EAGER,cascade=CascadeType.ALL)
 	@JoinTable(name="t_user_role",joinColumns=@JoinColumn(name="user_id"),inverseJoinColumns=@JoinColumn(name="role_id"))
 	private Set<Role> roles=new HashSet<Role>();
 	
