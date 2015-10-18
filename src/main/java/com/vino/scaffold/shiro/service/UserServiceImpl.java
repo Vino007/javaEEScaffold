@@ -129,10 +129,12 @@ public class UserServiceImpl extends AbstractBaseServiceImpl<User, Long>  implem
 		User user=userRepository.findByUsername(username);
 		Set<Role> roles=user.getRoles();
 		Set<String> roleNames=new HashSet<String>();
+		if(!roles.isEmpty()){
 		for(Role r : roles){
 			roleNames.add(r.getName());
 		}
-		System.out.println(Arrays.toString(roleNames.toArray()));
+		}
+			
 		return roleNames;
 	}
 

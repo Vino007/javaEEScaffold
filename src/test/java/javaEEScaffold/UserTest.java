@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.vino.scaffold.shiro.entity.User;
+import com.vino.scaffold.shiro.exception.UserDuplicateException;
 import com.vino.scaffold.shiro.service.UserService;
 
 public class UserTest {
@@ -36,9 +37,10 @@ public class UserTest {
 	}
 
 	@Test
-	public void testSave() {
+	public void testSave() throws UserDuplicateException {
 		User user=new User("admin","1111","³¬¹Ü");
-		//userService.save(user);
+		User user2=new User();
+		userService.saveWithCheckDuplicate(user,user);
 		userService.findByUsername("admin");
 	}
 	@Test

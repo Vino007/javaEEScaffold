@@ -128,7 +128,7 @@ public class RoleController extends BaseController{
 		return "role/bind";
 		
 	}
-	@RequiresPermissions("role:view")
+	@RequiresPermissions("role:bind")
 	@ResponseBody
 	@RequestMapping(value="/json/getResources/{id}",method=RequestMethod.GET)
 	public List<Tree> getResourcesByRole(@PathVariable("id") Long roleId){
