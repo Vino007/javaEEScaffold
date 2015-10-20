@@ -86,42 +86,52 @@
 				</button>
 				<h4 class="modal-title" id="exampleModalLabel">新增资源</h4>
 			</div>
+			<form id="addForm" action="resource/add" method="post">
 			<div class="modal-body">
 					
 				<label for="parentName" class="control-label">上级资源:</label> 
 						<font color="red"><span id="parentName">请返回,选定上级资源再进行操作</span></font>
 					
-				<form id="addForm" action="resource/add" method="post">
+				
 					<div class="form-group">
-						<label for="name" class="control-label">资源名:</label> <input
-							type="text" class="form-control" id="name" name="name">
+						<label for="name" class="control-label"><font color="red">*</font>资源名:</label> <input
+							type="text" class="form-control required" id="name" name="name">
 					</div>
 					<div class="form-group">
-						<label for="permission" class="control-label">权限字符串:</label> <input
-							type="text" class="form-control" id="permission" name="permission">
+						<label for="permission" class="control-label"><font color="red">*</font>权限字符串:</label> <input
+							type="text" class="form-control required" id="permission" name="permission">
 					</div>
 					<div class="form-group">
-						<label for="type" class="control-label">资源类型:</label> <input
-							type="text" class="form-control" id="type" name="type">
+						<label for="type" class="control-label"><font color="red">*</font>资源类型:</label> <!-- <input
+							type="text" class="form-control required" id="type" name="type"> -->
+							
+							<select
+								 data-placeholder="选择资源类型"
+								class="form-control select2 js-example-basic-single"
+								tabindex="-1"  style="width: 100%">								
+									<option value="menu">menu</option>
+									<option value="button" selected="selected">button</option>
+							</select>
 					</div>
 					<div class="form-group">
 						<label for="url" class="control-label">菜单路径URL:</label> <input
-							type="text" class="form-control" id="url" name="url">
+							type="text" class="form-control " id="url" name="url">
 					</div>
 					<div class="form-group">
-						<label for="priority" class="control-label">排序优先级:</label> <input
-							type="text" class="form-control" id="priority" name="priority">
+						<label for="priority" class="control-label"><font color="red">*</font>排序优先级:</label> <input
+							type="text" class="form-control required digits" id="priority" name="priority">
 					</div>	
 						
 					
 					<input type="hidden" class="form-control" id="parentId" name="parentId" >
 									
-				</form>
+				
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary" id="addSubmitBtn">提交</button>
+				<button type="submit" class="btn btn-primary" id="addSubmitBtn">提交</button>
 			</div>
+			</form>
 		</div>
 	</div>
 </div>
@@ -183,31 +193,38 @@
 	});
 		
  	/*modal框事件监听 详情：http://v3.bootcss.com/javascript/#modals-events */
-	$('#addModal').on('shown.bs.modal', function(event) {			
+	$('#addModal').on('shown.bs.modal', function(event) {	
+		
+			$("#name").focus();
+			 $("#addForm").validate({
+				 submitHandler : function(form){
+			           	$.ajax({
+							async : false,
+							cache : false,
+							type : 'POST',
+							data :  $("#addForm").serialize(),
+						   // contentType : 'application/json',    //发送信息至服务器时内容编码类型
+							//dataType : "json",
+							url : "resource/add",//请求的action路径  
+							error : function() {//请求失败处理函数  
+								alert('失败');
+							},
+							success : function(data) { //请求成功后处理函数。    
+								alert("success");
+								$('#addModal').on('hidden.bs.modal',function(event){//当modal框完全隐藏后再刷新页面content，要不然有bug
+									$("#content-wrapper").html(data);//刷新content页面
+								});
+							}
+						});
+			        }    
+			    });
 			$("#addSubmitBtn").click(function() {
 				if($('#parentId').val()==""){
 					alert("请返回,选定上级资源再进行操作");
 					return;
 				}
 				
-				$.ajax({
-					async : false,
-					cache : false,
-					type : 'POST',
-					data : $("#addForm").serialize(),
-				   // contentType : 'application/json',    //发送信息至服务器时内容编码类型
-					//dataType : "json",
-					url : "resource/add",//请求的action路径  
-					error : function() {//请求失败处理函数  
-						alert('失败');
-					},
-					success : function(data) { //请求成功后处理函数。    
-						alert("success");
-						$('#addModal').on('hidden.bs.modal',function(event){//当modal框完全隐藏后再刷新页面content，要不然有bug
-							$("#content-wrapper").html(data);//刷新content页面
-						});
-					}
-				});
+				
 			});
 		});
 	
@@ -289,6 +306,8 @@
 	       $.fn.zTree.init($("#resourceTree"), setting, zNodes);
 	   });
 	   	     
-	
+		$(document).ready(function() {
+		    $(".js-example-basic-single").select2();	    
+		  });	
 	
 </script>

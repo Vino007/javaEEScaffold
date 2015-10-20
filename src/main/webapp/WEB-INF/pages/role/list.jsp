@@ -83,7 +83,7 @@
 						<shiro:hasPermission name="role:create">
 						<button id="addBtn" type="button"
 							class="btn  btn-primary btn-flat margin" data-toggle="modal"
-							data-target="#addModal">
+							data-target="#addModal" onclick="addItem()">
 							<span class="fa fa-fw  fa-plus" aria-hidden="true"></span> 新增
 						</button>
 						</shiro:hasPermission>
@@ -162,30 +162,7 @@
 	aria-labelledby="exampleModalLabel">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal"
-					aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-				<h4 class="modal-title" id="exampleModalLabel">新增角色</h4>
-			</div>
-			<div class="modal-body">
-
-				<form id="addForm" action="role/add" method="post">
-					<div class="form-group">
-						<label for="name" class="control-label">角色名:</label> <input
-							type="text" class="form-control" id="name" name="name">
-					</div>					
-					<div class="form-group">
-						<label for="description" class="control-label">描述:</label> <input
-							type="text" class="form-control" id="description" name="description">
-					</div>
-				</form>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary" id="addSubmitBtn">提交</button>
-			</div>
+			
 		</div>
 	</div>
 </div>
@@ -233,7 +210,6 @@
 		
 	});
 	
-
 	/* button监听事件 */
 	$(document).ready(function(){
 		$("#deleteBtn").click(function(){
@@ -242,31 +218,8 @@
 		
 	});
 		
- 	/*modal框事件监听 详情：http://v3.bootcss.com/javascript/#modals-events */
-	$('#addModal').on('shown.bs.modal', function(event) {			
-			$("#addSubmitBtn").click(function() {
-				$.ajax({
-					async : false,
-					cache : false,
-					type : 'POST',
-					data : $("#addForm").serialize(),
-				   // contentType : 'application/json',    //发送信息至服务器时内容编码类型
-					//dataType : "json",
-					url : "role/add",//请求的action路径  
-					error : function() {//请求失败处理函数  
-						alert('失败');
-					},
-					success : function(data) { //请求成功后处理函数。    
-						alert("success");
-						$('#addModal').on('hidden.bs.modal',function(event){//当modal框完全隐藏后再刷新页面content，要不然有bug
-							$("#content-wrapper").html(data);//刷新content页面
-						});
-					}
-				});
-			});
-		});
+ 	
 	
-
 	$("#searchBtn").click(function() {
 		$('#pageNumber').val(1);
 		$.ajax({
@@ -284,7 +237,11 @@
 			}
 		});
 	});
-
+	function addItem(){
+		$("#addModal").on('show.bs.modal',function(event){
+			$('#addModal .modal-content').load('role/prepareAdd');
+		});
+	}
 	function updateItem(id){
 		$('#updateModal').on('show.bs.modal',function(event){
 			$('#updateModal .modal-content').load('role/'+id);

@@ -30,7 +30,7 @@ public class Resource extends BaseEntity<Long> {
 	private Boolean available=Boolean.TRUE;
 	@Column(name="url",length=200)
 	private String url;
-	@ManyToMany(mappedBy="resources",targetEntity=Role.class,cascade=CascadeType.REMOVE)
+	@ManyToMany(mappedBy="resources",targetEntity=Role.class)
 	private Set<Role> roles=new HashSet<Role>();
 		
 	public Resource() {

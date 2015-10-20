@@ -166,6 +166,12 @@ public class RoleServiceImpl extends AbstractBaseServiceImpl<Role, Long> impleme
 			Pageable pageable) {
 		return roleRepository.findAll(buildSpecification(searchParams), pageable);
 	}
+
+	@Override
+	public void delete(Long... ids) {
+		roleRepository.deleteAssociateById(ids);
+		super.delete(ids);
+	}
 	
 
 }

@@ -59,6 +59,11 @@ public class UserController extends BaseController{
 		return "user/list";
 	}
 	@RequiresPermissions("user:create")
+	@RequestMapping(value="/prepareAdd",method=RequestMethod.GET)
+	public String prepareAddUser(Model model ){
+		return "user/add";
+	}
+	@RequiresPermissions("user:create")
 	@RequestMapping(value="/add",method=RequestMethod.POST)
 	public String addUser(Model model ,User user,HttpSession session){
 		User curUser=(User) session.getAttribute(Constants.CURRENT_USER);

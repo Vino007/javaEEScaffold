@@ -88,22 +88,22 @@
 					</div>
 					<div class="btn-group">
 						<!-- 注意，为了设置正确的内补（padding），务必在图标和文本之间添加一个空格。 -->
-						
-							<shiro:hasPermission name="user:create">
-								<button id="addBtn" type="button"
-									class="btn  btn-primary btn-flat margin" data-toggle="modal"
-									data-target="#addModal">
-									<span class="fa fa-fw  fa-plus" aria-hidden="true"></span> 新增
-								</button>
-							</shiro:hasPermission>
-							<shiro:hasPermission name="user:delete">
-								<button id="deleteBtn" type="button"
-									class="btn  btn-danger btn-flat margin">
-									<span class="fa fa-fw fa-remove" aria-hidden="true"></span> 删除
-								</button>
-							</shiro:hasPermission>
-						
-						
+
+						<shiro:hasPermission name="user:create">
+							<button id="addBtn" type="button"
+								class="btn  btn-primary btn-flat margin" data-toggle="modal"
+								data-target="#addModal" onclick="addItem()">
+								<span class="fa fa-fw  fa-plus" aria-hidden="true"></span> 新增
+							</button>
+						</shiro:hasPermission>
+						<shiro:hasPermission name="user:delete">
+							<button id="deleteBtn" type="button"
+								class="btn  btn-danger btn-flat margin">
+								<span class="fa fa-fw fa-remove" aria-hidden="true"></span> 删除
+							</button>
+						</shiro:hasPermission>
+
+
 					</div>
 					<table class="table table-hover">
 						<tr>
@@ -140,25 +140,19 @@
 									</c:otherwise>
 								</c:choose>
 
-								<td>
-										<shiro:hasPermission name="user:update">
-											<button id="updateBtn" type="button"
-												class="btn btn-xs btn-primary btn-flat " data-toggle="modal"
-												data-target="#updateModal" onclick='updateItem(${user.id})'>编辑</button>
-										</shiro:hasPermission>
-										<shiro:hasPermission name="user:view">
-											<button id="detailBtn" type="button"
-												class="btn  btn-xs btn-primary btn-flat "
-												data-toggle="modal" data-target="#detailModal"
-												onclick='detailItem(${user.id})'>详情</button>
-										</shiro:hasPermission>
-										<shiro:hasPermission name="user:bind">
-											<button id="bindRoleBtn" type="button"
-												class="btn  btn-xs btn-primary btn-flat "
-												data-toggle="modal" data-target="#bindModal"
-												onclick='bindItem(${user.id})'>角色绑定</button>
-										</shiro:hasPermission>
-									</td>
+								<td><shiro:hasPermission name="user:update">
+										<button id="updateBtn" type="button"
+											class="btn btn-xs btn-primary btn-flat " data-toggle="modal"
+											data-target="#updateModal" onclick='updateItem(${user.id})'>编辑</button>
+									</shiro:hasPermission> <shiro:hasPermission name="user:view">
+										<button id="detailBtn" type="button"
+											class="btn  btn-xs btn-primary btn-flat " data-toggle="modal"
+											data-target="#detailModal" onclick='detailItem(${user.id})'>详情</button>
+									</shiro:hasPermission> <shiro:hasPermission name="user:bind">
+										<button id="bindRoleBtn" type="button"
+											class="btn  btn-xs btn-primary btn-flat " data-toggle="modal"
+											data-target="#bindModal" onclick='bindItem(${user.id})'>角色绑定</button>
+									</shiro:hasPermission></td>
 							</tr>
 						</c:forEach>
 					</table>
@@ -179,34 +173,7 @@
 	aria-labelledby="exampleModalLabel">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal"
-					aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-				<h4 class="modal-title" id="exampleModalLabel">新增用户</h4>
-			</div>
-			<div class="modal-body">
-
-				<form id="addForm" action="user/add" method="post">
-					<div class="form-group">
-						<label for="username" class="control-label">用户名:</label> <input
-							type="text" class="form-control" id="username" name="username">
-					</div>
-					<div class="form-group">
-						<label for="password" class="control-label">密码:</label> <input
-							class="form-control" id="password" name="password">
-					</div>
-					<div class="form-group">
-						<label for="userAlias" class="control-label">别名:</label> <input
-							type="text" class="form-control" id="userAlias" name="userAlias">
-					</div>
-				</form>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary" id="submitBtn">提交</button>
-			</div>
+			
 		</div>
 	</div>
 </div>
@@ -261,33 +228,7 @@
 			deleteItems("input[class*='deleteCheckbox']","user/delete");
 		});
 		
-	});
-		
- 	/*modal框事件监听 详情：http://v3.bootcss.com/javascript/#modals-events */
-	$('#addModal').on('shown.bs.modal', function(event) {			
-			$("#submitBtn").click(function() {
-				$.ajax({
-					async : false,
-					cache : false,
-					type : 'POST',
-					data : $("#addForm").serialize(),
-				   // contentType : 'application/json',    //发送信息至服务器时内容编码类型
-					//dataType : "json",
-					url : "user/add",//请求的action路径  
-					error : function() {//请求失败处理函数  
-						alert('失败');
-					},
-					success : function(data) { //请求成功后处理函数。    
-						alert("success");
-						$('#addModal').on('hidden.bs.modal',function(event){//当modal框完全隐藏后再刷新页面content，要不然有bug
-							$("#content-wrapper").html(data);//刷新content页面
-						});
-					}
-				});
-			});
-		});
-	
-
+	});		
 	$("#searchBtn").click(function() {
 		$('#pageNumber').val(1);
 		$.ajax({
@@ -305,12 +246,17 @@
 			}
 		});
 	});
-
+	function addItem(){
+		$("#addModal").on('show.bs.modal',function(event){
+			$('#addModal .modal-content').load('user/prepareAdd');
+		});
+	}
 	function updateItem(id){
 		$('#updateModal').on('show.bs.modal',function(event){
 			$('#updateModal .modal-content').load('user/'+id);
 		});
 	}
+	f
 	function detailItem(id){
 		$('#detailModal').on('show.bs.modal',function(event){
 			$('#detailModal .modal-content').load('user/detail/'+id)

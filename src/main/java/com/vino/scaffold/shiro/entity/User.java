@@ -39,7 +39,7 @@ public class User extends BaseEntity<Long> {
 	@Column(name = "locked")
 	private Boolean locked = Boolean.FALSE;
 	
-	@ManyToMany(targetEntity=Role.class,fetch=FetchType.EAGER,cascade=CascadeType.REMOVE)
+	@ManyToMany(targetEntity=Role.class,fetch=FetchType.EAGER)
 	@JoinTable(name="t_user_role",joinColumns=@JoinColumn(name="user_id"),inverseJoinColumns=@JoinColumn(name="role_id"))
 	private Set<Role> roles=new HashSet<Role>();
 	

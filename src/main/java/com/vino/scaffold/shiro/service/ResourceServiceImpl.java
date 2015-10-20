@@ -142,6 +142,13 @@ public class ResourceServiceImpl extends AbstractBaseServiceImpl<Resource, Long>
 		return resourceRepository.findByName(name);
 	}
 
+	@Override
+	public void delete(Long... ids) {
+		// TODO Auto-generated method stub
+		resourceRepository.deleteAssociateById(ids);
+		super.delete(ids);
+	}
+
 
 
 	

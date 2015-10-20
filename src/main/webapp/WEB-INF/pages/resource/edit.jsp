@@ -19,20 +19,20 @@
 					</div>		
 					<div class="form-group">
 						<label for="permission" class="control-label">权限字符串:</label> <input
-							type="text" class="form-control" id="permission" name="permission" value="${resource.permission}">
+							type="text" class="form-control required" id="permission" name="permission" value="${resource.permission}">
 					</div>			
 					<div class="form-group">
 						<label for="type" class="control-label">类型:</label> <input
-							type="text" class="form-control" id="type" name="type" value="${resource.type}">
+							type="text" class="form-control required" id="type" name="type" value="${resource.type}">
 					</div>
 					
 					<div class="form-group">
 						<label for="priority" class="control-label">排序优先级:</label> <input
-							type="text" class="form-control" id="priority" name="priority" value="${resource.priority}">
+							type="text" class="form-control required digits" id="priority" name="priority" value="${resource.priority}">
 					</div>
 					<div class="form-group">
-						<label for="parentId" class="control-label">上级资源ID:</label> <input
-							type="text" class="form-control" id="parentId" name="parentId" value="${resource.parentId}">
+						 <input
+							type="hidden" class="form-control" id="parentId" name="parentId" value="${resource.parentId}">
 					</div>
 					<div class="form-group">
 						<label for="url" class="control-label">菜单路径URL:</label> <input
@@ -55,14 +55,15 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary" id="updateSubmitBtn">提交</button>
+				<button type="submit" class="btn btn-primary" id="updateSubmitBtn">提交</button>
 			</div>
 			</form>
 <script>
 /* 异步提交表单及更新content */
 $('#updateModal').on('shown.bs.modal', function(event) {
 
-		$("#updateSubmitBtn").click(function() {
+	$("#updateForm").validate({
+		 submitHandler : function(form){
 			$.ajax({
 				async : false,
 				cache : false,
@@ -80,7 +81,9 @@ $('#updateModal').on('shown.bs.modal', function(event) {
 					});
 				}
 			});
+		 }
 		});
+	
 	});
 
 </script>

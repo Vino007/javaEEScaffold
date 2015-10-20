@@ -19,7 +19,7 @@
 					</div>					
 					<div class="form-group">
 						<label for="description" class="control-label">描述:</label> <input
-							type="text" class="form-control" id="description" name="description" value="${role.description}">
+							type="text" class="form-control required" id="description" name="description" value="${role.description}">
 					</div>
 					<div class="form-group">
 						<label for="available" class="control-label">状态:</label> 
@@ -38,21 +38,20 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary" id="updateSubmitBtn">提交</button>
+				<button type="submit" class="btn btn-primary" id="updateSubmitBtn">提交</button>
 			</div>
 			</form>
 <script>
 /* 异步提交表单及更新content */
 $('#updateModal').on('shown.bs.modal', function(event) {
 
-		$("#updateSubmitBtn").click(function() {
+	$('#updateForm').validate({
+		 submitHandler : function(form){
 			$.ajax({
 				async : false,
 				cache : false,
 				type : 'POST',
-				data : $("#updateForm").serialize(),
-			   // contentType : 'application/json',    //发送信息至服务器时内容编码类型
-				//dataType : "json",
+				data : $("#updateForm").serialize(),			
 				url : "role/update",//请求的action路径  
 				error : function() {//请求失败处理函数  
 					alert('失败');
@@ -64,7 +63,8 @@ $('#updateModal').on('shown.bs.modal', function(event) {
 					});
 				}
 			});
-		});
+		}
 	});
+});
 
 </script>

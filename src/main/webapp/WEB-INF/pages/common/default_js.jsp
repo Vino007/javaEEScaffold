@@ -2,6 +2,13 @@
 	pageEncoding="UTF-8"%><!-- 不加这句，编码会出错！！ -->
 <script type="text/javascript"
 	src="<%=request.getContextPath()%>/resources/js/jquery-2.1.4.js"></script>
+	<script type="text/javascript"
+	src="<%=request.getContextPath()%>/resources/js/jquery.validate.min.js"></script>
+	<script type="text/javascript"
+	src="<%=request.getContextPath()%>/resources/js/additional-methods.min.js"></script>
+	
+	<script type="text/javascript"
+	src="<%=request.getContextPath()%>/resources/js/messages_zh.js"></script>
 <script type="text/javascript"
 	src="<%=request.getContextPath()%>/resources/js/bootstrap.js"></script>
 <script type="text/javascript"

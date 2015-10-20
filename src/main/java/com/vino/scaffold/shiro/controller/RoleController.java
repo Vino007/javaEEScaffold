@@ -62,6 +62,11 @@ public class RoleController extends BaseController{
 		return "role/list";
 	}
 	@RequiresPermissions("role:create")
+	@RequestMapping(value="/prepareAdd",method=RequestMethod.GET)
+	public String prepareAddUser(Model model){
+		return "role/add";
+	}
+	@RequiresPermissions("role:create")
 	@RequestMapping(value="/add",method=RequestMethod.POST)
 	public String addRole(Model model ,Role role,HttpSession session){
 		User curUser=(User) session.getAttribute(Constants.CURRENT_USER);

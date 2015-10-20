@@ -54,10 +54,7 @@ public class ResourceController extends BaseController{
 		List<Resource> resources=resourceService.findAll();
 		
 		return TreeUtils.fomatResourceToTree(resources);
-	}
-	
-	
-	
+	}	
 	@RequestMapping(value="/search",method=RequestMethod.GET)
 	public String getRolesByCondition(Model model,Resource resource,@RequestParam(value="pageNumber",defaultValue="1")int pageNumber,ServletRequest request){
 		Map<String,Object> searchParams=Servlets.getParametersStartingWith(request, "search_");
@@ -69,6 +66,12 @@ public class ResourceController extends BaseController{
 		System.out.println("返回到页面的搜索参数"+Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
 		model.addAttribute("searchParamsMap", searchParams);
 		return "resource/list";
+	}
+	@RequiresPermissions("resource:create")
+	@RequestMapping(value="/prepareAdd",method=RequestMethod.GET)
+	public String prepareAddUser(Model model){
+	
+		return "resource/add";
 	}
 	@RequiresPermissions("resource:create")
 	@RequestMapping(value="/add",method=RequestMethod.POST)
