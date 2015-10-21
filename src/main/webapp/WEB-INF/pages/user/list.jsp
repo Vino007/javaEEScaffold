@@ -102,7 +102,11 @@
 								<span class="fa fa-fw fa-remove" aria-hidden="true"></span> 删除
 							</button>
 						</shiro:hasPermission>
-
+							<button id="uploadBtn" type="button"
+								class="btn  btn-danger btn-flat margin" data-toggle="modal"
+								data-target="#uploadModal" onclick="uploadItem()">
+								<span class="fa fa-fw fa-remove" aria-hidden="true"></span> upload
+							</button>
 
 					</div>
 					<table class="table table-hover">
@@ -202,6 +206,13 @@
 		<div class="modal-content"></div>
 	</div>
 </div>
+<!-- upload页面 modal框  -->
+<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog"
+	aria-labelledby="exampleModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content"></div>
+	</div>
+</div>
 
 <script>
 
@@ -259,12 +270,17 @@
 	f
 	function detailItem(id){
 		$('#detailModal').on('show.bs.modal',function(event){
-			$('#detailModal .modal-content').load('user/detail/'+id)
+			$('#detailModal .modal-content').load('user/detail/'+id);
 		});
 	}
 	function bindItem(id){
 		$('#bindModal').on('show.bs.modal',function(event){
-			$('#bindModal .modal-content').load('user/prepareBind/'+id)
+			$('#bindModal .modal-content').load('user/prepareBind/'+id);
+		});
+	}
+	function uploadItem(){
+		$('#uploadModal').on('show.bs.modal',function(event){
+			$('#uploadModal .modal-content').load('user/prepareUpload');
 		});
 	}
 	

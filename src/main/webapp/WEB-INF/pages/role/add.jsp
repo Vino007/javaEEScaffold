@@ -12,12 +12,12 @@
 
 
 		<div class="form-group">
-			<label for="name" class="control-label">角色名:</label> <input
-				type="text" class="form-control required" id="name" name="name">
+			<label for="name" class="control-label"><font color="red">*</font>角色名:</label> <input
+				type="text" class="form-control required"  id="name" name="name">
 		</div>
 		<div class="form-group">
-			<label for="description" class="control-label">描述:</label> <input
-				type="text" class="form-control" id="description" name="description">
+			<label for="description" class="control-label"><font color="red">*</font>描述:</label> <input
+				type="text" class="form-control required" id="description" name="description">
 		</div>
 
 	</div>
@@ -28,7 +28,8 @@
 </form>
 <script>
 //*modal框事件监听 详情：http://v3.bootcss.com/javascript/#modals-events */
-	$('#addModal').on('shown.bs.modal', function(event) {			
+	$('#addModal').on('shown.bs.modal', function(event) {
+		$('#name').focus();
 		$('#addForm').validate({
 			 submitHandler : function(form){
 				$.ajax({

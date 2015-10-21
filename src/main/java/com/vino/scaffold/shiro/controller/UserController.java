@@ -1,11 +1,15 @@
 package com.vino.scaffold.shiro.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.vino.scaffold.controller.base.BaseController;
 import com.vino.scaffold.entity.Constants;
@@ -144,6 +149,32 @@ public class UserController extends BaseController{
 		model.addAttribute("page", userPage);
 		return "user/list";
 		
+	}
+	@RequestMapping(value="/prepareUpload",method=RequestMethod.GET)
+	public String prepareUpload(){
+		return "user/upload";
+	}
+	@ResponseBody
+	@RequestMapping(value="/upload",method=RequestMethod.POST)
+	public String upload(Model model,@RequestParam("fileName") String fileName,@RequestParam("file")MultipartFile file,HttpServletRequest request){
+		System.out.println(file.getOriginalFilename());
+		Page<User> userPage=userService.findAll(buildPageRequest(1));
+		model.addAttribute("users", userPage.getContent());
+		model.addAttribute("page", userPage);
+		
+		if(!file.isEmpty()){
+			 //如果用的是Tomcat服务器，则文件会上传到\\%TOMCAT_HOME%\\webapps\\YourWebProject\\WEB-INF\\upload\\文件夹中  
+            String realPath = request.getSession().getServletContext().getRealPath("/WEB-INF/upload");  
+            //这里不必处理IO流关闭的问题，因为FileUtils.copyInputStreamToFile()方法内部会自动把用到的IO流关掉，我是看它的源码才知道的  
+            try {
+				FileUtils.copyInputStreamToFile(file.getInputStream(), new File(realPath, file.getOriginalFilename()));
+			} catch (IOException e) {
+				log.error("保存文件出错");
+				e.printStackTrace();
+			}
+		}
+		
+		return "uploadSuccess";
 	}
 	
 	

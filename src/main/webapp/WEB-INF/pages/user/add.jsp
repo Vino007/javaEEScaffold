@@ -12,16 +12,16 @@
 
 				
 					<div class="form-group">
-						<label for="username" class="control-label">用户名:</label> <input
+						<label for="username" class="control-label"><font color="red">*</font>用户名:</label> <input
 							type="text" class="form-control required " id="username"
 							name="username">
 					</div>
 					<div class="form-group">
-						<label for="password" class="control-label">密码:</label> <input
+						<label for="password" class="control-label"><font color="red">*</font>密码:</label> <input
 							class="form-control required" id="password" name="password">
 					</div>
 					<div class="form-group">
-						<label for="userAlias" class="control-label">别名:</label> <input
+						<label for="userAlias" class="control-label"><font color="red">*</font>别名:</label> <input
 							type="text" class="form-control required" id="userAlias"
 							name="userAlias">
 					</div>
@@ -59,4 +59,44 @@ $('#addModal').on('shown.bs.modal', function(event) {
 			        }    
 			    });
 	});
+	/* js校验 */
+	/* 
+	$().ready(function() {
+ $("#signupForm").validate({
+        rules: {
+   firstname: "required",
+   email: {
+    required: true,
+    email: true
+   },
+   password: {
+    required: true,
+    minlength: 5
+   },
+   confirm_password: {
+    required: true,
+    minlength: 5,
+    equalTo: "#password"
+   }
+  },
+        messages: {
+   firstname: "请输入姓名",
+   email: {
+    required: "请输入Email地址",
+    email: "请输入正确的email地址"
+   },
+   password: {
+    required: "请输入密码",
+    minlength: jQuery.format("密码不能小于{0}个字 符")
+   },
+   confirm_password: {
+    required: "请输入确认密码",
+    minlength: "确认密码不能小于5个字符",
+    equalTo: "两次输入密码不一致不一致"
+   }
+  }
+    });
+});
+	
+	*/
 </script>

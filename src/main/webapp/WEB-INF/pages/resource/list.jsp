@@ -119,7 +119,7 @@
 					</div>
 					<div class="form-group">
 						<label for="priority" class="control-label"><font color="red">*</font>排序优先级:</label> <input
-							type="text" class="form-control required digits" id="priority" name="priority">
+							type="text" class="form-control required digits" id="priority" name="priority" value="1">
 					</div>	
 						
 					

@@ -24,9 +24,7 @@
 				<optgroup label="已持有角色">
 					<c:forEach var="role" items="${user.roles}" varStatus="status">
 						<option value="${role.id}" selected="selected">${role.name}</option>
-					</c:forEach>
-					<!-- 	<option value="primaryRole" selected="selected">初级用户</option>
-					<option value="seniorRole" selected="selected">中级用户</option> -->
+					</c:forEach>					
 				</optgroup>
 				<optgroup label="可选角色">
 					<c:forEach var="role" items="${availableRoles}" varStatus="status">
