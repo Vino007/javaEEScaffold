@@ -157,14 +157,14 @@ public class UserServiceImpl extends AbstractBaseServiceImpl<User, Long>  implem
 	 * @throws UserDuplicateException 
      */
     
-    public void saveWithCheckDuplicate(User user,User curUser) throws UserDuplicateException{
+    public void saveWithCheckDuplicate(User user) throws UserDuplicateException{
     	//校验是否用户重复
     	if(userRepository.findByUsername(user.getUsername())!=null)
     		throw new UserDuplicateException();
         //加密密码
         passwordHelper.encryptPassword(user);
         user.setCreateTime(new Date());
-        user.setCreatorName(curUser.getUsername());
+        user.setCreatorName(getCurrentUser().getUsername());
         userRepository.save(user);
     }
     @Override
@@ -227,6 +227,24 @@ public class UserServiceImpl extends AbstractBaseServiceImpl<User, Long>  implem
 	public void clearAllUserAndRoleConnection(Long userId) {
 		User user=userRepository.findOne(userId);
 		user.getRoles().clear();
+	}
+
+
+	@Override
+	public void saveWithCheckDuplicate(List<User> users)
+			throws UserDuplicateException {
+		if(null==users||0==users.size())
+			return;
+		//校验是否用户重复
+		for(User user:users){
+    	if(userRepository.findByUsername(user.getUsername())!=null)
+    		throw new UserDuplicateException();
+        //加密密码
+        passwordHelper.encryptPassword(user);
+        user.setCreateTime(new Date());
+        user.setCreatorName(getCurrentUser().getUsername());
+        userRepository.save(user);
+		}
 	}
 
 	

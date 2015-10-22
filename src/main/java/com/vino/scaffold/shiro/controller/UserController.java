@@ -2,12 +2,15 @@ package com.vino.scaffold.shiro.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import jxl.read.biff.BiffException;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -29,6 +32,7 @@ import com.vino.scaffold.shiro.entity.Role;
 import com.vino.scaffold.shiro.entity.User;
 import com.vino.scaffold.shiro.exception.UserDuplicateException;
 import com.vino.scaffold.shiro.service.RoleService;
+import com.vino.scaffold.shiro.service.UserExcelService;
 import com.vino.scaffold.shiro.service.UserService;
 import com.vino.scaffold.utils.Servlets;
 
@@ -39,6 +43,8 @@ public class UserController extends BaseController{
 	private UserService userService;
 	@Autowired
 	private RoleService roleService;
+	@Autowired
+	private UserExcelService userExcelService;
 	@RequiresPermissions("user:menu")
 	@RequestMapping(value="/all",method=RequestMethod.GET)
 	public String getALLUsers(Model model,@RequestParam(value="pageNumber",defaultValue="1")int pageNumber,
@@ -73,7 +79,7 @@ public class UserController extends BaseController{
 	public String addUser(Model model ,User user,HttpSession session){
 		User curUser=(User) session.getAttribute(Constants.CURRENT_USER);
 		try {
-			userService.saveWithCheckDuplicate(user,curUser);
+			userService.saveWithCheckDuplicate(user);
 			
 		} catch (UserDuplicateException e) {
 			model.addAttribute("userDuplicate", "true");
@@ -168,10 +174,23 @@ public class UserController extends BaseController{
             //这里不必处理IO流关闭的问题，因为FileUtils.copyInputStreamToFile()方法内部会自动把用到的IO流关掉，我是看它的源码才知道的  
             try {
 				FileUtils.copyInputStreamToFile(file.getInputStream(), new File(realPath, file.getOriginalFilename()));
+				List<User> uploadUsers=userExcelService.getFromExcel(new File(realPath+"\\"+file.getOriginalFilename()));		
+				userService.saveWithCheckDuplicate(uploadUsers);
+				log.info("上传用户:"+Arrays.toString(uploadUsers.toArray()));
 			} catch (IOException e) {
-				log.error("保存文件出错");
+				log.error("保存或读取文件出错");
 				e.printStackTrace();
-			}
+			} catch (BiffException e) {
+				
+				e.printStackTrace();
+			} catch (UserDuplicateException e) {
+				e.printStackTrace();
+				log.warn("上传文件包含与数据库重复的对象");
+				return "entityDuplicate";
+				
+			} 
+		}else{
+			return "fileIsEmpty";
 		}
 		
 		return "uploadSuccess";
@@ -183,6 +202,9 @@ public class UserController extends BaseController{
 	}
 	public void setUserService(UserService userService) {
 		this.userService = userService;
+	}
+	public void setUserExcelService(UserExcelService userExcelService) {
+		this.userExcelService = userExcelService;
 	}
 	
 	

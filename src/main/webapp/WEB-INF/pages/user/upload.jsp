@@ -11,7 +11,7 @@
 			<div class="modal-body">
 					<div class="form-group">
 						<label for="file" class="control-label"><font color="red">*</font>上传文件:</label>
-						<input type="file" name="file" class="form-control">
+						<input id="file" type="file" name="file" class="form-control">
 					</div>
 					<div class="form-group">
 						<label for="fileName" class="control-label"><font color="red">*</font>文件名:</label> <input
@@ -26,7 +26,17 @@
 			<script src="${pageContext.request.contextPath}/resources/js/jquery.form.js"></script>
 <script>
  	$('#uploadModal').on('shown.bs.modal', function(event) { 
-				 $("#uploadForm").submit(function(){
+				 $("#uploadForm").submit(function(event){
+					 var file=$("#file").val();
+					  var fileType=file.substring(file.lastIndexOf(".")+1); 
+					 alert(fileType);
+					 if(file==""){
+						 alert("请选择要上传的文件");
+						return false;
+					 }else if(fileType!="xls"&&fileType!="xlsx"){
+						 alert("文件类型错误,请是上传xls或者xlsx文件");
+						 return false;
+					 }
 				 $(this).ajaxSubmit({
 					success:function(data){
 						alert(data);
