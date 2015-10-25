@@ -13,10 +13,7 @@
 						<label for="file" class="control-label"><font color="red">*</font>上传文件:</label>
 						<input id="file" type="file" name="file" class="form-control">
 					</div>
-					<div class="form-group">
-						<label for="fileName" class="control-label"><font color="red">*</font>文件名:</label> <input
-							class="form-control" id="fileName" name="fileName">
-					</div>
+					
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

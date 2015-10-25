@@ -31,6 +31,7 @@
       <div class="login-box-body">
         <p class="login-box-msg">登录</p>
         <form action="" method="post">
+          <div><font color="red">${loginError}</font></div>
           <div class="form-group has-feedback">
             <input type="text" name="username" class="form-control" placeholder="Username">
             <span></span>

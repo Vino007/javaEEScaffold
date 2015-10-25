@@ -40,7 +40,7 @@ public class UserTest {
 	public void testSave() throws UserDuplicateException {
 		User user=new User("admin","1111","³¬¹Ü");
 		User user2=new User();
-		userService.saveWithCheckDuplicate(user,user);
+		//userService.saveWithCheckDuplicate(user,user);
 		userService.findByUsername("admin");
 	}
 	@Test

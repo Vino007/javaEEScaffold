@@ -156,14 +156,27 @@ public class UserController extends BaseController{
 		return "user/list";
 		
 	}
+	/*@RequiresPermissions("user:profile")*/
+	@RequestMapping(value="/profile",method=RequestMethod.GET)
+	public  String getProfile(Model model,HttpSession session){
+		/*model.addAttribute("currentUser",session.getAttribute(Constants.CURRENT_USER));*/
+		return "user/profile";
+		
+	}
 	@RequestMapping(value="/prepareUpload",method=RequestMethod.GET)
 	public String prepareUpload(){
 		return "user/upload";
 	}
+	/**
+	 * 上传文件
+	 * @param model
+	 * @param file
+	 * @param request
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/upload",method=RequestMethod.POST)
-	public String upload(Model model,@RequestParam("fileName") String fileName,@RequestParam("file")MultipartFile file,HttpServletRequest request){
-		System.out.println(file.getOriginalFilename());
+	public String upload(Model model,@RequestParam("file")MultipartFile file,HttpServletRequest request){
 		Page<User> userPage=userService.findAll(buildPageRequest(1));
 		model.addAttribute("users", userPage.getContent());
 		model.addAttribute("page", userPage);
@@ -180,6 +193,7 @@ public class UserController extends BaseController{
 			} catch (IOException e) {
 				log.error("保存或读取文件出错");
 				e.printStackTrace();
+				return "saveFileError";
 			} catch (BiffException e) {
 				
 				e.printStackTrace();

@@ -98,6 +98,28 @@ scratch. This page gets rid of all links and provides the needed markup only.
         	 return false;       		
           	});
           	});
+         
+         $(document).ready(function(){
+        	 $("#profile").click(function(){
+        		 
+        		 $.ajax({
+                     async : false,
+                     cache:false,
+                     type: 'GET',
+                     //    contentType : 'application/json',  //发送信息至服务器时内容编码类型
+                     //dataType : "json",
+                     url: this.href,//请求的action路径
+                     error: function () {//请求失败处理函数
+                         alert('请求失败');
+                     },
+                     success:function(data){ //请求成功后处理函数。
+                        // alert(data);
+                     $("#content-wrapper").html(data);
+                     }
+        	 });
+        	 return false;       		
+          	});
+          	});
           	
          </script>	
 </body>

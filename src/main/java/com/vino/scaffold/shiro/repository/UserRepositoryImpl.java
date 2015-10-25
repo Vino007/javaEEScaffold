@@ -47,7 +47,6 @@ public class UserRepositoryImpl {
 		//Predicate condition3=cb.equal(root.get("createTime").as(Date.class),cb.parameter(String.class, "createTime"));	
 		cq.where(condition1,condition2);
 		cb.and(condition1,condition2);
-	//	cq.where(condition3);
 		TypedQuery<User> query=em.createQuery(cq);
 		query.setParameter("username", "%"+user.getUsername()+"%");
 		query.setParameter("userAlias","%"+ user.getUserAlias()+"%");

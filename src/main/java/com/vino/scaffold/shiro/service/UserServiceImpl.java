@@ -176,6 +176,10 @@ public class UserServiceImpl extends AbstractBaseServiceImpl<User, Long>  implem
 		if(user.getLocked()!=null){
 			user2.setLocked(user.getLocked());
 		}
+		if(user.getLastLoginTime()!=null){
+			user2.setLastLoginTime(user.getLastLoginTime());
+		}
+		
 	}
     /**
      * ĞŞ¸ÄÃÜÂë

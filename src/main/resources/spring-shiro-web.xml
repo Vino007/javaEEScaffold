@@ -99,7 +99,8 @@
         <property name="loginUrl" value="/login"/>
         <property name="rememberMeParam" value="rememberMe"/><!--即rememberMe请求参数名，请求参数是boolean类型，true表示rememberMe。   -->
     </bean>
-
+    
+	
     <!-- Shiro的Web过滤器 -->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
  <!--  此处使用ShiroFilterFactoryBean来创建ShiroFilter过滤器；filters属性用于定义自己的过滤器，
@@ -115,7 +116,7 @@
         </property>
         <property name="filterChainDefinitions"><!-- 用于申明过滤器与url的关系 -->
             <value>
-                /index.jsp = anon	<!-- 匿名过滤器，允许不登陆访问 -->
+               <!--  /index.jsp = anon	匿名过滤器，允许不登陆访问 -->
                 /login = authc		<!--authc拦截器会判断用户是否是通过Subject.login（isAuthenticated()==true）登录的，如果是才放行，否则会跳转到登录页面叫你重新登录  -->
                 /logout = logout 	<!-- 注销拦截器 -->               
                 /authenticated = user <!-- isRemenber=true或者是通过login登录的就可以通过 -->

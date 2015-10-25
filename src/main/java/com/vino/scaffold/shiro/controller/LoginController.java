@@ -34,7 +34,7 @@ public class LoginController extends BaseController{
 	        } else if(exceptionClassName != null) {
 	            error = "ÆäËû´íÎó£º" + exceptionClassName;
 	        }
-	        model.addAttribute("error", error);
+	        model.addAttribute("loginError", error);
 	        return "login";
 	    }
 

@@ -105,7 +105,7 @@
 							<button id="uploadBtn" type="button"
 								class="btn  btn-danger btn-flat margin" data-toggle="modal"
 								data-target="#uploadModal" onclick="uploadItem()">
-								<span class="fa fa-fw fa-remove" aria-hidden="true"></span> upload
+								<span class="fa fa-fw fa-cloud-upload" aria-hidden="true"></span> upload
 							</button>
 
 					</div>
