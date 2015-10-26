@@ -164,6 +164,7 @@ public class UserServiceImpl extends AbstractBaseServiceImpl<User, Long>  implem
         //º”√‹√‹¬Î
         passwordHelper.encryptPassword(user);
         user.setCreateTime(new Date());
+        if(getCurrentUser()!=null)
         user.setCreatorName(getCurrentUser().getUsername());
         userRepository.save(user);
     }

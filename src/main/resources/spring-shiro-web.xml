@@ -118,7 +118,9 @@
             <value>
                <!--  /index.jsp = anon	匿名过滤器，允许不登陆访问 -->
                 /login = authc		<!--authc拦截器会判断用户是否是通过Subject.login（isAuthenticated()==true）登录的，如果是才放行，否则会跳转到登录页面叫你重新登录  -->
-                /logout = logout 	<!-- 注销拦截器 -->               
+                /logout = logout 	<!-- 注销拦截器 --> 
+                /register=anon
+                /prepareRegister=anon              
                 /authenticated = user <!-- isRemenber=true或者是通过login登录的就可以通过 -->
                 /resources/**=anon  <!-- 不拦截静态资源！！ -->
                 /** = user

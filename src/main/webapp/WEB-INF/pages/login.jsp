@@ -53,8 +53,8 @@
             </div><!-- /.col -->
           </div>
         </form>     
-        <a href="#">忘记密码</a><br>
-        <a href="register.html" class="text-center">注册</a>
+        <a href="forgetPassword">忘记密码</a><br>
+        <a href="prepareRegister" class="text-center">注册</a>
 
       </div><!-- /.login-box-body -->
     </div><!-- /.login-box -->
