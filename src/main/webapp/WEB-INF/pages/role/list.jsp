@@ -104,7 +104,7 @@
 							<th>描述</th>
 							<th>创建时间</th>
 							<th>创建人</th>
-							<th style="width: 60px">状态</th>
+							<!-- <th style="width: 60px">状态</th> -->
 							<th style="width: 200px">操作</th>
 
 						</tr>
@@ -118,14 +118,14 @@
 								<td>${role.description}</td>
 								<td><fmt:formatDate  pattern="yyyy-MM-dd HH:mm:ss" value="${role.createTime}"/></td>
 								<td>${role.creatorName}</td>
-								<c:choose>
+								<%-- <c:choose>
 									<c:when test="${role.available}">
 										<td><span class="badge bg-red">可用</span></td>
 									</c:when>
 									<c:otherwise>
 										<td><span class="badge bg-green">不可用</span></td>
 									</c:otherwise>
-								</c:choose>
+								</c:choose> --%>
 								<td>
 									<shiro:hasPermission name="role:update">
 									<button id="updateBtn" type="button"

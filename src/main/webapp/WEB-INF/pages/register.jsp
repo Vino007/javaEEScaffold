@@ -32,11 +32,10 @@
       <div class="register-box-body">
         <p class="login-box-msg">注册</p>
         <form id="registerForm" action="register" method="post">
+        <div style="color:red;">${isUserDuplicate}</div>
           <div class="form-group has-feedback">
             <input type="text" class="form-control required" placeholder="Username" name="username">
-            <span class="form-control-feedback"></span>
-            <p style="color:red;">${isUserDuplicate}</p>
-            
+            <span class="form-control-feedback"></span>           
           </div>
        
           <div class="form-group has-feedback">

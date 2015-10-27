@@ -13,7 +13,7 @@ public interface BaseService<T extends BaseEntity<PK>,PK extends Serializable> {
 	public T findOne(PK id);
 	public void save(T obj);
 	public void save(List<T> objs);
-	
+	public List<T> find(Long...ids );
 	public void delete(PK ...ids);
 	
 	public void deleteAll();

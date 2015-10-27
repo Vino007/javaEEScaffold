@@ -1,13 +1,19 @@
 package com.vino.scaffold.shiro.controller;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import jxl.read.biff.BiffException;
@@ -16,6 +22,10 @@ import org.apache.commons.io.FileUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +36,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
 import com.vino.scaffold.controller.base.BaseController;
 import com.vino.scaffold.entity.Constants;
 import com.vino.scaffold.shiro.entity.Role;
@@ -184,7 +195,7 @@ public class UserController extends BaseController{
 		if(!file.isEmpty()){
 			 //如果用的是Tomcat服务器，则文件会上传到\\%TOMCAT_HOME%\\webapps\\YourWebProject\\WEB-INF\\upload\\文件夹中  
             String realPath = request.getSession().getServletContext().getRealPath("/WEB-INF/upload");  
-            //这里不必处理IO流关闭的问题，因为FileUtils.copyInputStreamToFile()方法内部会自动把用到的IO流关掉，我是看它的源码才知道的  
+            //这里不必处理IO流关闭的问题，因为FileUtils.copyInputStreamToFile()方法内部会自动把用到的IO流关掉
             try {
 				FileUtils.copyInputStreamToFile(file.getInputStream(), new File(realPath, file.getOriginalFilename()));
 				List<User> uploadUsers=userExcelService.getFromExcel(new File(realPath+"\\"+file.getOriginalFilename()));		
@@ -197,23 +208,41 @@ public class UserController extends BaseController{
 			} catch (BiffException e) {
 				
 				e.printStackTrace();
+				return "fileStreamError";
 			} catch (UserDuplicateException e) {
 				e.printStackTrace();
 				log.warn("上传文件包含与数据库重复的对象");
-				return "entityDuplicate";
-				
+				return "entityDuplicate";				
 			} 
 		}else{
-			return "fileIsEmpty";
+			return "fileEmpty";
 		}
 		
 		return "uploadSuccess";
+	}
+	@RequestMapping(value="/download",method=RequestMethod.POST)
+	public ResponseEntity<byte[]> download(@RequestParam(value="downloadIds[]",required=false)Long[] downloadIds,HttpSession session) throws IOException{
+		System.out.println(downloadIds);
+		String realPath=session.getServletContext().getRealPath("/WEB-INF/upload");
+		String fileName="userExport"+System.currentTimeMillis()+".xls";
+		userExcelService.saveToExcel(realPath+"\\"+fileName, downloadIds);
+		HttpHeaders headers = new HttpHeaders();    
+		headers.setContentDispositionFormData("attachment", fileName); 
+	
+	    headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);   
+	    FileInputStream fin=new FileInputStream(new File(realPath+"\\"+fileName));
+	    
+	    return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(new File(realPath+"\\"+fileName)),    
+				                                  headers, HttpStatus.CREATED);
+		
+		
 	}
 	
 	
 	
 	
-	public void setRoleService(RoleService roleService) {
+	
+	/*public void setRoleService(RoleService roleService) {
 		this.roleService = roleService;
 	}
 	public void setUserService(UserService userService) {
@@ -222,6 +251,6 @@ public class UserController extends BaseController{
 	public void setUserExcelService(UserExcelService userExcelService) {
 		this.userExcelService = userExcelService;
 	}
-	
+	*/
 	
 }

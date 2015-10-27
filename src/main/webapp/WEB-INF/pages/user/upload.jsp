@@ -25,18 +25,30 @@
  	$('#uploadModal').on('shown.bs.modal', function(event) { 
 				 $("#uploadForm").submit(function(event){
 					 var file=$("#file").val();
-					  var fileType=file.substring(file.lastIndexOf(".")+1); 
-					 alert(fileType);
+					 var fileType=file.substring(file.lastIndexOf(".")+1); 
+					
 					 if(file==""){
 						 alert("请选择要上传的文件");
 						return false;
-					 }else if(fileType!="xls"&&fileType!="xlsx"){
-						 alert("文件类型错误,请是上传xls或者xlsx文件");
+					 }else if(fileType!="xls"){
+						 alert("文件类型错误,请上传xls文件");
 						 return false;
 					 }
 				 $(this).ajaxSubmit({
 					success:function(data){
-						alert(data);
+						switch(data){
+						case "\"uploadSuccess\"":
+							alert("上传成功");break;
+						case "\"fileEmpty\"":
+							alert("文件为空");break;
+						case "\"entityDuplicate\"":
+							alert("文件中有与数据库中重复的对象");break;
+						case "\"saveFileError\"":
+							alert("保存文件出错");break;		
+						case "\"fileStreamError\"":
+							alert("读取文件出错");break;	
+						}
+						
 					},
 					error:function(){
 						alert("失败");

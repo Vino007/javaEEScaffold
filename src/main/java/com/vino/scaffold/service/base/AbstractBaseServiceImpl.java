@@ -1,6 +1,7 @@
 package com.vino.scaffold.service.base;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -63,6 +64,14 @@ public abstract class AbstractBaseServiceImpl<T extends BaseEntity<PK>,PK extend
 	}
 	public Page<T> findAll(Pageable pageable){
 		return baseRepository.findAll(pageable);
+	}
+	public List<T> find(PK...ids){
+		List<PK> idList=new ArrayList<PK>();
+		
+		for(PK id :ids){
+			idList.add(id);
+		}
+		return baseRepository.findAll(idList);
 	}
 	public BaseRepository<T, PK> getBaseRepository() {
 		return baseRepository;

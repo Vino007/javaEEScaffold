@@ -102,11 +102,23 @@
 								<span class="fa fa-fw fa-remove" aria-hidden="true"></span> 删除
 							</button>
 						</shiro:hasPermission>
+						<shiro:hasPermission name="user:upload">
 							<button id="uploadBtn" type="button"
-								class="btn  btn-danger btn-flat margin" data-toggle="modal"
+								class="btn  btn-primary btn-flat margin" data-toggle="modal"
 								data-target="#uploadModal" onclick="uploadItem()">
 								<span class="fa fa-fw fa-cloud-upload" aria-hidden="true"></span> upload
 							</button>
+							</shiro:hasPermission>
+							<shiro:hasPermission name="user:download">
+							<form id="downloadForm" action="user/download" method="post">
+							<input id="downloadIds" type="hidden" name="downloadIds[]">
+							<button id="downloadBtn" type="submit"
+								class="btn  btn-primary btn-flat margin" 
+								 onclick="downloadItem()">
+								<span class="fa fa-fw fa-cloud-download" aria-hidden="true"></span> download
+							</button>
+							</form>
+							</shiro:hasPermission>
 
 					</div>
 					<table class="table table-hover">
@@ -283,5 +295,23 @@
 			$('#uploadModal .modal-content').load('user/prepareUpload');
 		});
 	}
+	/**
+	AJAX不能下载文件，用表单来实现
+	*/
+	function downloadItem(){	
+		var downloadIds = [];
+		var i = 0;
+		$("input[class*='deleteCheckbox']").each(function(index, item) {
+			var isChecked = item.checked;
+			if (isChecked == true) {
+				downloadIds[i++] = item.value;
+			}
+		});
+		$('#downloadIds').val(downloadIds)
+		$('#downloadForm').submit(function(){
+			
+		});
+	}
+	
 	
 </script>

@@ -36,8 +36,9 @@ public class UserExcelService {
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
-	public void saveToExcel(String path) throws FileNotFoundException{
-		List<User> users=userService.findAll();
+	public void saveToExcel(String path,Long...ids) throws FileNotFoundException{
+		List<User> users=userService.find(ids);
+		System.out.println("创建excel"+users);
 		File file=new File(path);
 		createExcel(new FileOutputStream(file), users);
 	}
@@ -94,7 +95,7 @@ public class UserExcelService {
 		try {
 			workbook = Workbook.createWorkbook(os);
 		// 创建新的一页，sheet只能在工作簿中使用
-		WritableSheet sheet = workbook.createSheet("userExport sheet1", 0);
+		WritableSheet sheet = workbook.createSheet("user sheet1", 0);
 		// 创建单元格即具体要显示的内容，new Label(0,0,"用户") 第一个参数是column 第二个参数是row
 		// 第三个参数是content，第四个参数是可选项,为Label添加字体样式
 		// 通过sheet的addCell方法添加Label，注意一个cell/label只能使用一次addCell

@@ -23,6 +23,7 @@
 
     <mvc:annotation-driven >
     <mvc:message-converters register-defaults="true">
+     		<bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>  
             <!-- 配置Fastjson支持 -->
             <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
                 <property name="supportedMediaTypes">
