@@ -54,7 +54,7 @@
 													</div>
 													<input type="text" class="form-control pull-right"
 														id="reservation" name="search_createTimeRange"
-														value=${searchParamsMap.createTimeRange }>
+														value="${searchParamsMap.createTimeRange}">
 												</div>
 												<!-- /.input group -->
 											</div>
@@ -88,7 +88,7 @@
 					</div>
 					<div class="btn-group">
 						<!-- 注意，为了设置正确的内补（padding），务必在图标和文本之间添加一个空格。 -->
-
+						<form id="downloadForm" action="user/download" method="post" >
 						<shiro:hasPermission name="user:create">
 							<button id="addBtn" type="button"
 								class="btn  btn-primary btn-flat margin" data-toggle="modal"
@@ -106,20 +106,18 @@
 							<button id="uploadBtn" type="button"
 								class="btn  btn-primary btn-flat margin" data-toggle="modal"
 								data-target="#uploadModal" onclick="uploadItem()">
-								<span class="fa fa-fw fa-cloud-upload" aria-hidden="true"></span> upload
+								<span class="fa fa-fw fa-cloud-upload" aria-hidden="true"></span> 上传
 							</button>
 							</shiro:hasPermission>
 							<shiro:hasPermission name="user:download">
-							<form id="downloadForm" action="user/download" method="post">
-							<input id="downloadIds" type="hidden" name="downloadIds[]">
 							<button id="downloadBtn" type="submit"
 								class="btn  btn-primary btn-flat margin" 
 								 onclick="downloadItem()">
-								<span class="fa fa-fw fa-cloud-download" aria-hidden="true"></span> download
+								<span class="fa fa-fw fa-cloud-download" aria-hidden="true"></span> 下载
 							</button>
-							</form>
 							</shiro:hasPermission>
-
+							<input id="downloadIds" type="hidden" name="downloadIds[]">
+							</form>
 					</div>
 					<table class="table table-hover">
 						<tr>

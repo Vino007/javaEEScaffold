@@ -16,25 +16,23 @@
 
 		<div class="form-group">
 			<label for="name" class="control-label"><font color="red">*</font>资源名:</label>
-			<input type="text" class="form-control required" id="name"
+			<input type="text" class="form-control " id="name"
 				name="name">
 		</div>
 		<div class="form-group">
 			<label for="permission" class="control-label"><font
 				color="red">*</font>权限字符串:</label> <input type="text"
-				class="form-control required" id="permission" name="permission">
+				class="form-control " id="permission" name="permission">
 		</div>
 		<div class="form-group">
-			<label for="type" class="control-label"><font color="red">*</font>资源类型:</label>
-			<!-- <input
-							type="text" class="form-control required" id="type" name="type"> -->
-
-			<select  name="type"
+			<label for="type" class="control-label"><font color="red">*</font>资源类型:</label>			
+			<input name="type" type="checkbox" value="menu">
+			<!-- <select  name="type" id="type"
 				class="form-control select2  js-example-basic-single" tabindex="-1"
 				style="width: 100%">
 				<option value="menu">menu</option>
 				<option value="button" selected="selected">button</option>
-			</select>
+			</select> -->
 		</div>
 		<div class="form-group">
 			<label for="url" class="control-label">菜单路径URL:</label> <input
@@ -42,7 +40,7 @@
 		</div>
 		<div class="form-group">
 			<label for="priority" class="control-label"><font color="red">*</font>排序优先级:</label>
-			<input type="text" class="form-control required digits" id="priority"
+			<input type="text" class="form-control"  id="priority" placeholder="优先级数字越小，排在越上面"
 				name="priority">
 		</div>
 
@@ -59,15 +57,14 @@
 </form>
 <script>
 /*modal框事件监听 详情：http://v3.bootcss.com/javascript/#modals-events */
-
-
-
-
-$('#addModal').on('shown.bs.modal', function(event) {
-			
-			
+$('#addModal').on('shown.bs.modal', function(event) {						
 			$("#name").focus();
 			 $("#addForm").validate({
+				 priority:{
+					 min:1,
+					 required:true,
+					 digits:false
+				 },
 				 submitHandler : function(form){
 			           	$.ajax({
 							async : false,

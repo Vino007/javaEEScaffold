@@ -49,7 +49,7 @@
 														<i class="fa fa-calendar"></i>
 													</div>
 													<input type="text" class="form-control pull-right"
-														id="reservation" name="search_createTimeRange" value=${searchParamsMap.createTimeRange }>
+														id="reservation" name="search_createTimeRange" value="${searchParamsMap.createTimeRange}">
 												</div>
 												<!-- /.input group -->
 											</div>

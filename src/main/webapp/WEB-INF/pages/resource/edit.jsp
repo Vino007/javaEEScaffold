@@ -27,7 +27,7 @@
 					</div>
 					
 					<div class="form-group">
-						<label for="priority" class="control-label">排序优先级:</label> <input
+						<label for="priority" class="control-label">排序优先级:</label> <input placeholder="优先级数字越小，排在越上面"
 							type="text" class="form-control required digits" id="priority" name="priority" value="${resource.priority}">
 					</div>
 					<div class="form-group">

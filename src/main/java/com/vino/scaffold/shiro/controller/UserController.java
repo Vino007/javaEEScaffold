@@ -77,6 +77,7 @@ public class UserController extends BaseController{
 		model.addAttribute("page", userPage);	
 		model.addAttribute("searchParams", Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
 		System.out.println("返回到页面的搜索参数"+Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
+		System.out.println(searchParams.toString());
 		model.addAttribute("searchParamsMap", searchParams);
 		return "user/list";
 	}

@@ -19,9 +19,9 @@ public class Resource extends BaseEntity<Long> {
 	@Column(name="name",length=100)
 	private String name;
 	@Column(name="type",length=30)
-	private String type;
+	private String type="button";
 	@Column(name="priority")
-	private Integer priority=0;
+	private Integer priority=1;
 	@Column(name="parent_id")
 	private Long parentId=0L;
 	@Column(name="permission",length=100)
