@@ -95,23 +95,17 @@
 				
 					<div class="form-group">
 						<label for="name" class="control-label"><font color="red">*</font>资源名:</label> <input
-							type="text" class="form-control required" id="name" name="name">
+							type="text" class="form-control " id="name" name="name">
 					</div>
 					<div class="form-group">
 						<label for="permission" class="control-label"><font color="red">*</font>权限字符串:</label> <input
-							type="text" class="form-control required" id="permission" name="permission">
+							type="text" class="form-control " id="permission" name="permission">
 					</div>
 					<div class="form-group">
-						<label for="type" class="control-label"><font color="red">*</font>资源类型:</label> <!-- <input
-							type="text" class="form-control required" id="type" name="type"> -->
+						<label for="type" class="control-label"><font color="red">*</font>资源类型:</label> 
 							
-							<select
-								 data-placeholder="选择资源类型"
-								class="form-control select2 js-example-basic-single"
-								tabindex="-1"  style="width: 100%">								
-									<option value="menu">menu</option>
-									<option value="button" selected="selected">button</option>
-							</select>
+						<input name="type" type="radio" value="menu" >Menu
+						<input name="type" type="radio" value="button" checked="checked">Button
 					</div>
 					<div class="form-group">
 						<label for="url" class="control-label">菜单路径URL:</label> <input
@@ -119,7 +113,8 @@
 					</div>
 					<div class="form-group">
 						<label for="priority" class="control-label"><font color="red">*</font>排序优先级:</label> <input
-							type="text" class="form-control required digits" id="priority" name="priority" value="1">
+						placeholder="优先级数字越小，排在越上面"
+							type="text" class="form-control" id="priority" name="priority" value="1">
 					</div>	
 						
 					
@@ -197,14 +192,33 @@
 		
 			$("#name").focus();
 			 $("#addForm").validate({
+				 rules:{
+					 name:"required",
+					 permission:"required",
+					 priority:{
+						 min:1,//无效
+						 max:10,
+						 required:true,
+						 digits:true	
+						 }
+				 },
+				 messages:{
+					 name:"请输入名字",
+					 priority:{
+						 max: jQuery.validator.format("请输入一个最大为{0} 的值"),
+						 min: jQuery.validator.format("请输入一个最小为{0} 的值"),
+						 required: "必选字段",
+						 digits: "只能输入整数"
+					 }
+				 },
+				 
 				 submitHandler : function(form){
 			           	$.ajax({
 							async : false,
 							cache : false,
 							type : 'POST',
 							data :  $("#addForm").serialize(),
-						   // contentType : 'application/json',    //发送信息至服务器时内容编码类型
-							//dataType : "json",
+						   
 							url : "resource/add",//请求的action路径  
 							error : function() {//请求失败处理函数  
 								alert('失败');

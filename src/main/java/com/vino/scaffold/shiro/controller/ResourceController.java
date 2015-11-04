@@ -1,12 +1,9 @@
 package com.vino.scaffold.shiro.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpSession;
-
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.vino.scaffold.controller.base.BaseController;
 import com.vino.scaffold.entity.Constants;
 import com.vino.scaffold.shiro.entity.Resource;
@@ -67,12 +63,7 @@ public class ResourceController extends BaseController{
 		model.addAttribute("searchParamsMap", searchParams);
 		return "resource/list";
 	}
-	@RequiresPermissions("resource:create")
-	@RequestMapping(value="/prepareAdd",method=RequestMethod.GET)
-	public String prepareAddUser(Model model){
-	
-		return "resource/add";
-	}
+
 	@RequiresPermissions("resource:create")
 	@RequestMapping(value="/add",method=RequestMethod.POST)
 	public String addRole(Model model ,Resource resource,HttpSession session){

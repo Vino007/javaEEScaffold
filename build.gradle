@@ -1,6 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'war' 
 apply plugin: 'eclipse-wtp' 
+apply plugin: 'jetty'
 
 // Uses JDK 7
 sourceCompatibility = 1.8

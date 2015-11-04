@@ -17,19 +17,15 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @ControllerAdvice
 public class DefaultExceptionHandler {
-	/**
-     * 没有权限 异常
-     * <p/>
-     * 后续根据不同的需求定制即�?
-     */
+	
     @ExceptionHandler({UnauthorizedException.class})
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ModelAndView processUnauthenticatedException(NativeWebRequest request, UnauthorizedException e) {
         ModelAndView mv = new ModelAndView();
         mv.addObject("exception", e);
-        mv.setViewName("unauthorized");//跳转到unauthorized.jsp
+        mv.setViewName("unauthorized");
         Logger log=Logger.getLogger(this.getClass());
-        log.info("捕获未授权异常");
+      
         return mv;
     }
 
