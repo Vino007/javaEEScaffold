@@ -63,6 +63,9 @@ public class ResourceServiceImpl extends AbstractBaseServiceImpl<Resource, Long>
 		if(resource.getAvailable()!=null){
 			resource2.setAvailable(resource.getAvailable());
 		}
+		if(resource.getPermission()!=null){
+			resource2.setPermission(resource.getPermission());
+		}
 	}
 
 	@Override

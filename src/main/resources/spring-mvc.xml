@@ -44,7 +44,7 @@
     </mvc:annotation-driven>
     
     
-   <!--  <mvc:view-controller path="/" view-name="index"/> --><!-- 如果当前路径是/ 则交给相应的视图解析器直接解析为视图 -->
+   <!--   <mvc:view-controller path="/404" view-name="404"/> --> <!-- 如果当前路径是/ 则交给相应的视图解析器直接解析为视图 -->
     <!-- 默认的视图解析器 在上边的解析错误时使用 (默认使用html)- -->
     <bean id="defaultViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
@@ -57,6 +57,7 @@
 	<!-- 静态资源文件处理，mapping为映射,location为实际路径，根路径为webapp路径 -->
 	<mvc:resources mapping="/resources/**" location="/resources/" /> 
 	<!-- 静态html处理 -->
+	<mvc:resources location="/WEB-INF/pages/static/" mapping="/static/**"></mvc:resources>
 	<mvc:resources location="/resources/html/" mapping="/html/**"></mvc:resources>
 	<mvc:resources location="/resources/js/" mapping="/js/**"></mvc:resources>
 	<mvc:resources location="/resources/css/" mapping="/css/**"></mvc:resources>

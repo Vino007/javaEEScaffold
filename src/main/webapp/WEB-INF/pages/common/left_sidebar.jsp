@@ -46,24 +46,7 @@
 					<span>系统管理</span> <i class="fa fa-angle-left pull-right"></i></a>
 				<ul class="treeview-menu">
 					<v:sidebarRank currentUser="${currentUser }"/>	
-				<%-- 	<c:forEach var="role" items="${currentUser.roles}">
-					
-				
-						 <c:forEach var="resource" items="${role.resources}">
-							<c:if test="${resource.type=='menu'}">
-							<li><a class="sidebarMenuHref" href="${resource.url}">${resource.name}</a></li>
-							</c:if>							
-						</c:forEach>
-					</c:forEach>
-				 --%>
-			 		<%-- <shiro:hasRole name="admin">
-					
-					<c:forEach var="resource" items="${resources}">
-							<c:if test="${resource.type=='menu'}">
-							<li><a class="sidebarMenuHref" href="${resource.url}">${resource.name}</a></li>
-							</c:if>							
-						</c:forEach>
-					</shiro:hasRole>		 --%>		
+			
 				</ul>
 				</li>
 		</ul>

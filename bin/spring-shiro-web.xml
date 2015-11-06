@@ -99,6 +99,9 @@
         <property name="loginUrl" value="/login"/>
         <property name="rememberMeParam" value="rememberMe"/><!--即rememberMe请求参数名，请求参数是boolean类型，true表示rememberMe。   -->
     </bean>
+    <bean id="monitorFilter" class="com.vino.scaffold.shiro.filter.MonitorAccessControlFilter"></bean> 
+    
+    
     
 	
     <!-- Shiro的Web过滤器 -->
@@ -112,13 +115,16 @@
         <property name="filters">
             <util:map>
                 <entry key="authc" value-ref="formAuthenticationFilter"/><!-- filters该属性用于定义自定义的过滤器 -->
+                 <entry key="monitor" value-ref="monitorFilter"/> 
             </util:map>
         </property>
+       
         <property name="filterChainDefinitions"><!-- 用于申明过滤器与url的关系 -->
             <value>
                <!--  /index.jsp = anon	匿名过滤器，允许不登陆访问 -->
                 /login = authc		<!--authc拦截器会判断用户是否是通过Subject.login（isAuthenticated()==true）登录的，如果是才放行，否则会跳转到登录页面叫你重新登录  -->
                 /logout = logout 	<!-- 注销拦截器 --> 
+                /druid/**=monitor
                 /register=anon
                 /prepareRegister=anon              
                 /authenticated = user <!-- isRemenber=true或者是通过login登录的就可以通过 -->

@@ -8,9 +8,9 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/persistence_2_1.xsd" 
             <!--声明数据库连接的驱动-->
 			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
             <!--jdbc数据库的连接地址-->
-			<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/javaEEScaffold"/>
+		<!-- 	<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/javaEEScaffold"/>
 			<property name="hibernate.connection.username" value="root"/>
-			<property name="hibernate.connection.password" value="1haows"/>
+			<property name="hibernate.connection.password" value="1haows"/> -->
             <!--配置方言-->
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
             <!--激活查询日志功能-->

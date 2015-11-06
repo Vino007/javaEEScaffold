@@ -38,8 +38,13 @@ public class SidebarRankTag extends SimpleTagSupport{
 		});
 		System.out.println(menuResources);
 		JspWriter out=getJspContext().getOut();
-		for(Resource res : menuResources)
-		out.println("<li><a class='sidebarMenuHref' href='"+res.getUrl()+"'>"+res.getName()+"</a></li>");		
+		for(Resource res : menuResources){
+			if(res.getUrl().equals("druid"))
+				out.println("<li><a  href='"+res.getUrl()+"'>"+res.getName()+"</a></li>");//直接跳转到监控页面
+			else
+				out.println("<li><a class='sidebarMenuHref' href='"+res.getUrl()+"'>"+res.getName()+"</a></li>");	
+		
+		}
 	}
 	public User getCurrentUser() {
 		return currentUser;

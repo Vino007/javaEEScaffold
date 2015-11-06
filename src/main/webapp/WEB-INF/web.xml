@@ -36,6 +36,7 @@
         <servlet-name>spring</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+    
       <!-- Spring配置文件结束 -->
 
     <!-- shiro 安全过滤器 -->
@@ -72,7 +73,7 @@
         <filter-name>encodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-    
+  	  
     <filter> 
     	<description>使session在一个http请求中保持打开状态过滤器</description>
    		<filter-name>SpringOpenEntityManagerInViewFilter</filter-name> 
@@ -84,12 +85,53 @@
    		<filter-name>SpringOpenEntityManagerInViewFilter</filter-name> 
    		<url-pattern>/*</url-pattern> 
 	</filter-mapping>
-    
-   
-    
+	
+	
+	<!-- 下面为Druid默认配置，过滤掉多余的url地址 -->
+  <filter>
+    <filter-name>DruidWebStatFilter</filter-name>
+    <filter-class>com.alibaba.druid.support.http.WebStatFilter</filter-class>
+    <init-param>
+      <param-name>exclusions</param-name>
+      <param-value>*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*</param-value>
+    </init-param>
+    <init-param>
+        <param-name>principalSessionName</param-name>
+        <param-value>currentUsername</param-value>
+    </init-param>
+    <init-param>
+        <param-name>principalCookieName</param-name>
+        <param-value>currentUsername</param-value>
+    </init-param>
+    <!-- 配置profileEnable能够监控单个url调用的sql列表。 -->
+	 <init-param>
+	    <param-name>profileEnable</param-name>
+	    <param-value>true</param-value>
+	</init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>DruidWebStatFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
   
-   
-    
-        
-
+	<servlet>
+      	<servlet-name>DruidStatView</servlet-name>
+     	 <servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
+     	 
+    <!-- deny优先于allow，如果在deny列表中，就算在allow列表中，也会被拒绝。
+    	 如果allow没有配置或者为空，则允许所有访问 --> 
+    	 <!-- <IP>或者<IP>/<SUB_NET_MASK_size> -->  	 
+	  <!--   <init-param>
+	        <param-name>allow</param-name>
+	        <param-value>128.242.127.1/24,128.242.128.1</param-value>   
+	    </init-param>
+	    <init-param>
+	        <param-name>deny</param-name>
+	        <param-value>128.242.127.4</param-value>
+	    </init-param> -->
+ 	</servlet>
+    <servlet-mapping>
+      	<servlet-name>DruidStatView</servlet-name>
+      	<url-pattern>/druid/*</url-pattern>
+    </servlet-mapping>
 </web-app>
