@@ -46,10 +46,6 @@ public class HomeController extends BaseController{
 		request.setAttribute("resources", resources);
 		return "index";
 	}
-	
-	public UserService getUserService() {
-		return userService;
-	}
 
 
 	public void setUserService(UserService userService) {

@@ -38,8 +38,9 @@ public class UserRealm extends AuthorizingRealm {
         System.out.println("dogetAuthorization 获取权限");
         //更新登录时间
         User curUser=userService.findByUsername(username);
-        if(curUser.getLoginTime()!=null)
-        curUser.setLastLoginTime(curUser.getLoginTime());
+        if(curUser.getLoginTime()!=null){
+        	curUser.setLastLoginTime(curUser.getLoginTime());
+        }
 		curUser.setLoginTime(new Date());		
 		userService.update(curUser);
 		
@@ -50,6 +51,14 @@ public class UserRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         String username = (String)token.getPrincipal();
         User user = userService.findByUsername(username);
+        //更新登录时间
+        User curUser=userService.findByUsername(username);
+        if(curUser.getLoginTime()!=null){
+        	curUser.setLastLoginTime(curUser.getLoginTime());
+        }
+		curUser.setLoginTime(new Date());		
+		userService.update(curUser);
+		
         System.out.println("doGetAuthenticationInfo 登录");
         if(user == null) {
             throw new UnknownAccountException();//没找到帐号

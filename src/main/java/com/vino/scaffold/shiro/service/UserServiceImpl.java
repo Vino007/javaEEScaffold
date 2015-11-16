@@ -180,6 +180,12 @@ public class UserServiceImpl extends AbstractBaseServiceImpl<User, Long>  implem
 		if(user.getLastLoginTime()!=null){
 			user2.setLastLoginTime(user.getLastLoginTime());
 		}
+		if(user.getPassword()!=null){
+			user2.setPassword(user.getPassword());
+		}
+		if(user.getLoginTime()!=null){
+			user2.setLoginTime(user.getLoginTime());
+		}
 		
 	}
     /**

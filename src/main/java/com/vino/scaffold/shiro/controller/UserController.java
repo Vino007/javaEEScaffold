@@ -161,13 +161,14 @@ public class UserController extends BaseController{
 		return "user/list";
 		
 	}
-	/*@RequiresPermissions("user:profile")*/
+	@RequiresPermissions("user:view")
 	@RequestMapping(value="/profile",method=RequestMethod.GET)
 	public  String getProfile(Model model,HttpSession session){
 		/*model.addAttribute("currentUser",session.getAttribute(Constants.CURRENT_USER));*/
 		return "user/profile";
 		
 	}
+	@RequiresPermissions("user:upload")
 	@RequestMapping(value="/prepareUpload",method=RequestMethod.GET)
 	public String prepareUpload(){
 		return "user/upload";
@@ -179,6 +180,7 @@ public class UserController extends BaseController{
 	 * @param request
 	 * @return
 	 */
+	@RequiresPermissions("user:upload")
 	@ResponseBody
 	@RequestMapping(value="/upload",method=RequestMethod.POST)
 	public String upload(Model model,@RequestParam("file")MultipartFile file,HttpServletRequest request){
@@ -214,6 +216,7 @@ public class UserController extends BaseController{
 		
 		return "uploadSuccess";
 	}
+	@RequiresPermissions("user:download")
 	@RequestMapping(value="/download",method=RequestMethod.POST)
 	public ResponseEntity<byte[]> download(@RequestParam(value="downloadIds[]",required=false)Long[] downloadIds,HttpSession session) throws IOException{
 		System.out.println(downloadIds);
@@ -228,23 +231,7 @@ public class UserController extends BaseController{
 	    
 	    return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(new File(realPath+"\\"+fileName)),    
 				                                  headers, HttpStatus.CREATED);
-		
-		
+			
 	}
-	
-	
-	
-	
-	
-	/*public void setRoleService(RoleService roleService) {
-		this.roleService = roleService;
-	}
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
-	public void setUserExcelService(UserExcelService userExcelService) {
-		this.userExcelService = userExcelService;
-	}
-	*/
 	
 }

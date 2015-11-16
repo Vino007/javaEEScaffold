@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%><!-- 不加这句，编码会出错！！ -->
+	pageEncoding="UTF-8"%><!-- 不加这句，编码会出错！！ -->
 <link type="text/css" rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/bootstrap.css" />
 <link rel="stylesheet"
@@ -23,7 +23,10 @@
     -->
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/AdminLTE/dist/css/skins/skin-blue.min.css">
-   <!-- iCheck for checkboxes and radio inputs -->
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/AdminLTE/plugins/iCheck/all.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/AdminLTE/plugins/select2/select2.min.css">   
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/AdminLTE/plugins/daterangepicker/daterangepicker-bs3.css">   
+<!-- iCheck for checkboxes and radio inputs -->
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/AdminLTE/plugins/iCheck/all.css">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/AdminLTE/plugins/select2/select2.min.css">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/AdminLTE/plugins/daterangepicker/daterangepicker-bs3.css">

@@ -50,7 +50,8 @@ public class ResourceController extends BaseController{
 		List<Resource> resources=resourceService.findAll();
 		
 		return TreeUtils.fomatResourceToTree(resources);
-	}	
+	}
+	@RequiresPermissions("resource:view")
 	@RequestMapping(value="/search",method=RequestMethod.GET)
 	public String getRolesByCondition(Model model,Resource resource,@RequestParam(value="pageNumber",defaultValue="1")int pageNumber,ServletRequest request){
 		Map<String,Object> searchParams=Servlets.getParametersStartingWith(request, "search_");
@@ -102,6 +103,7 @@ public class ResourceController extends BaseController{
 		return "resource/list";
 		
 	}
+	@RequiresPermissions("resource:update")
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
 	public String prepareUpdateRole(Model model,@PathVariable("id") Long id){
 		model.addAttribute("resource", resourceService.findOne(id));

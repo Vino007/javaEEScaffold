@@ -40,7 +40,7 @@ public class SidebarRankTag extends SimpleTagSupport{
 		JspWriter out=getJspContext().getOut();
 		for(Resource res : menuResources){
 			if(res.getUrl().equals("druid"))
-				out.println("<li><a  href='"+res.getUrl()+"'>"+res.getName()+"</a></li>");//直接跳转到监控页面
+				out.println("<li><a  href='"+res.getUrl()+"' target='_blank'>"+res.getName()+"</a></li>");//直接跳转到监控页面
 			else
 				out.println("<li><a class='sidebarMenuHref' href='"+res.getUrl()+"'>"+res.getName()+"</a></li>");	
 		

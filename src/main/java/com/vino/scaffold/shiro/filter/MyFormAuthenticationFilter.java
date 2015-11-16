@@ -23,7 +23,11 @@ public class MyFormAuthenticationFilter extends FormAuthenticationFilter{
 		// TODO Auto-generated method stub
 		
 		User curUser=userService.findByUsername((String)subject.getPrincipal());
-		curUser.setLastLoginTime(new Date());
+		//设置登录时间和上次登录时间
+		 if(curUser.getLoginTime()!=null){
+		        curUser.setLastLoginTime(curUser.getLoginTime());
+		 }
+		curUser.setLoginTime(new Date());	
 		userService.update(curUser);
 		System.out.println("执行myfilter");
 		return super.onLoginSuccess(token, subject, request, response);
