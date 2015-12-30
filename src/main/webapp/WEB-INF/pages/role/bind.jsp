@@ -6,7 +6,7 @@
 		aria-label="Close">
 		<span aria-hidden="true">&times;</span>
 	</button>
-	<h4 class="modal-title" id="exampleModalLabel">编辑用户</h4>
+	<h4 class="modal-title" id="exampleModalLabel">绑定资源</h4>
 </div>
 
 <div class="modal-body">
@@ -40,7 +40,7 @@ function getCheckedResourceIds(){
 	return resourceIds;	
 	}
 /* 提交表单 */
-	$('#bindModal').on('shown.bs.modal', function(event) {
+	$('#modal').on('shown.bs.modal', function(event) {
 		$("#bindSubmitBtn").click(function() {			
 			var resourceIds=getCheckedResourceIds();					
 			$.ajax({
@@ -57,7 +57,7 @@ function getCheckedResourceIds(){
 				},
 				success : function(data) { //请求成功后处理函数。    
 					alert("success");						
-					$('#bindModal').on('hidden.bs.modal',function(event){//当modal框完全隐藏后再刷新页面content，要不然有bug
+					$('#modal').on('hidden.bs.modal',function(event){//当modal框完全隐藏后再刷新页面content，要不然有bug
 						$("#content-wrapper").html(data);//刷新content页面
 					});
 				}

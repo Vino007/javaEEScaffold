@@ -26,14 +26,14 @@
                 <!-- Menu Toggle Button -->
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <!-- The user image in the navbar-->
-                  <img src="resources/AdminLTE/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                  <img src="<%=request.getContextPath()%>/resources/AdminLTE/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
                   <!-- hidden-xs hides the username on small devices so only the image appears. -->
                   <span class="hidden-xs">${currentUser.userAlias}</span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- The user image in the menu -->
                   <li class="user-header">
-                    <img src="resources/AdminLTE/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                    <img src="<%=request.getContextPath()%>/resources/AdminLTE/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                     <p>
                      <strong>${currentUser.userAlias}</strong> 
                       <small>上次登录时间:<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${currentUser.lastLoginTime}"></fmt:formatDate></small>
@@ -53,9 +53,9 @@
                 </ul>
               </li>
               <!-- Control Sidebar Toggle Button -->
-              <li>
+          <!--     <li>
                 <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-              </li>
+              </li> -->
             </ul>
           </div>
         </nav>

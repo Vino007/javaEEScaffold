@@ -57,7 +57,7 @@
 	<!-- 静态资源文件处理，mapping为映射,location为实际路径，根路径为webapp路径 -->
 	<mvc:resources mapping="/resources/**" location="/resources/" /> 
 	<!-- 静态html处理 -->
-	<mvc:resources location="/WEB-INF/pages/static/" mapping="/static/**"></mvc:resources>
+	<mvc:resources location="/WEB-INF/pages/static/" mapping="/static/**"></mvc:resources><!-- 静态页面请求，如404.html -->
 	<mvc:resources location="/resources/html/" mapping="/html/**"></mvc:resources>
 	<mvc:resources location="/resources/js/" mapping="/js/**"></mvc:resources>
 	<mvc:resources location="/resources/css/" mapping="/css/**"></mvc:resources>

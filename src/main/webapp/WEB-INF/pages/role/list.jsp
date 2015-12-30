@@ -82,8 +82,7 @@
 			
 						<shiro:hasPermission name="role:create">
 						<button id="addBtn" type="button"
-							class="btn  btn-primary btn-flat margin" data-toggle="modal"
-							data-target="#addModal" onclick="addItem()">
+							class="btn  btn-primary btn-flat margin" onclick="addItem()">
 							<span class="fa fa-fw  fa-plus" aria-hidden="true"></span> 新增
 						</button>
 						</shiro:hasPermission>
@@ -93,19 +92,20 @@
 							<span class="fa fa-fw fa-remove" aria-hidden="true"></span> 删除</button>
 						</shiro:hasPermission>
 					</div>
-					<table class="table table-hover">
+				<div class="table-responsive">
+					<table class="table table-hover center">
 						<tr>
 							<th style="width: 10px"><label> <input id="allCheck"
 									type="checkbox" class="minimal" value="0">
 							</label></th>
 							<th style="width: 10px">#</th>
 							<th>角色名</th>
-							<th>资源</th>
+							<!-- <th>资源</th> -->
 							<th>描述</th>
 							<th>创建时间</th>
 							<th>创建人</th>
 							<!-- <th style="width: 60px">状态</th> -->
-							<th style="width: 200px">操作</th>
+							<th >操作</th>
 
 						</tr>
 						<c:forEach items="${roles}" var="role" varStatus="status">
@@ -114,7 +114,7 @@
 										class="minimal deleteCheckbox" value="${role.id}"></label></td>
 								<td>${status.count}</td>
 								<td>${role.name}</td>
-								<td><c:forEach var="resource" items="${role.resources}">${resource.name}&nbsp;&nbsp;&nbsp;&nbsp;</c:forEach></td>
+								<%-- <td><c:forEach var="resource" items="${role.resources}">${resource.name}&nbsp;&nbsp;&nbsp;&nbsp;</c:forEach></td> --%>
 								<td>${role.description}</td>
 								<td><fmt:formatDate  pattern="yyyy-MM-dd HH:mm:ss" value="${role.createTime}"/></td>
 								<td>${role.creatorName}</td>
@@ -129,23 +129,21 @@
 								<td>
 									<shiro:hasPermission name="role:update">
 									<button id="updateBtn" type="button"
-										class="btn btn-xs btn-primary btn-flat " data-toggle="modal"
-										data-target="#updateModal" onclick='updateItem(${role.id})'>编辑</button>
+										class="btn btn-xs btn-primary btn-flat"  onclick='updateItem(${role.id})'>编辑</button>
 									</shiro:hasPermission>
 									<shiro:hasPermission name="role:view">
 									<button id="detailBtn" type="button"
-										class="btn  btn-xs btn-primary btn-flat " data-toggle="modal"
-										data-target="#detailModal" onclick='detailItem(${role.id})'>详情</button>
+										class="btn  btn-xs btn-primary btn-flat"  onclick='detailItem(${role.id})'>详情</button>
 									</shiro:hasPermission>
 									<shiro:hasPermission name="role:bind">
 									<button id="bindRoleBtn" type="button"
-										class="btn  btn-xs btn-primary btn-flat " data-toggle="modal"
-										data-target="#bindModal" onclick='bindItem(${role.id})'>资源绑定</button>
+										class="btn  btn-xs btn-primary btn-flat "  onclick='bindItem(${role.id})'>资源绑定</button>
 									</shiro:hasPermission>
 								</td>
 							</tr>
 						</c:forEach>
 					</table>
+					</div>
 				</div>
 				<!-- /.box-body -->
 				<!-- 分页 -->
@@ -158,7 +156,7 @@
 <!-- /.content -->
 
 <!-- 新增页面 modal框 -->
-<div class="modal fade" id="addModal" tabindex="-1" role="dialog"
+<div class="modal fade" id="modal" tabindex="-1" role="dialog"
 	aria-labelledby="exampleModalLabel">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
@@ -167,38 +165,33 @@
 	</div>
 </div>
 <!-- ./新增页面 modal框 -->
-
-<!-- 编辑页面 modal框  -->
-<div class="modal fade" id="updateModal" tabindex="-1" role="dialog"
+<!-- 删除确认页面 modal框 -->
+<div class="modal fade" id="deleteConfirmModal" tabindex="-1" role="dialog"
 	aria-labelledby="exampleModalLabel">
 	<div class="modal-dialog" role="document">
-		<div class="modal-content"></div>
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="exampleModalLabel">删除角色</h4>
+			</div>
+			<div class="modal-body">
+				<div>确定要删除吗？</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary" id="deleteConfirmBtn">提交</button>
+			</div>
+		</div>
 	</div>
 </div>
-
-<!-- 详情页面 modal框  -->
-<div class="modal fade" id="detailModal" tabindex="-1" role="dialog"
-	aria-labelledby="exampleModalLabel">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content"></div>
-	</div>
-</div>
-
-<!-- bind页面 modal框  -->
-<div class="modal fade" id="bindModal" tabindex="-1" role="dialog"
-	aria-labelledby="exampleModalLabel">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content"></div>
-	</div>
-</div>
-
-<script>
-	/*   */
+<script>	
 	//Date range picker
 	$('#reservation').daterangepicker();
 	//Date range picker with time picker
-	$('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A'});
-	
+	$('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A'});	
 	/* icheck 初始化 详情：https://github.com/fronteed/icheck */
    	iCheckInit();
  	/* iCheck事件监听 详情：https://github.com/fronteed/icheck */
@@ -206,19 +199,21 @@
 	$(document).ready(function(){
 		$('#allCheck').on('ifToggled', function(event){		
 			$('input[class*="deleteCheckbox"]').iCheck('toggle');			
+		});		
+	});	
+	//删除确认modal事件处理
+	$('#deleteConfirmModal').on('shown.bs.modal', function(event) {
+		$('#deleteConfirmBtn').click(function(){
+			deleteItemsUseModal("input[class*='deleteCheckbox']","role/delete");
 		});
-		
 	});
-	
 	/* button监听事件 */
 	$(document).ready(function(){
 		$("#deleteBtn").click(function(){
-			deleteItems("input[class*='deleteCheckbox']","role/delete");
+			$("#deleteConfirmModal").modal();	
 		});
 		
 	});
-		
- 	
 	
 	$("#searchBtn").click(function() {
 		$('#pageNumber').val(1);
@@ -237,25 +232,25 @@
 			}
 		});
 	});
+	function modalLoadAndDisplay(url){	
+		$('#modal .modal-content').load(url,function(){
+			$("#modal").modal();
+		});		
+	}
 	function addItem(){
-		$("#addModal").on('show.bs.modal',function(event){
-			$('#addModal .modal-content').load('role/prepareAdd');
-		});
+		modalLoadAndDisplay('role/prepareAdd');
 	}
-	function updateItem(id){
-		$('#updateModal').on('show.bs.modal',function(event){
-			$('#updateModal .modal-content').load('role/'+id);
-		});
+	
+	function updateItem(id){	
+		modalLoadAndDisplay('role/'+id);
 	}
+	
 	function detailItem(id){
-		$('#detailModal').on('show.bs.modal',function(event){
-			$('#detailModal .modal-content').load('role/detail/'+id)
-		});
+		modalLoadAndDisplay('role/detail/'+id);
 	}
+	
 	function bindItem(id){
-		$('#bindModal').on('show.bs.modal',function(event){
-			$('#bindModal .modal-content').load('role/prepareBind/'+id)
-		});
-	}
+		modalLoadAndDisplay('role/prepareBind/'+id);	
+	}	
 	
 </script>

@@ -36,13 +36,13 @@ public class SidebarRankTag extends SimpleTagSupport{
 				return o1.getPriority().compareTo(o2.getPriority());
 			}
 		});
-		System.out.println(menuResources);
+		
 		JspWriter out=getJspContext().getOut();
 		for(Resource res : menuResources){
 			if(res.getUrl().equals("druid"))
-				out.println("<li><a  href='"+res.getUrl()+"' target='_blank'>"+res.getName()+"</a></li>");//直接跳转到监控页面
+				out.println("<li><a  href='"+res.getUrl()+"' target='_blank'><i class='fa fa-laptop'></i><span>"+res.getName()+"</span></a></li>");//直接跳转到监控页面
 			else
-				out.println("<li><a class='sidebarMenuHref' href='"+res.getUrl()+"'>"+res.getName()+"</a></li>");	
+				out.println("<li><a class='sidebarMenuHref' href='"+res.getUrl()+"'><i class='fa  fa-circle-o'></i><span>"+res.getName()+"</span></a></li>");	
 		
 		}
 	}

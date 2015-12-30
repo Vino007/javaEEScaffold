@@ -22,7 +22,7 @@
 			</form>
 			<script src="${pageContext.request.contextPath}/resources/js/jquery.form.js"></script>
 <script>
- 	$('#uploadModal').on('shown.bs.modal', function(event) { 
+ 	$('#modal').on('shown.bs.modal', function(event) { 
 				 $("#uploadForm").submit(function(event){
 					 var file=$("#file").val();
 					 var fileType=file.substring(file.lastIndexOf(".")+1); 

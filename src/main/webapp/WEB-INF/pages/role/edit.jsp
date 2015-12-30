@@ -14,12 +14,12 @@
 
 					<input name="id" value="${role.id}" hidden="true"/>
 					<div class="form-group">
-						<label for="name" class="control-label">角色名:</label> <input
-							type="text" class="form-control" id="name" name="name" disabled="disabled" value="${role.name}" >
+						<label for="name" class="control-label">角色名:</label>${role.name}<%--  <input
+							type="text" class="form-control" id="name" name="name" disabled="disabled" value="${role.name}" > --%>
 					</div>					
 					<div class="form-group">
 						<label for="description" class="control-label">描述:</label> <input
-							type="text" class="form-control required" id="description" name="description" value="${role.description}">
+							type="text" class="form-control" id="description" name="description" value="${role.description}">
 					</div>
 					<div class="form-group">
 						<label for="available" class="control-label">状态:</label> 
@@ -43,9 +43,9 @@
 			</form>
 <script>
 /* 异步提交表单及更新content */
-$('#updateModal').on('shown.bs.modal', function(event) {
+$('#modal').on('shown.bs.modal', function(event) {
 
-	$('#updateForm').validate({
+	$('#updateForm').validate({	
 		 submitHandler : function(form){
 			$.ajax({
 				async : false,
@@ -58,7 +58,7 @@ $('#updateModal').on('shown.bs.modal', function(event) {
 				},
 				success : function(data) { //请求成功后处理函数。    
 					alert("success");						
-					$('#updateModal').on('hidden.bs.modal',function(event){//当modal框完全隐藏后再刷新页面content，要不然有bug
+					$('#modal').on('hidden.bs.modal',function(event){//当modal框完全隐藏后再刷新页面content，要不然有bug
 						$("#content-wrapper").html(data);//刷新content页面
 					});
 				}

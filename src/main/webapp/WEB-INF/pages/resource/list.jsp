@@ -50,14 +50,12 @@
 						</shiro:hasPermission>	
 						<shiro:hasPermission name="resource:view">
 						<button id="detailBtn" type="button"
-							class="btn  btn-primary btn-flat margin" data-toggle="modal"
-										data-target="#detailModal" onclick=''>
+							class="btn  btn-primary btn-flat margin"  onclick=''>
 							<span class="fa fa-fw fa-newspaper-o" aria-hidden="true"></span> 详情</button>	
 						</shiro:hasPermission>
 						<shiro:hasPermission name="resource:update">
 						<button id="updateBtn" type="button"
-							class="btn  btn-primary btn-flat margin" data-toggle="modal"
-										data-target="#updateModal" onclick=''>
+							class="btn  btn-primary btn-flat margin"  onclick=''>
 							<span class="fa fa-fw fa-pencil-square-o" aria-hidden="true"></span> 编辑</button>	
 							</shiro:hasPermission>	
 							
@@ -99,7 +97,7 @@
 					</div>
 					<div class="form-group">
 						<label for="permission" class="control-label"><font color="red">*</font>权限字符串:</label> <input
-							type="text" class="form-control " id="permission" name="permission">
+							type="text" class="form-control " id="permission" name="permission" placeholder="如 user:create">
 					</div>
 					<div class="form-group">
 						<label for="type" class="control-label"><font color="red">*</font>资源类型:</label> 
@@ -133,20 +131,14 @@
 <!-- ./新增页面 modal框 -->
 
 <!-- 编辑页面 modal框  -->
-<div class="modal fade" id="updateModal" tabindex="-1" role="dialog"
+<div class="modal fade" id="modal" tabindex="-1" role="dialog"
 	aria-labelledby="exampleModalLabel">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content"></div>
 	</div>
 </div>
 
-<!-- 详情页面 modal框  -->
-<div class="modal fade" id="detailModal" tabindex="-1" role="dialog"
-	aria-labelledby="exampleModalLabel">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content"></div>
-	</div>
-</div>
+
 
 
 
@@ -186,29 +178,37 @@
 		});
 		
 	});
-		
+	
+	
  	/*modal框事件监听 详情：http://v3.bootcss.com/javascript/#modals-events */
 	$('#addModal').on('shown.bs.modal', function(event) {	
 		
 			$("#name").focus();
 			 $("#addForm").validate({
 				 rules:{
-					 name:"required",
-					 permission:"required",
+					 name:{ //格式：domId: 规则
+						 minlength:2,//无效
+						 maxlength:30,
+						 required:true,							 	
+						 },
+					 type:"required",					
+					 permission:{
+						 required:true,
+						 isPermission:true
+					 },//正则来校验，校验方法在additional-method.js里
 					 priority:{
 						 min:1,//无效
-						 max:10,
+						 max:999,
 						 required:true,
 						 digits:true	
 						 }
 				 },
-				 messages:{
-					 name:"请输入名字",
+				 messages:{					
 					 priority:{
-						 max: jQuery.validator.format("请输入一个最大为{0} 的值"),
-						 min: jQuery.validator.format("请输入一个最小为{0} 的值"),
-						 required: "必选字段",
-						 digits: "只能输入整数"
+						 max: jQuery.validator.format("请输入一个最大为{0} 的数"),
+						 min: jQuery.validator.format("请输入一个最小为{0} 的数"),						
+						 digits: "只能输入整数",
+						 reuqired:true
 					 }
 				 },
 				 
@@ -261,15 +261,18 @@
 		});
 	});
 
-	function updateItem(id){
-		$('#updateModal').on('show.bs.modal',function(event){
-			$('#updateModal .modal-content').load('resource/'+id);
-		});
+	function modalLoadAndDisplay(url){	
+		$('#modal .modal-content').load(url,function(){
+			$("#modal").modal();
+		});		
 	}
+	
+	function updateItem(id){	
+		modalLoadAndDisplay('resource/'+id);
+	}
+	
 	function detailItem(id){
-		$('#detailModal').on('show.bs.modal',function(event){
-			$('#detailModal .modal-content').load('resource/detail/'+id)
-		});
+		modalLoadAndDisplay('resource/detail/'+id);
 	}
 	/* ztree */
 	/* 节点点击的时候回调函数*/

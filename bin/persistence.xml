@@ -6,17 +6,17 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/persistence_2_1.xsd" 
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<properties>
             <!--声明数据库连接的驱动-->
-			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
+			<property name="hibernate.connection.driver_class" value="${db.driver}"/>
             <!--jdbc数据库的连接地址-->
-		<!-- 	<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/javaEEScaffold"/>
-			<property name="hibernate.connection.username" value="root"/>
-			<property name="hibernate.connection.password" value="1haows"/> -->
+			<property name="hibernate.connection.url" value="${db.url}"/>
+			<property name="hibernate.connection.username" value="${db.user}"/>
+			<property name="hibernate.connection.password" value="${db.password}"/> 
             <!--配置方言-->
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
             <!--激活查询日志功能-->
 			<property name="hibernate.show_sql" value="true"/>
             <!--优雅地输出Sql-->
-			<property name="hibernate.format_sql" value="true"/>
+			<!-- <property name="hibernate.format_sql" value="true"/> -->
             <!--添加一条解释型标注-->
 			<property name="hibernate.use_sql_comments" value="false"/>
             <!--配置如何根据java模型生成数据库表结构,常用update,validate-->

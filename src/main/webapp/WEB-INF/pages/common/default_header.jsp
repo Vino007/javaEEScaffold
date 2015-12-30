@@ -7,7 +7,7 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
-
+<link rel="shortcut icon" href="<%=request.getContextPath()%>/resources/img/moon-large.png" type="image/x-icon" /><!-- 设置项目图标 -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <!-- Tell the browser to be responsive to screen width -->
 <meta

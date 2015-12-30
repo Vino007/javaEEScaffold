@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%><!-- 不加这句，编码会出错！！ -->
 <link type="text/css" rel="stylesheet"
-	href="<%=request.getContextPath()%>/resources/css/bootstrap.css" />
+	href="<%=request.getContextPath()%>/resources/css/bootstrap.min.css" />
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/zTreeStyle/zTreeStyle.css"
 	type="text/css">
@@ -30,3 +30,5 @@
 	href="<%=request.getContextPath()%>/resources/AdminLTE/plugins/select2/select2.min.css">
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/AdminLTE/plugins/daterangepicker/daterangepicker-bs3.css">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/app.css">

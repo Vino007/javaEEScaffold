@@ -12,7 +12,7 @@
 		<!-- Sidebar user panel (optional) -->
 		<div class="user-panel">
 			<div class="pull-left image">
-				<img src="resources/AdminLTE/dist/img/user2-160x160.jpg"
+				<img src="<%=request.getContextPath()%>/resources/AdminLTE/dist/img/user2-160x160.jpg"
 					class="img-circle" alt="User Image">
 			</div>
 			<div class="pull-left info">
@@ -37,18 +37,19 @@
 		<!-- /.search form -->
 		<!-- Sidebar Menu -->
 		<ul class="sidebar-menu">
-			<li class="header">HEADER</li>
+			<li class="header">MAIN NAVIGATION</li>
 			<!-- Optionally, you can add icons to the links -->
 		
 		<!-- 	<li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li> -->
 			
-			<li class="treeview"><a href="#"><i class="fa fa-link"></i>
-					<span>系统管理</span> <i class="fa fa-angle-left pull-right"></i></a>
-				<ul class="treeview-menu">
-					<v:sidebarRank currentUser="${currentUser }"/>	
+			<li class="treeview">
+			<!-- <a href="#"><i class="fa fa-link"></i><span>系统管理</span> <i class="fa fa-angle-left pull-right"></i></a> -->
+				<!-- <ul class="treeview-menu"> -->
+					<v:sidebarRank currentUser="${currentUser}"/>	
 			
-				</ul>
-				</li>
+				<!-- </ul -->
+			</li>
+			<!-- <li><a href="../../documentation/index.html"><i class="fa fa-book"></i> <span>Documentation</span></a></li> -->
 		</ul>
 		<!-- /.sidebar-menu -->
 	</section>

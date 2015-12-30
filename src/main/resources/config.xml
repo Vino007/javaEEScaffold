@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+     <!-- 注入properties配置文件管理 -->  
+	<bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="locations">
+            <list>
+                <value>classpath:/config/database.properties</value>
+                <value>classpath:/config/druid.properties</value>
+                <value>classpath:/config/shiro.properties</value>
+                <value>classpath:/config/system.properties</value>
+            </list>
+        </property>
+    </bean> 
+    <!-- 将多个配置文件读取到容器中，交给Spring管理 -->  
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">  
+  		  <property name="properties" ref="configProperties" /> 		
+    </bean>  
+</beans>
