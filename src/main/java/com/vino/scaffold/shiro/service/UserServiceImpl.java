@@ -27,6 +27,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.vino.scaffold.entity.Constants;
 import com.vino.scaffold.service.base.AbstractBaseServiceImpl;
 import com.vino.scaffold.shiro.entity.Role;
 import com.vino.scaffold.shiro.entity.User;
@@ -250,6 +251,9 @@ public class UserServiceImpl extends AbstractBaseServiceImpl<User, Long>  implem
 		for(User user:users){
     	if(userRepository.findByUsername(user.getUsername())!=null)
     		throw new UserDuplicateException();
+    	if(user.getPassword()==null){
+    		user.setPassword(Constants.DEFAULT_PASSWORD);
+    	}
         //º”√‹√‹¬Î
         passwordHelper.encryptPassword(user);
         user.setCreateTime(new Date());

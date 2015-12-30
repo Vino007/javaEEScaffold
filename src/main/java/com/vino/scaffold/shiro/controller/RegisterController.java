@@ -21,9 +21,6 @@ public class RegisterController extends BaseController{
 	}
 	@RequestMapping(value="/register",method=RequestMethod.POST)
 	public String register(Model model,User user){
-		//User u=userService.findByUsername(user.getUsername());
-		
-		System.out.println(user);
 		try {
 			userService.saveWithCheckDuplicate(user);
 		} catch (UserDuplicateException e) {

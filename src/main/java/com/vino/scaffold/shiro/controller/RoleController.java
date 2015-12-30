@@ -57,7 +57,6 @@ public class RoleController extends BaseController{
 		model.addAttribute("roles",rolePage.getContent());
 		model.addAttribute("page", rolePage);	
 		model.addAttribute("searchParams", Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
-		System.out.println("返回到页面的搜索参数"+Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
 		model.addAttribute("searchParamsMap", searchParams);
 		return "role/list";
 	}

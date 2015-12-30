@@ -38,7 +38,6 @@ public class UserExcelService {
 	}
 	public void saveToExcel(String path,Long...ids) throws FileNotFoundException{
 		List<User> users=userService.find(ids);
-		System.out.println("创建excel"+users);
 		File file=new File(path);
 		createExcel(new FileOutputStream(file), users);
 	}
@@ -63,7 +62,7 @@ public class UserExcelService {
 		// 创建输入流
 		// 获取Excel文件对象
 		if (file == null || !file.exists()) {
-			System.out.println(file.getName() + "不存在！");
+			return null;
 		}
 		InputStream stream = new FileInputStream(file);
 		rwb = Workbook.getWorkbook(stream);

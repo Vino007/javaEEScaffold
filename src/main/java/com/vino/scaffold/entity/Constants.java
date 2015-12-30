@@ -9,5 +9,6 @@ public class Constants {
 	public final static String CURRENT_USER="currentUser";
 	public final static String CURRENT_USERNAME="currentUsername";
 	public final static String DEFAULT_PASSWORD="123456";
+	public static final int PASSWORD_RETRY_MAX = 10;//√‹¬Î÷ÿ ‘¥Œ ˝
 	
 }

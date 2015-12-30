@@ -1,8 +1,10 @@
 package com.vino.scaffold.shiro.controller;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
+
 
 
 
@@ -44,6 +46,11 @@ public class HomeController extends BaseController{
 		session.setAttribute(Constants.CURRENT_USERNAME, username);
 		List<Resource> resources=resourceService.findAll();//用于前端页面生成侧边栏
 		request.setAttribute("resources", resources);
+		if (currentUser.getLoginTime() != null) { //更新登陆时间
+			currentUser.setLastLoginTime(currentUser.getLoginTime());
+		}
+		currentUser.setLoginTime(new Date());
+		userService.update(currentUser);
 		return "index";
 	}
 

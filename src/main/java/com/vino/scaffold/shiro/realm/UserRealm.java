@@ -14,13 +14,6 @@ import org.apache.shiro.util.ByteSource;
 import com.vino.scaffold.shiro.entity.User;
 import com.vino.scaffold.shiro.service.UserService;
 
-
-
-/**
- * <p>User: Zhang Kaitao
- * <p>Date: 14-1-28
- * <p>Version: 1.0
- */
 public class UserRealm extends AuthorizingRealm {
 
     private UserService userService;
@@ -35,14 +28,7 @@ public class UserRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         authorizationInfo.setRoles(userService.findAllRoleNamesByUsername(username));//查询用户的角色放入凭证中
         authorizationInfo.setStringPermissions(userService.findAllPermissionsByUsername(username));//查询用户权限放入凭证中
-        System.out.println("dogetAuthorization 获取权限");
-        //更新登录时间
-        User curUser=userService.findByUsername(username);
-        if(curUser.getLoginTime()!=null){
-        	curUser.setLastLoginTime(curUser.getLoginTime());
-        }
-		curUser.setLoginTime(new Date());		
-		userService.update(curUser);
+
 		
         return authorizationInfo;
     }

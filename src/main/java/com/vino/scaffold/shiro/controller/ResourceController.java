@@ -60,7 +60,6 @@ public class ResourceController extends BaseController{
 		model.addAttribute("resources",resourcePage.getContent());
 		model.addAttribute("page", resourcePage);	
 		model.addAttribute("searchParams", Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
-		System.out.println("返回到页面的搜索参数"+Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
 		model.addAttribute("searchParamsMap", searchParams);
 		return "resource/list";
 	}

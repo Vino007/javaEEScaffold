@@ -30,7 +30,6 @@ public class MonitorAccessControlFilter extends AccessControlFilter {
 			return false;
 		Set<String> permissions=userService.findAllPermissionsByUsername(username);	
 		for(String permission:permissions){
-			System.out.println(permission);
 			if("monitor:view".equals(permission)){
 				return true;
 			}
@@ -41,7 +40,6 @@ public class MonitorAccessControlFilter extends AccessControlFilter {
 	@Override
 	protected boolean onAccessDenied(ServletRequest request, ServletResponse response)
 			throws Exception {
-		 System.out.println("试图访问监控界面被拒绝，您没有该权限");		 
 		 WebUtils.issueRedirect(request, response, "/static/404.html");//导向404 not found,导向login由于用户已登录，会导致login无效
 		return false;
 	}

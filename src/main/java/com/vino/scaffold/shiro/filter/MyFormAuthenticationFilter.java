@@ -32,6 +32,11 @@ public class MyFormAuthenticationFilter extends FormAuthenticationFilter{
 		System.out.println("Ö´ÐÐmyfilter");
 		return super.onLoginSuccess(token, subject, request, response);
 	}
+	@Override
+	protected boolean executeLogin(ServletRequest arg0, ServletResponse arg1) throws Exception {
+		// TODO Auto-generated method stub
+		return super.executeLogin(arg0, arg1);
+	}
 	
 
 }
