@@ -18,7 +18,7 @@ import javax.persistence.TemporalType;
 import com.vino.scaffold.entity.base.BaseEntity;
 
 @Entity
-@Table(name = "t_user", schema = "javaEEScaffold")
+@Table(name = "t_user")
 public class User extends BaseEntity<Long> {
 
 	@Column(name = "username", length = 100)
@@ -39,8 +39,8 @@ public class User extends BaseEntity<Long> {
 	@Column(name = "locked")
 	private Boolean locked = Boolean.FALSE;
 	
-	@ManyToMany(targetEntity=Role.class,fetch=FetchType.EAGER)
-	@JoinTable(name="t_user_role",joinColumns=@JoinColumn(name="user_id"),inverseJoinColumns=@JoinColumn(name="role_id"))
+	@ManyToMany(targetEntity=Role.class,fetch=FetchType.EAGER)//多对多
+	@JoinTable(name="t_user_role",joinColumns=@JoinColumn(name="user_id"),inverseJoinColumns=@JoinColumn(name="role_id"))//生成中间表
 	private Set<Role> roles=new HashSet<Role>();
 	
 	public User(){

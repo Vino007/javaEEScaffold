@@ -28,7 +28,7 @@ public class Role extends BaseEntity<Long> {
 	@ManyToMany(targetEntity=Resource.class)
 	@JoinTable(name="t_role_resource",joinColumns=@JoinColumn(name="role_id"),inverseJoinColumns=@JoinColumn(name="resource_id"))
 	private Set<Resource> resources=new HashSet<Resource>();
-	@ManyToMany(targetEntity=User.class,mappedBy="roles")
+	@ManyToMany(targetEntity=User.class,mappedBy="roles")//双向关系的接收端，mappedBy指的是关联对象中的某个属性
 	private Set<User> users=new HashSet<User>();
 	
 	

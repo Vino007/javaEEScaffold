@@ -121,7 +121,7 @@
             <value>
                 /login = authc		<!--authc拦截器会判断用户是否是通过Subject.login（isAuthenticated()==true）登录的，如果是才放行，否则会跳转到登录页面叫你重新登录  -->
                 /logout = logout 	<!-- 注销拦截器 --> 
-                /druid/**=monitor   <!-- 监控拦截器 -->
+                /druid = monitor   <!-- 监控拦截器 -->
                 /register=anon		<!-- 允许匿名访问 -->
                 /prepareRegister=anon                            
                 /resources/**=anon  <!-- 不拦截静态资源！！ -->
